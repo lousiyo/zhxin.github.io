@@ -2,30 +2,30 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on Zhang Hongxin</title>
-    <link>www.zhxin.xyz/tags/</link>
+    <link>https://zhxin.github.io/tags/</link>
     <description>Recent content in Tags on Zhang Hongxin</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 19 Sep 2016 15:46:20 +0800</lastBuildDate>
     
-	<atom:link href="www.zhxin.xyz/tags/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://zhxin.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Git</title>
-      <link>www.zhxin.xyz/tags/git/</link>
+      <link>https://zhxin.github.io/tags/git/</link>
       <pubDate>Mon, 19 Sep 2016 15:46:20 +0800</pubDate>
       
-      <guid>www.zhxin.xyz/tags/git/</guid>
+      <guid>https://zhxin.github.io/tags/git/</guid>
       <description></description>
     </item>
     
     <item>
       <title>tools</title>
-      <link>www.zhxin.xyz/tags/tools/</link>
+      <link>https://zhxin.github.io/tags/tools/</link>
       <pubDate>Mon, 19 Sep 2016 15:46:20 +0800</pubDate>
       
-      <guid>www.zhxin.xyz/tags/tools/</guid>
+      <guid>https://zhxin.github.io/tags/tools/</guid>
       <description></description>
     </item>
     
