@@ -7,11 +7,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="Zhang Hongxin">
   <meta name="generator" content="Hugo 0.57.2" />
-  <title>Posts — Zhang Hongxin</title>
+  <title>Git客户端厨师配置 — Zhang Hongxin</title>
 
   <meta name="description" content="">
-  <link rel="canonical" href="https://zhxin.github.io/post/">
-  <link href="/post/index.xml" rel="alternate"
+  <link rel="canonical" href="https://zhxin.github.io/2016/09/git%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%8E%A8%E5%B8%88%E9%85%8D%E7%BD%AE/">
+  <link href="" rel="alternate"
     type="application/rss+xml" title="Zhang Hongxin">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Arvo:400,700">
   <link rel="stylesheet" href="https://zhxin.github.io/css/highlight.css">
@@ -23,8 +23,10 @@
   <div class="container">
 
     <header>
-  <h1>Posts</h1>
+  <h1>Git客户端厨师配置</h1>
 
+  
+  <time datetime="2016-09-19 15:46:20 &#43;0800 CST">2016/09/19</time>
   
 
   
@@ -32,35 +34,29 @@
 
 
     <article>
+      <ul>
+<li><p>安装完成GIT之后配置相关用户名邮箱.</p>
 
-      <section>
-        <h2>2018/07</h2>
+<pre><code class="language-bash">git config --global user.name &quot;zhxin&quot;
+git config --global user.email zhxin@outlook.com
+</code></pre></li>
+</ul>
 
-        <ol>
-          <li>
-            <p>
-  <a href="https://zhxin.github.io/2018/07/%E6%88%91%E7%9A%84%E5%A4%A9%E6%89%8D%E5%A5%B3%E5%8F%8B%E8%AF%BB%E5%90%8E%E6%84%9F/">我的天才女友读后感</a>
-</p>
+<ul>
+<li><p>配置连接github.</p>
 
-          </li>
-          
-        </ol>
-      </section>
-      <section>
-        <h2>2016/09</h2>
+<pre><code class="language-bash">ls -al ~/.ssh #查看是否生成SSH key
+ssh-keygen -t rsa -b 4096 -C &quot;zhxin@outlook.com&quot; #生成key
+eval &quot;$(ssh-agent -s)&quot; #保证ssh可用
+ssh-add ~/.ssh/id_rsa #添加ssh key到客户端
+</code></pre></li>
 
-        <ol>
-          <li>
-            <p>
-  <a href="https://zhxin.github.io/2016/09/git%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%8E%A8%E5%B8%88%E9%85%8D%E7%BD%AE/">Git客户端厨师配置</a>
-</p>
+<li><p>将ssh key添加到github账户</p>
 
-          </li>
-          
-        </ol>
-      </section>
-      
-
+<pre><code class="language-bash">clip &lt; ~/.ssh/id_rsa.pub
+ssh -T git@github.com #测试是否连接到github
+</code></pre></li>
+</ul>
     </article>
 
     <nav class="site-nav">
