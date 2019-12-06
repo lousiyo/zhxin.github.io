@@ -2,39 +2,39 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on zhxin</title>
-    <link>zhxin.github.io/categories/</link>
+    <link>zhxin.xyz/categories/</link>
     <description>Recent content in Categories on zhxin</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Fri, 06 Dec 2019 15:39:40 +0800</lastBuildDate>
     
-	<atom:link href="zhxin.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="zhxin.xyz/categories/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>code</title>
-      <link>zhxin.github.io/categories/code/</link>
+      <link>zhxin.xyz/categories/code/</link>
       <pubDate>Fri, 06 Dec 2019 15:39:40 +0800</pubDate>
       
-      <guid>zhxin.github.io/categories/code/</guid>
+      <guid>zhxin.xyz/categories/code/</guid>
       <description></description>
     </item>
     
     <item>
       <title>article</title>
-      <link>zhxin.github.io/categories/article/</link>
+      <link>zhxin.xyz/categories/article/</link>
       <pubDate>Wed, 11 Jul 2018 15:46:20 +0800</pubDate>
       
-      <guid>zhxin.github.io/categories/article/</guid>
+      <guid>zhxin.xyz/categories/article/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Tips</title>
-      <link>zhxin.github.io/categories/tips/</link>
+      <link>zhxin.xyz/categories/tips/</link>
       <pubDate>Mon, 19 Sep 2016 15:46:20 +0800</pubDate>
       
-      <guid>zhxin.github.io/categories/tips/</guid>
+      <guid>zhxin.xyz/categories/tips/</guid>
       <description></description>
     </item>
     
