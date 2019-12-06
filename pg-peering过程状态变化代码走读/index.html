@@ -1,40 +1,84 @@
 <!DOCTYPE html>
-<html lang="en-us">
+<html>
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1">
+    <title>PG Peering过程状态变化代码走读 - zhxin</title>
 
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="author" content="">
-  <meta name="generator" content="Hugo 0.58.3" />
-  <title>PG Peering过程状态变化代码走读 — zhxin</title>
-
-  <meta name="description" content="">
-  <link rel="canonical" href="http://zhxin.github.io/pg-peering%E8%BF%87%E7%A8%8B%E7%8A%B6%E6%80%81%E5%8F%98%E5%8C%96%E4%BB%A3%E7%A0%81%E8%B5%B0%E8%AF%BB/">
-  <link href="" rel="alternate"
-    type="application/rss+xml" title="zhxin">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Arvo:400,700">
-  <link rel="stylesheet" href="http://zhxin.github.iocss/highlight.css">
-  <link rel="stylesheet" href="http://zhxin.github.iocss/paperback.css">
+    <style type="text/css">
+        img.wp-smiley,
+        img.emoji {
+            display: inline !important;
+            border: none !important;
+            box-shadow: none !important;
+            height: 1em !important;
+            width: 1em !important;
+            margin: 0 .07em !important;
+            vertical-align: -0.1em !important;
+            background: none !important;
+            padding: 0 !important;
+        }
+    </style>
+    <link rel='stylesheet' href='http://zhxin.github.io/css/style.css' type='text/css' media='all' />
+    <link rel='stylesheet' href='http://zhxin.github.io/css/custom.css' type='text/css' media='all' />
+        
 </head>
+    <body class="two-column">
+        <a href="#content">Skip to content</a>
+<div class="wrapper">
+    <header role="banner" class="banner widgets columns-1">
+        <a href="/" rel="home">
+            <h1 class="site">zhxin</h1>
+            <p></p>
+        </a>
+        <nav role="navigation" aria-label="Primary Navigation">
 
+            <ul class="menu">
+            </ul>
+            <select onChange="location.href=value;">
+            </select>
+        </nav>
+    </header>
 
-<body>
-  <div class="container">
+    <br>
+    <div style="width: 100%; max-height: 100px; text-align: center;">
+       
+</div>
 
-    <header>
-  <h1>PG Peering过程状态变化代码走读</h1>
+    <div class="breadcrumbs">
+        
+    </div>
+        <div id="content" class="content">
 
-  
-  <time datetime="2019-12-06 15:39:40 &#43;0800 CST">2019/12/06</time>
-  
+<main role="main">
+    <article role="article" class="post type-post format-standard hentry">
+        <header class="post-header">
+            <h1>PG Peering过程状态变化代码走读</h1>
+            <div class="post-details">
+                <a rel="bookmark">
+                    <time datetime="2019-12-06T126:339:406">2019-12-06</time>
+                </a>
+				
+<span style="float: right;">
+    <div id="fb-root" style="height: 100%;"></div>
+    
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.2"></script>
+    
+    <div class="fb-share-button" data-href="http://zhxin.github.io/pg-peering%E8%BF%87%E7%A8%8B%E7%8A%B6%E6%80%81%E5%8F%98%E5%8C%96%E4%BB%A3%E7%A0%81%E8%B5%B0%E8%AF%BB/" data-layout="button_count" data-size="small">
+        <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3a%2f%2fzhxin.github.io%2fpg-peering%25E8%25BF%2587%25E7%25A8%258B%25E7%258A%25B6%25E6%2580%2581%25E5%258F%2598%25E5%258C%2596%25E4%25BB%25A3%25E7%25A0%2581%25E8%25B5%25B0%25E8%25AF%25BB%2f" class="fb-xfbml-parse-ignore">Share</a>
+    </div>
+    &nbsp;
+    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-text="PG Peering过程状态变化代码走读" data-url="http://zhxin.github.io/pg-peering%E8%BF%87%E7%A8%8B%E7%8A%B6%E6%80%81%E5%8F%98%E5%8C%96%E4%BB%A3%E7%A0%81%E8%B5%B0%E8%AF%BB/" data-show-count="false">Tweet</a>
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    &nbsp;
+    
+</span>
 
-  
-</header>
+            </div>
+        </header>
 
-
-    <article>
-      
+        <div class="post-content">
+            
 
 <p>最近看了PG状态转换的过程,代码细节没有仔细研究，先粗略过了一遍代码，特此记录.</p>
 
@@ -482,36 +526,141 @@ Recovery过程由PG的主OSD来触发并控制，先修复主的，然后修复�
 Backfill是PG通过重新扫描所有的对象，对比发现确实的对象，通过整体拷贝来修复。和Recovery一样需要进行资源预约.<br />
 这部分过程就不写了&hellip;</p>
 
+        </div>
+
+
+
+        <footer class="post-footer">
+                
+                
+                
+                <span class="post-categories">
+                        <a href="http://zhxin.github.io/categories/code/">code</a>&emsp;
+                        
+                </span>
+                
+        
+                
+                
+                
+                <span class="post-tags">
+                        <a href="http://zhxin.github.io/tags/ceph/">ceph</a>&emsp;
+                        
+                </span>
+                
+        </footer>
+        
+<table cellspacing="15" style="width:100%; border: none;">
+    <tr>
+        <td style="text-align: center; border: none; padding: 0px;">
+        </td>
+        <td style="text-align: center; border: none; padding: 0px;">
+        </td>
+    </tr>
+</table>
+
+        
+	
+	
+
     </article>
 
-    <nav class="site-nav">
-  <a href="http://zhxin.github.io">Home</a>
-  <a href="http://zhxin.github.iopost/">All posts</a>
+    
+    <nav class="navigation post-navigation" role="navigation">
+        <div class="nav-links">
+            <div class="nav-previous">
+                
+                <a class="previous" href="http://zhxin.github.io/%E6%88%91%E7%9A%84%E5%A4%A9%E6%89%8D%E5%A5%B3%E5%8F%8B%E8%AF%BB%E5%90%8E%E6%84%9F/"> 我的天才女友读后感</a>
+                
+            </div>
+            <div class="nav-next">
+                
+            </div>
+        </div>
+    </nav>
+    <section>
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "zhxin" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </section>
+    
 
-  
-
-  
-
-  
-</nav>
+</main>
 
 
-    <footer class="site-footer">
-  <span class="owner">©2019 </span>
+        <div class="sidebar1 widgets columns-1">
 
-  
+    <aside>
+    
+</aside>
+    <aside class="widget widget_categories">
+        <h2>Categories</h2>
+        <ul class="widget__list"><li class="cat-item cat-item-2">
+                <a href="http://zhxin.github.io/categories/article/">article (1)</a>
+            </li><li class="cat-item cat-item-2">
+                <a href="http://zhxin.github.io/categories/code/">code (1)</a>
+            </li><li class="cat-item cat-item-2">
+                <a href="http://zhxin.github.io/categories/tips/">Tips (1)</a>
+            </li>
+        </ul>
+    </aside>
 
-  
+    <aside class="widget widget_tag_cloud">
+        <h2>Tags</h2>
+        <div class="tagcloud"><a class="tag-cloud-link" href="http://zhxin.github.io/tags/ceph/" title="ceph" style="font-size: 12pt;">ceph</a>&emsp;<a class="tag-cloud-link" href="http://zhxin.github.io/tags/git/" title="git" style="font-size: 12pt;">Git</a>&emsp;
+        </div>
+    </aside>
+
+    <aside class="widget widget_recent_entries">
+        <h2>Recent Posts</h2>
+        <ul>
+            <li>
+                <a href="/pg-peering%E8%BF%87%E7%A8%8B%E7%8A%B6%E6%80%81%E5%8F%98%E5%8C%96%E4%BB%A3%E7%A0%81%E8%B5%B0%E8%AF%BB/">PG Peering过程状态变化代码走读</a>
+            </li>
+            <li>
+                <a href="/%E6%88%91%E7%9A%84%E5%A4%A9%E6%89%8D%E5%A5%B3%E5%8F%8B%E8%AF%BB%E5%90%8E%E6%84%9F/">我的天才女友读后感</a>
+            </li>
+            <li>
+                <a href="/git%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%88%9D%E5%A7%8B%E9%85%8D%E7%BD%AE/">Git客户端初始配置</a>
+            </li>
+        </ul>
+    </aside>
+
+    <aside class="widget widget_archive">
+        <h2>Archives</h2>
+        <ul>
+        </ul>
+    </aside>
+
+</div>
+        </div>
+        </div>
+<footer role="contentinfo" class="document-footer contentinfo widgets columns-1">
+
+    <aside class="widget widget_text">
+        <div class="textwidget">
+            <p>© zhxin / Powered by <a href="https://gohugo.io" target="_blank">Hugo</a> with theme <a href="https://github.com/tosi29/inkblotty" target="_blank">Inkblotty</a></p>
+        </div>
+    </aside>
 </footer>
+</div>
 
-
-  </div>
-
-  
-<script src="http://zhxin.github.iojs/highlight.pack.js"></script>
-<script>hljs.initHighlightingOnLoad();</script>
-
-
-</body>
-
+    </body>
 </html>
