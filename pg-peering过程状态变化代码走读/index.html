@@ -110,14 +110,13 @@ PG状态机的对象、状态及时间处理主要在<code>PG.h</code>、<code>P
 </code></pre>
 
 <p>PG状态机主要包含的状态如下图:<br />
-<img src="https://raw.githubusercontent.com/zhxin/PicRepo/master/imgPG%E7%8A%B6%E6%80%81%E6%9C%BA%E6%B1%87%E6%80%BB.png" alt="" /></p>
+<img src="https://zhxin.oss-cn-qingdao.aliyuncs.com/gp/PG状态机汇总.png" alt="pg状态机" /></p>
 
 <h3 id="primary-peering">Primary Peering</h3>
 
 <p>Primary Peering过程中状态机流程图如下图所示，并没有展示<code>从OSD</code>和<code>Recovery</code>、<code>Backfill</code>过程.<br />
-<img src="https://raw.githubusercontent.com/zhxin/PicRepo/master/imgpart_state_flow.png" alt="" /></p>
-
-<p>主OSD接受到pg_create消息开始创建PG</p>
+<img src="https://zhxin.oss-cn-qingdao.aliyuncs.com/gp/part_state_flow.png" alt="pg部分状态变化" />
+主OSD接受到pg_create消息开始创建PG</p>
 
 <pre><code class="language-c++">void OSD::handle_pg_create(OpRequestRef op)
 {
