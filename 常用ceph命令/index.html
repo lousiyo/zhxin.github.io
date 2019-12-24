@@ -3,7 +3,7 @@
     <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1">
-    <title>Git客户端初始配置 - zhxin.xyz</title>
+    <title>常用ceph命令 - zhxin.xyz</title>
 
     <style type="text/css">
         img.wp-smiley,
@@ -42,39 +42,114 @@
 <main role="main">
     <article role="article" class="post type-post format-standard hentry">
         <header class="post-header">
-            <h1>Git客户端初始配置</h1>
+            <h1>常用ceph命令</h1>
             <div class="post-details">
                 <a rel="bookmark">
-                    <time datetime="2016-09-19T919:346:206">2016-09-19</time>
+                    <time datetime="2019-12-24T1224:346:206">2019-12-24</time>
                 </a>
                 
             </div>
         </header>
 
         <div class="post-content">
-            <ul>
-<li><p>安装完成GIT之后配置相关用户名邮箱.</p>
+            
 
-<pre><code class="language-bash">git config --global user.name &quot;zhxin&quot;
-git config --global user.email zhxin@outlook.com
-</code></pre></li>
-</ul>
+<h1 id="查看集群状态">查看集群状态</h1>
+
+<pre><code class="language-shell">ceph -s #查看状态
+ceph -v #查看版本
+ceph df #查询集群存储容量
+ceph health detail #集群详细健康信息
+</code></pre>
+
+<h1 id="查询集群组件信息相关命令">查询集群组件信息相关命令</h1>
+
+<pre><code class="language-shell">rados lspools #查询池子列表
+ceph osd dump | grep pool #查询所有池子信息
+rados -p &lt;pool&gt; ls #池子下对象
+rados --pgid &lt;pgid&gt; ls #查看pg下对象
+ceph osd map &lt;pool&gt; object #查看对象信息
+ceph-objectstore-tool --data-path &lt;datapath&gt; --journal-path &lt;journalpath&gt; &lt;objname&gt; dump #输出对象元数据信息
+ceph-admin-disktool --getdisks  #获取磁盘信息
+
+#mon信息
+ceph mon stat
+ceph mon dump
+ceph quorum_status
+
+#osd信息
+ceph osd tree
+ceph osd dump
+ceph osd find &lt;numeric_osd_id&gt;
+ceph osd df tree #查看集群空间使用率
+
+#pg信息
+ceph pg stat
+ceph pg dump
+ceph pg dump_stuck unclean
+</code></pre>
+
+<h1 id="systemctl管理服务">systemctl管理服务</h1>
+
+<pre><code class="language-shell">systemctl reset-failed ceph-osd@*   #重置失败服务
+systemctl start ceph-osd.target     #重启osd服务
+systemctl restart ceph.target   #重启ceph服务
+systemctl stop ceph-osd@0   #停止单个osd服务
+systemctl status ceph-osd@1 #查看服务状态
+</code></pre>
+
+<h1 id="集群操作命令">集群操作命令</h1>
+
+<pre><code class="language-shell">ceph osd pool delete &lt;pool&gt; &lt;pool&gt; --yes-i-really-really-mean-it    #删除池
+rados put &lt;oid&gt; &lt;filename&gt; --pool=&lt;pool&gt; #在池中添加对象
+ceph osd pool set &lt;pool&gt; objectchunk &lt;num&gt; #设置聚合
+eph osd pool create &lt;pool&gt; &lt;pgnum&gt; &lt;pgnum&gt; -r &lt;host、osd&gt;  #创建池
+</code></pre>
+
+<h1 id="crush相关操作">crush相关操作</h1>
+
+<pre><code class="language-shell">ceph osd crush dump
+ceph osd crush rule list
+ceph osd crush rule dump &lt;crush rule name&gt;
+#在线修改crush rule
+ceph osd getcrushmap -o &lt;map_old&gt;    #导出map
+crushtool -d &lt;map_old&gt; -o &lt;map_old.txt&gt;  #转化成可编辑格式
+vi map_old.txt #修改rule replicated_ruleset step chooseleaf firstn 0 type *osd*
+crushtool -c &lt;map_old.txt&gt; -o &lt;map_new&gt;  #还原为map
+ceph osd setcrushmap -i &lt;map_new&gt;     #将map导入ceph
+</code></pre>
+
+<h1 id="块设备管理命令">块设备管理命令</h1>
+
+<pre><code class="language-shell">ceph osd pool create &lt;rbd&gt; &lt;pgnum&gt; &lt;pgnum&gt;
+ceph osd pool set &lt;rbd&gt; size &lt;repnum&gt;
+rbd create --image &lt;my_image&gt; --size &lt;1T&gt; --pool &lt;rbd&gt;
+rbd ls -p &lt;pool_name&gt; #查看指定pool中的卷
+rbd trash move/mv &lt;images_name&gt; -p &lt;pool_name&gt; #将卷丢到回收站
+rbd trash restore &lt;ID&gt; -p &lt;pool_name&gt; #将回收站中的卷还原
+rbd trash remove/rm &lt;ID&gt; -p &lt;pool_name&gt; #清除回收站中的卷
+</code></pre>
+
+<h1 id="配置命令">配置命令</h1>
+
+<pre><code class="language-shell">ceph --show-config #查询集群默认配置
+
+#设置恢复策略为读写优先
+#ceph osd set recovery-pri rwFirst
+#ceph osd set recovery-pri adaptable
+
+ceph daemon &lt;mon.5&gt; config show | grep &lt;mon_osd_down_out_interval&gt; #查询进程配置信息
+#修改运行配置信息 临时生效
+ceph tell &lt;daemon-type&gt;.&lt;daemon id or *&gt; injectargs --&lt;name&gt; &lt;value&gt;
+ceph tell osd.0 injectargs '--debug-osd 0/5'
+</code></pre>
+
+<h1 id="其他">其他</h1>
 
 <ul>
-<li><p>配置连接github.</p>
-
-<pre><code class="language-bash">ls -al ~/.ssh #查看是否生成SSH key
-ssh-keygen -t rsa -b 4096 -C &quot;zhxin@outlook.com&quot; #生成key
-eval &quot;$(ssh-agent -s)&quot; #保证ssh可用
-ssh-add ~/.ssh/id_rsa #添加ssh key到客户端
-</code></pre></li>
-
-<li><p>将ssh key添加到github账户</p>
-
-<pre><code class="language-bash">clip &lt; ~/.ssh/id_rsa.pub
-ssh -T git@github.com #测试是否连接到github
-</code></pre></li>
+<li>出现由于mon服务没有起来导致的admin_socket问题，可能原因是mon对所在分区目录空间的要求不满足(默认5%）清除部分空间即可;</li>
 </ul>
+
         </div>
 
 
@@ -84,7 +159,7 @@ ssh -T git@github.com #测试是否连接到github
                 
                 
                 <span class="post-categories">
-                        <a href="//zhxin.github.io/categories/%E5%A4%87%E5%BF%98/">备忘</a>&emsp;
+                        <a href="//zhxin.github.io/categories/%E7%BC%96%E7%A8%8B/">编程</a>&emsp;
                         
                 </span>
                 
@@ -93,7 +168,7 @@ ssh -T git@github.com #测试是否连接到github
                 
                 
                 <span class="post-tags">
-                        <a href="//zhxin.github.io/tags/git/">git</a>&emsp;
+                        <a href="//zhxin.github.io/tags/ceph/">ceph</a>&emsp;
                         
                 </span>
                 
@@ -111,6 +186,13 @@ ssh -T git@github.com #测试是否连接到github
         
 	
 	
+	<h4>相关文章</h4>
+	<ol style="margin-left: 30px; list-style-type: decimal;">
+		
+		<li><strong><a href="/pg-peering%E8%BF%87%E7%A8%8B%E7%8A%B6%E6%80%81%E5%8F%98%E5%8C%96%E4%BB%A3%E7%A0%81%E8%B5%B0%E8%AF%BB/">PG Peering过程状态变化代码走读</a></strong></li>
+		
+	</ol>
+	
 
     </article>
 
@@ -119,10 +201,10 @@ ssh -T git@github.com #测试是否连接到github
         <div class="nav-links">
             <div class="nav-previous">
                 
+                <a class="previous" href="//zhxin.github.io/pg-peering%E8%BF%87%E7%A8%8B%E7%8A%B6%E6%80%81%E5%8F%98%E5%8C%96%E4%BB%A3%E7%A0%81%E8%B5%B0%E8%AF%BB/"> PG Peering过程状态变化代码走读</a>
+                
             </div>
             <div class="nav-next">
-                
-                <a class="next" href="//zhxin.github.io/%E6%88%91%E7%9A%84%E5%A4%A9%E6%89%8D%E5%A5%B3%E5%8F%8B%E8%AF%BB%E5%90%8E%E6%84%9F/"> 我的天才女友读后感</a>
                 
             </div>
         </div>

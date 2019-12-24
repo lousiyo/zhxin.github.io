@@ -4,17 +4,37 @@
   
   <url>
     <loc>//zhxin.github.io/categories/</loc>
-    <lastmod>2019-12-06T15:39:40+08:00</lastmod>
+    <lastmod>2019-12-24T15:46:20+08:00</lastmod>
   </url>
   
   <url>
     <loc>//zhxin.github.io/tags/ceph/</loc>
-    <lastmod>2019-12-06T15:39:40+08:00</lastmod>
+    <lastmod>2019-12-24T15:46:20+08:00</lastmod>
   </url>
   
   <url>
-    <loc>//zhxin.github.io/categories/code/</loc>
-    <lastmod>2019-12-06T15:39:40+08:00</lastmod>
+    <loc>//zhxin.github.io/post/</loc>
+    <lastmod>2019-12-24T15:46:20+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>//zhxin.github.io/tags/</loc>
+    <lastmod>2019-12-24T15:46:20+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>//zhxin.github.io/</loc>
+    <lastmod>2019-12-24T15:46:20+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>//zhxin.github.io/%E5%B8%B8%E7%94%A8ceph%E5%91%BD%E4%BB%A4/</loc>
+    <lastmod>2019-12-24T15:46:20+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>//zhxin.github.io/categories/%E7%BC%96%E7%A8%8B/</loc>
+    <lastmod>2019-12-24T15:46:20+08:00</lastmod>
   </url>
   
   <url>
@@ -23,27 +43,12 @@
   </url>
   
   <url>
-    <loc>//zhxin.github.io/post/</loc>
-    <lastmod>2019-12-06T15:39:40+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>//zhxin.github.io/tags/</loc>
-    <lastmod>2019-12-06T15:39:40+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>//zhxin.github.io/</loc>
-    <lastmod>2019-12-06T15:39:40+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>//zhxin.github.io/categories/article/</loc>
+    <loc>//zhxin.github.io/%E6%88%91%E7%9A%84%E5%A4%A9%E6%89%8D%E5%A5%B3%E5%8F%8B%E8%AF%BB%E5%90%8E%E6%84%9F/</loc>
     <lastmod>2018-07-11T15:46:20+08:00</lastmod>
   </url>
   
   <url>
-    <loc>//zhxin.github.io/%E6%88%91%E7%9A%84%E5%A4%A9%E6%89%8D%E5%A5%B3%E5%8F%8B%E8%AF%BB%E5%90%8E%E6%84%9F/</loc>
+    <loc>//zhxin.github.io/categories/%E6%96%87%E7%AB%A0/</loc>
     <lastmod>2018-07-11T15:46:20+08:00</lastmod>
   </url>
   
@@ -58,7 +63,7 @@
   </url>
   
   <url>
-    <loc>//zhxin.github.io/categories/tips/</loc>
+    <loc>//zhxin.github.io/categories/%E5%A4%87%E5%BF%98/</loc>
     <lastmod>2016-09-19T15:46:20+08:00</lastmod>
   </url>
   
