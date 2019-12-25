@@ -17,7 +17,17 @@
       <pubDate>Tue, 24 Dec 2019 15:46:20 +0800</pubDate>
       
       <guid>//zhxin.github.io/%E5%B8%B8%E7%94%A8ceph%E5%91%BD%E4%BB%A4/</guid>
-      <description>工作中遇到的比较常用的命令,特此整理以备忘. 查看集群状态 ceph -s #查看状态 ceph -v #查看版本 ceph df #查询集群存储容量 ceph health detail #集群详细健康信息 查询集群组件信息相关命令 rados lspools #查询池子列表 ceph osd dump | grep pool #查询所有池子信息 rados -p &amp;lt;pool&amp;gt; ls #池子下对象 rados --pgid &amp;lt;pgid&amp;gt; ls #查看pg下对象 ceph osd map &amp;lt;pool&amp;gt; object #查看对象信息 ceph-objectstore-tool --data-path &amp;lt;datapath&amp;gt; --journal-path &amp;lt;journalpath&amp;gt; &amp;lt;objname&amp;gt; dump #输出对象元数据</description>
+      <description>&lt;p&gt;工作中遇到的比较常用的命令,特此整理以备忘.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;查看集群状态&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-bash&#34;&gt;ceph -s #查看状态
+ceph -v #查看版本
+ceph df #查询集群存储容量
+ceph health detail #集群详细健康信息
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;</description>
     </item>
     
     <item>

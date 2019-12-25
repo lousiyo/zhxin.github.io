@@ -57,15 +57,17 @@
 <ul>
 <li><p>查看集群状态</p>
 
-<pre><code class="language-shell">ceph -s #查看状态
+<pre><code class="language-bash">ceph -s #查看状态
 ceph -v #查看版本
 ceph df #查询集群存储容量
 ceph health detail #集群详细健康信息
 </code></pre></li>
+</ul>
 
+<ul>
 <li><p>查询集群组件信息相关命令</p>
 
-<pre><code class="language-shell">rados lspools #查询池子列表
+<pre><code class="language-bash">rados lspools #查询池子列表
 ceph osd dump | grep pool #查询所有池子信息
 rados -p &lt;pool&gt; ls #池子下对象
 rados --pgid &lt;pgid&gt; ls #查看pg下对象
@@ -92,7 +94,7 @@ ceph pg dump_stuck unclean
 
 <li><p>systemctl管理服务</p>
 
-<pre><code class="language-shell">systemctl reset-failed ceph-osd@*   #重置失败服务
+<pre><code class="language-bash">systemctl reset-failed ceph-osd@*   #重置失败服务
 systemctl start ceph-osd.target     #重启osd服务
 systemctl restart ceph.target   #重启ceph服务
 systemctl stop ceph-osd@0   #停止单个osd服务
@@ -101,7 +103,7 @@ systemctl status ceph-osd@1 #查看服务状态
 
 <li><p>集群操作命令</p>
 
-<pre><code class="language-shell">ceph osd pool delete &lt;pool&gt; &lt;pool&gt; --yes-i-really-really-mean-it    #删除池
+<pre><code class="language-bash">ceph osd pool delete &lt;pool&gt; &lt;pool&gt; --yes-i-really-really-mean-it    #删除池
 rados put &lt;oid&gt; &lt;filename&gt; --pool=&lt;pool&gt; #在池中添加对象
 ceph osd pool set &lt;pool&gt; objectchunk &lt;num&gt; #设置聚合
 eph osd pool create &lt;pool&gt; &lt;pgnum&gt; &lt;pgnum&gt; -r &lt;host、osd&gt;  #创建池
@@ -109,7 +111,7 @@ eph osd pool create &lt;pool&gt; &lt;pgnum&gt; &lt;pgnum&gt; -r &lt;host、osd&g
 
 <li><p>crush相关操作</p>
 
-<pre><code class="language-shell">ceph osd crush dump
+<pre><code class="language-bash">ceph osd crush dump
 ceph osd crush rule list
 ceph osd crush rule dump &lt;crush rule name&gt;
 #在线修改crush rule
@@ -122,7 +124,7 @@ ceph osd setcrushmap -i &lt;map_new&gt;     #将map导入ceph
 
 <li><p>块设备管理命令</p>
 
-<pre><code class="language-shell">ceph osd pool create &lt;rbd&gt; &lt;pgnum&gt; &lt;pgnum&gt;
+<pre><code class="language-bash">ceph osd pool create &lt;rbd&gt; &lt;pgnum&gt; &lt;pgnum&gt;
 ceph osd pool set &lt;rbd&gt; size &lt;repnum&gt;
 rbd create --image &lt;my_image&gt; --size &lt;1T&gt; --pool &lt;rbd&gt;
 rbd ls -p &lt;pool_name&gt; #查看指定pool中的卷
@@ -133,7 +135,7 @@ rbd trash remove/rm &lt;ID&gt; -p &lt;pool_name&gt; #清除回收站中的卷
 
 <li><p>配置命令</p>
 
-<pre><code class="language-shell">ceph --show-config #查询集群默认配置
+<pre><code class="language-bash">ceph --show-config #查询集群默认配置
 
 #设置恢复策略为读写优先
 #ceph osd set recovery-pri rwFirst
@@ -151,7 +153,6 @@ ceph tell osd.0 injectargs '--debug-osd 0/5'
 <ol>
 <li><em>出现由于mon服务没有起来导致的admin_socket问题，可能原因是mon对所在分区目录空间的要求不满足(默认5%）清除部分空间即可;</em></li>
 </ol>
-
         </div>
 
 
