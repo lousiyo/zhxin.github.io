@@ -105,7 +105,6 @@ systemctl status ceph-osd@1 #查看服务状态
 
 <pre><code class="language-bash">ceph osd pool delete &lt;pool&gt; &lt;pool&gt; --yes-i-really-really-mean-it    #删除池
 rados put &lt;oid&gt; &lt;filename&gt; --pool=&lt;pool&gt; #在池中添加对象
-ceph osd pool set &lt;pool&gt; objectchunk &lt;num&gt; #设置聚合
 eph osd pool create &lt;pool&gt; &lt;pgnum&gt; &lt;pgnum&gt; -r &lt;host、osd&gt;  #创建池
 </code></pre></li>
 
@@ -137,10 +136,6 @@ rbd trash remove/rm &lt;ID&gt; -p &lt;pool_name&gt; #清除回收站中的卷
 
 <pre><code class="language-bash">ceph --show-config #查询集群默认配置
 
-#设置恢复策略为读写优先
-#ceph osd set recovery-pri rwFirst
-#ceph osd set recovery-pri adaptable
-
 ceph daemon &lt;mon.5&gt; config show | grep &lt;mon_osd_down_out_interval&gt; #查询进程配置信息
 #修改运行配置信息 临时生效
 ceph tell &lt;daemon-type&gt;.&lt;daemon id or *&gt; injectargs --&lt;name&gt; &lt;value&gt;
@@ -158,23 +153,23 @@ ceph tell osd.0 injectargs '--debug-osd 0/5'
 
 
         <footer class="post-footer">
+            
+            
+            
+            <span class="post-categories">
+                <a href="//zhxin.github.io/categories/%E7%BC%96%E7%A8%8B/">编程</a>&emsp;
                 
+            </span>
+            
+
+            
+            
+            
+            <span class="post-tags">
+                <a href="//zhxin.github.io/tags/ceph/">ceph</a>&emsp;
                 
-                
-                <span class="post-categories">
-                        <a href="//zhxin.github.io/categories/%E7%BC%96%E7%A8%8B/">编程</a>&emsp;
-                        
-                </span>
-                
-        
-                
-                
-                
-                <span class="post-tags">
-                        <a href="//zhxin.github.io/tags/ceph/">ceph</a>&emsp;
-                        
-                </span>
-                
+            </span>
+            
         </footer>
         
 <table cellspacing="15" style="width:100%; border: none;">
@@ -213,10 +208,13 @@ ceph tell osd.0 injectargs '--debug-osd 0/5'
         </div>
     </nav>
     <section>
-        
+        <div id="utter-container"></div>
+        <script src="https://utteranc.es/client.js" repo='zhxin/blog_comm'
+            issue-term="title" theme='github-light'
+            crossorigin="anonymous" async>
+            </script>
     </section>
     
-
 </main>
 
 
@@ -268,7 +266,7 @@ ceph tell osd.0 injectargs '--debug-osd 0/5'
 <footer role="contentinfo" class="document-footer contentinfo widgets columns-1">
     <aside class="widget widget_text">
         <div class="textwidget">
-            <p> zhxin.xyz © 2019 / Powered by Hugo | Based on Theme: Inkblotty</p>
+            <p> zhxin.xyz © 2020 / Powered by Hugo | Based on Theme: Inkblotty</p>
         </div>
     </aside>
 </footer>
