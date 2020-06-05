@@ -45,7 +45,7 @@ ceph health detail #集群详细健康信息
       <pubDate>Fri, 06 Dec 2019 15:39:40 +0800</pubDate>
       
       <guid>//zhxin.github.io/pg-peering%E8%BF%87%E7%A8%8B%E7%8A%B6%E6%80%81%E5%8F%98%E5%8C%96%E4%BB%A3%E7%A0%81%E8%B5%B0%E8%AF%BB/</guid>
-      <description>最近看了PG状态转换的过程,代码细节没有仔细研究，先粗略过了一遍代码，特此记录. PG PG是存储池的基本单元，是一些对象的集合，多副本和纠删的数据备份策略依托PG实现. PG有多种状态，状态之间的变化通过状态机实现. 有两个场景会触发peering流程： * 在pg创建时 * 在OSD启动、停止导致OSDMap变化</description>
+      <description>最近看了PG状态转换的过程,代码细节没有仔细研究，先粗略过了一遍代码，特此记录. PG PG是存储池的基本单元，是一些对象的集合，多副本和纠删的数据备份策略依托PG实现. PG有多种状态，状态之间的变化通过状态机实现. 有两个场景会触发peering流程： 在pg创建时 在OSD启动、停止导致OSDMap变化进而</description>
     </item>
     
     <item>

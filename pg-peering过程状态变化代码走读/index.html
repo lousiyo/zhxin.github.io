@@ -59,9 +59,12 @@
 <h3 id="pg">PG</h3>
 
 <p>PG是存储池的基本单元，是一些对象的集合，多副本和纠删的数据备份策略依托PG实现. PG有多种状态，状态之间的变化通过状态机实现.<br />
-有两个场景会触发peering流程：<br />
-* 在pg创建时<br />
-* 在OSD启动、停止导致OSDMap变化进而导致pg的acting set发生变化时</p>
+有两个场景会触发peering流程：</p>
+
+<ul>
+<li>在pg创建时<br /></li>
+<li>在OSD启动、停止导致OSDMap变化进而导致pg的acting set发生变化时<br /></li>
+</ul>
 
 <h3 id="状态机">状态机</h3>
 
@@ -77,33 +80,37 @@
   ...
 </code></pre>
 
-<p>boost::statechat包含对象：
-* state_machine: 状态机
-* state: 状态
-* event：事件 可通过process_event函数进行事件投递
-* transition / custom_reaction: 转移/反应 custom_reaction通过对于react函数进行处理
+<p>boost::statechat包含对象：</p>
+
+<ul>
+<li>state_machine: 状态机</li>
+<li>state: 状态</li>
+<li>event：事件 可通过process_event函数进行事件投递</li>
+
+<li><p>transition / custom_reaction: 转移/反应 custom_reaction通过对于react函数进行处理
 PG状态机的对象、状态及时间处理主要在<code>PG.h</code>、<code>PG.cc</code>文件中.</p>
 
-<pre><code class="language-c++">    struct Initial : boost::statechart::state&lt; Initial, RecoveryMachine &gt;, NamedState {
-      explicit Initial(my_context ctx);
-      void exit();
+<pre><code class="language-c++">struct Initial : boost::statechart::state&lt; Initial, RecoveryMachine &gt;, NamedState {
+  explicit Initial(my_context ctx);
+  void exit();
 
-      typedef boost::mpl::list &lt;
-	boost::statechart::transition&lt; Initialize, Reset &gt;,
-	boost::statechart::custom_reaction&lt; Load &gt;,
-	boost::statechart::custom_reaction&lt; NullEvt &gt;,
-	boost::statechart::transition&lt; boost::statechart::event_base, Crashed &gt;
-	&gt; reactions;
+  typedef boost::mpl::list &lt;
+boost::statechart::transition&lt; Initialize, Reset &gt;,
+boost::statechart::custom_reaction&lt; Load &gt;,
+boost::statechart::custom_reaction&lt; NullEvt &gt;,
+boost::statechart::transition&lt; boost::statechart::event_base, Crashed &gt;
+&gt; reactions;
 
-      boost::statechart::result react(const Load&amp;);
-      boost::statechart::result react(const MNotifyRec&amp;);
-      boost::statechart::result react(const MInfoRec&amp;);
-      boost::statechart::result react(const MLogRec&amp;);
-      boost::statechart::result react(const boost::statechart::event_base&amp;) {
-	return discard_event();
-      }
-    };
-</code></pre>
+  boost::statechart::result react(const Load&amp;);
+  boost::statechart::result react(const MNotifyRec&amp;);
+  boost::statechart::result react(const MInfoRec&amp;);
+  boost::statechart::result react(const MLogRec&amp;);
+  boost::statechart::result react(const boost::statechart::event_base&amp;) {
+return discard_event();
+  }
+};
+</code></pre></li>
+</ul>
 
 <p>PG状态机主要包含的状态如下图:<br />
 <img src="https://zhxin.oss-cn-qingdao.aliyuncs.com/gp/PG%E7%8A%B6%E6%80%81%E6%9C%BA%E6%B1%87%E6%80%BB.png" alt="pg状态机" /></p>
@@ -171,10 +178,10 @@ PG状态机的对象、状态及时间处理主要在<code>PG.h</code>、<code>P
     context&lt; RecoveryMachine &gt;().send_notify(
       pg-&gt;get_primary(),
       pg_notify_t(
-	pg-&gt;get_primary().shard, pg-&gt;pg_whoami.shard,
-	pg-&gt;get_osdmap()-&gt;get_epoch(),
-	pg-&gt;get_osdmap()-&gt;get_epoch(),
-	pg-&gt;info),
+ pg-&gt;get_primary().shard, pg-&gt;pg_whoami.shard,
+ pg-&gt;get_osdmap()-&gt;get_epoch(),
+ pg-&gt;get_osdmap()-&gt;get_epoch(),
+ pg-&gt;info),
       pg-&gt;past_intervals);
   }
 
@@ -192,19 +199,19 @@ PG状态机的对象、状态及时间处理主要在<code>PG.h</code>、<code>P
       void exit();
 
       typedef boost::mpl::list &lt;
-	boost::statechart::custom_reaction&lt; QueryState &gt;,
-	boost::statechart::custom_reaction&lt; AdvMap &gt;,
-	boost::statechart::custom_reaction&lt; NullEvt &gt;,
-	boost::statechart::custom_reaction&lt; FlushedEvt &gt;,
-	boost::statechart::custom_reaction&lt; IntervalFlush &gt;,
-	boost::statechart::transition&lt; boost::statechart::event_base, Crashed &gt;
-	&gt; reactions;
+ boost::statechart::custom_reaction&lt; QueryState &gt;,
+ boost::statechart::custom_reaction&lt; AdvMap &gt;,
+ boost::statechart::custom_reaction&lt; NullEvt &gt;,
+ boost::statechart::custom_reaction&lt; FlushedEvt &gt;,
+ boost::statechart::custom_reaction&lt; IntervalFlush &gt;,
+ boost::statechart::transition&lt; boost::statechart::event_base, Crashed &gt;
+ &gt; reactions;
       boost::statechart::result react(const QueryState&amp; q);
       boost::statechart::result react(const AdvMap&amp;);
       boost::statechart::result react(const FlushedEvt&amp;);
       boost::statechart::result react(const IntervalFlush&amp;);
       boost::statechart::result react(const boost::statechart::event_base&amp;) {
-	return discard_event();
+ return discard_event();
       }
     };
 </code></pre>
@@ -223,7 +230,7 @@ PG::RecoveryState::Start::Start(my_context ctx)
     dout(1) &lt;&lt; &quot;transitioning to Primary&quot; &lt;&lt; dendl;
     post_event(MakePrimary());
   } else { //is_stray
-    dout(1) &lt;&lt; &quot;transitioning to Stray&quot; &lt;&lt; dendl; 
+    dout(1) &lt;&lt; &quot;transitioning to Stray&quot; &lt;&lt; dendl;
     post_event(MakeStray());
   }
 }
@@ -232,7 +239,7 @@ PG::RecoveryState::Start::Start(my_context ctx)
 <p>首先获取当前处理的PG，判断当前osd是不是该pg的主osd，如果是的话则投递<code>MakePrimary</code>事件，否则投递<code>MakeStray</code>事件，如果进入<code>Stray</code>状态则对应PG实例需要由当前<code>Primary</code>按照Peering的进度和结果进一步确认其身份.<br />
 按照主OSD的路径继续走, 在<code>Start</code>状态下接受到<code>MakePrimary</code>事件后，状态机会依次进入到<code>Started/Primary/Peering/Getinfo</code>，进入peering阶段。<br />
 GetInfo过程获取该PG在其他OSD上的pg_info_t信息。<br />
-调用函数generate_past_intervals计算past intervals的值.<br />
+调用函数generate_past_intervals计算past intervals的值.
 调用函数build_prior构造获取pg_info_t信息的OSD列表<br />
 调用get_infos给参与的OSD发送获取请求</p>
 
@@ -277,7 +284,7 @@ PG::RecoveryState::GetLog::GetLog(my_context ctx)
 
   // adjust acting?
   if (!pg-&gt;choose_acting(auth_log_shard, false,
-			 &amp;context&lt; Peering &gt;().history_les_bound)) {
+    &amp;context&lt; Peering &gt;().history_les_bound)) {
     if (!pg-&gt;want_acting.empty()) {
       post_event(NeedActingChange());
     } else {
@@ -297,11 +304,11 @@ PG::RecoveryState::GetLog::GetLog(my_context ctx)
   assert(!msg);
   if (logevt.from != auth_log_shard) {
     dout(10) &lt;&lt; &quot;GetLog: discarding log from &quot;
-	     &lt;&lt; &quot;non-auth_log_shard osd.&quot; &lt;&lt; logevt.from &lt;&lt; dendl;
+      &lt;&lt; &quot;non-auth_log_shard osd.&quot; &lt;&lt; logevt.from &lt;&lt; dendl;
     return discard_event();
   }
   dout(10) &lt;&lt; &quot;GetLog: received master log from osd&quot;
-	   &lt;&lt; logevt.from &lt;&lt; dendl;
+    &lt;&lt; logevt.from &lt;&lt; dendl;
   msg = logevt.msg;
   post_event(GotLog());
   return discard_event();
@@ -351,11 +358,11 @@ PG::RecoveryState::GetMissing::GetMissing(my_context ctx)
 <p>到本阶段则可以说Peering主要工作已经完成,不过在接受客户端读写之前还需要执行active操作激活各个副本，该操作主要目的为固化本地peering成果，以保证其不致因为系统掉电而前功尽弃，同时还需要初始化后续在后台执行Recovery或者Backfill所依赖的关键元数据信息.</p>
 
 <pre><code class="language-c++">  pg-&gt;activate(*context&lt; RecoveryMachine &gt;().get_cur_transaction(),
-	       pg-&gt;get_osdmap()-&gt;get_epoch(),
-	       *context&lt; RecoveryMachine &gt;().get_on_safe_context_list(),
-	       *context&lt; RecoveryMachine &gt;().get_query_map(),
-	       context&lt; RecoveryMachine &gt;().get_info_map(),
-	       context&lt; RecoveryMachine &gt;().get_recovery_ctx());
+        pg-&gt;get_osdmap()-&gt;get_epoch(),
+        *context&lt; RecoveryMachine &gt;().get_on_safe_context_list(),
+        *context&lt; RecoveryMachine &gt;().get_query_map(),
+        context&lt; RecoveryMachine &gt;().get_info_map(),
+        context&lt; RecoveryMachine &gt;().get_recovery_ctx());
 </code></pre>
 
 <p>如果所有副本都被激活则投递<code>AllReplicasActivated</code>事件，在<code>Active</code>状态下处理该事件,处理过程中调用<code>pg-&gt;on_activate()</code>函数</p>
@@ -370,26 +377,26 @@ void ReplicatedPG::on_activate()
     dout(10) &lt;&lt; &quot;activate not all replicas are up-to-date, queueing recovery&quot; &lt;&lt; dendl;
     queue_peering_event(
       CephPeeringEvtRef(
-	std::make_shared&lt;CephPeeringEvt&gt;(
-	  get_osdmap()-&gt;get_epoch(),
-	  get_osdmap()-&gt;get_epoch(),
-	  DoRecovery())));
+ std::make_shared&lt;CephPeeringEvt&gt;(
+   get_osdmap()-&gt;get_epoch(),
+   get_osdmap()-&gt;get_epoch(),
+   DoRecovery())));
   } else if (needs_backfill()) {
     dout(10) &lt;&lt; &quot;activate queueing backfill&quot; &lt;&lt; dendl;
     queue_peering_event(
       CephPeeringEvtRef(
-	std::make_shared&lt;CephPeeringEvt&gt;(
-	  get_osdmap()-&gt;get_epoch(),
-	  get_osdmap()-&gt;get_epoch(),
-	  RequestBackfill())));
+ std::make_shared&lt;CephPeeringEvt&gt;(
+   get_osdmap()-&gt;get_epoch(),
+   get_osdmap()-&gt;get_epoch(),
+   RequestBackfill())));
   } else {
     dout(10) &lt;&lt; &quot;activate all replicas clean, no recovery&quot; &lt;&lt; dendl;
     queue_peering_event(
       CephPeeringEvtRef(
-	std::make_shared&lt;CephPeeringEvt&gt;(
-	  get_osdmap()-&gt;get_epoch(),
-	  get_osdmap()-&gt;get_epoch(),
-	  AllReplicasRecovered())));
+ std::make_shared&lt;CephPeeringEvt&gt;(
+   get_osdmap()-&gt;get_epoch(),
+   get_osdmap()-&gt;get_epoch(),
+   AllReplicasRecovered())));
   }
 ...
 </code></pre>
@@ -402,10 +409,10 @@ Recovery 是仅依据PG日志中的缺失记录来修复不一致的对象.<br /
 
 <pre><code class="language-c++">    struct Activating : boost::statechart::state&lt; Activating, Active &gt;, NamedState {
       typedef boost::mpl::list &lt;
-	boost::statechart::transition&lt; AllReplicasRecovered, Recovered &gt;,
-	boost::statechart::transition&lt; DoRecovery, WaitLocalRecoveryReserved &gt;,
-	boost::statechart::transition&lt; RequestBackfill, WaitLocalBackfillReserved &gt;
-	&gt; reactions;
+ boost::statechart::transition&lt; AllReplicasRecovered, Recovered &gt;,
+ boost::statechart::transition&lt; DoRecovery, WaitLocalRecoveryReserved &gt;,
+ boost::statechart::transition&lt; RequestBackfill, WaitLocalBackfillReserved &gt;
+ &gt; reactions;
       explicit Activating(my_context ctx);
       void exit();
     };
@@ -435,8 +442,8 @@ Recovery 是仅依据PG日志中的缺失记录来修复不一致的对象.<br /
 
 <pre><code class="language-c++">    struct WaitLocalRecoveryReserved : boost::statechart::state&lt; WaitLocalRecoveryReserved, Active &gt;, NamedState {
       typedef boost::mpl::list &lt;
-	boost::statechart::transition&lt; LocalRecoveryReserved, WaitRemoteRecoveryReserved &gt;
-	&gt; reactions;
+ boost::statechart::transition&lt; LocalRecoveryReserved, WaitRemoteRecoveryReserved &gt;
+ &gt; reactions;
       explicit WaitLocalRecoveryReserved(my_context ctx);
       void exit();
     };
@@ -508,7 +515,7 @@ Backfill是PG通过重新扫描所有的对象，对比发现确实的对象，�
             
             
             <span class="post-categories">
-                <a href="//zhxin.github.io/categories/%E7%BC%96%E7%A8%8B/">编程</a>&emsp;
+                <a href="//zhxin.github.io/categories/ceph/">ceph</a>&emsp;
                 
             </span>
             
@@ -571,13 +578,13 @@ Backfill是PG通过重新扫描所有的对象，对比发现确实的对象，�
     <aside class="widget widget_categories">
         <h2>目录</h2>
         <ul class="widget__list"><li class="cat-item cat-item-2">
-                <a href="//zhxin.github.io/categories/ceph/">ceph (1)</a>
+                <a href="//zhxin.github.io/categories/ceph/">ceph (2)</a>
             </li><li class="cat-item cat-item-2">
                 <a href="//zhxin.github.io/categories/%E5%A4%87%E5%BF%98/">备忘 (1)</a>
             </li><li class="cat-item cat-item-2">
                 <a href="//zhxin.github.io/categories/%E6%96%87%E7%AB%A0/">文章 (1)</a>
             </li><li class="cat-item cat-item-2">
-                <a href="//zhxin.github.io/categories/%E7%BC%96%E7%A8%8B/">编程 (2)</a>
+                <a href="//zhxin.github.io/categories/%E7%BC%96%E7%A8%8B/">编程 (1)</a>
             </li>
         </ul>
     </aside>
