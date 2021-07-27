@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PG Peering过程状态变化代码走读 // zhxin.xyz</title>
+
+    <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    
+    
+    
+
+        <meta property="og:title" content="PG Peering过程状态变化代码走读" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="zh-cn" />
+    <meta property="og:url" content="//zhxin.github.io/pg-peering%E8%BF%87%E7%A8%8B%E7%8A%B6%E6%80%81%E5%8F%98%E5%8C%96%E4%BB%A3%E7%A0%81%E8%B5%B0%E8%AF%BB/" />
+    
+
+    <link rel="shortcut icon" href="/favicon.ico">
+
+    <link href="//zhxin.github.io/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+    <link href="//zhxin.github.io/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="//zhxin.github.io/css/style.css">
+    
+
+    <meta name="generator" content="Hugo 0.86.0" />
+</head>
+
+
+<body>
+<div id="container">
+    <header id="header">
+    <div id="header-outer" class="outer">
+        <div id="header-inner" class="inner">
+            <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+            <a id="logo" class="logo-text" href="//zhxin.github.io/">zhxin.xyz</a>
+            <nav id="main-nav">
+                
+            </nav>
+            <nav id="sub-nav">
+                <div id="search-form-wrap">
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+
+    <section id="main" class="outer">
+        <article class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        <header class="article-header">
+            <h1 class="article-title" itemprop="name">PG Peering过程状态变化代码走读</h1>
+        </header>
+        
+        <div class="article-meta">
+            <a href="/pg-peering%E8%BF%87%E7%A8%8B%E7%8A%B6%E6%80%81%E5%8F%98%E5%8C%96%E4%BB%A3%E7%A0%81%E8%B5%B0%E8%AF%BB/" class="article-date">
+                <time datetime='2019-12-06T15:39:40.000&#43;08:00' itemprop="datePublished">2019-12-06</time>
+            </a>
+            
+            
+            <div class="post-categories">
+                <div class="article-category">
+                    
+                    
+                    <a class="article-category-link" href="//zhxin.github.io//categories/ceph">ceph</a>
+                    
+                </div>
+            </div>
+            
+            
+        </div>
+        <div class="article-entry" itemprop="articleBody">
+            <p>最近看了PG状态转换的过程,代码细节没有仔细研究，先粗略过了一遍代码，特此记录.</p>
+<h3 id="pg">PG</h3>
+<p>PG是存储池的基本单元，是一些对象的集合，多副本和纠删的数据备份策略依托PG实现. PG有多种状态，状态之间的变化通过状态机实现.<br>
+有两个场景会触发peering流程：</p>
+<ul>
+<li>在pg创建时</li>
+<li>在OSD启动、停止导致OSDMap变化进而导致pg的acting set发生变化时</li>
+</ul>
+<h3 id="状态机">状态机</h3>
+<p>状态机在创建PG进行初始化.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">  <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">RecoveryMachine</span> <span style="color:#f92672">:</span> <span style="color:#66d9ef">public</span> boost<span style="color:#f92672">::</span>statechart<span style="color:#f92672">::</span>state_machine<span style="color:#f92672">&lt;</span> RecoveryMachine, Initial <span style="color:#f92672">&gt;</span> {
+      RecoveryState <span style="color:#f92672">*</span>state;
+    <span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+      PG <span style="color:#f92672">*</span>pg;
+
+      utime_t event_time;
+      <span style="color:#66d9ef">uint64_t</span> event_count;
+  ...
+</code></pre></div><p>boost::statechat包含对象：</p>
+<ul>
+<li>state_machine: 状态机</li>
+<li>state: 状态</li>
+<li>event：事件 可通过process_event函数进行事件投递</li>
+<li>transition / custom_reaction: 转移/反应 custom_reaction通过对于react函数进行处理
+PG状态机的对象、状态及时间处理主要在<code>PG.h</code>、<code>PG.cc</code>文件中.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">    <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Initial</span> <span style="color:#f92672">:</span> boost<span style="color:#f92672">::</span>statechart<span style="color:#f92672">::</span>state<span style="color:#f92672">&lt;</span> Initial, RecoveryMachine <span style="color:#f92672">&gt;</span>, NamedState {
+      <span style="color:#66d9ef">explicit</span> <span style="color:#a6e22e">Initial</span>(my_context ctx);
+      <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">exit</span>();
+
+      <span style="color:#66d9ef">typedef</span> boost<span style="color:#f92672">::</span>mpl<span style="color:#f92672">::</span>list <span style="color:#f92672">&lt;</span>
+ boost<span style="color:#f92672">::</span>statechart<span style="color:#f92672">::</span>transition<span style="color:#f92672">&lt;</span> Initialize, Reset <span style="color:#f92672">&gt;</span>,
+ boost<span style="color:#f92672">::</span>statechart<span style="color:#f92672">::</span>custom_reaction<span style="color:#f92672">&lt;</span> Load <span style="color:#f92672">&gt;</span>,
+ boost<span style="color:#f92672">::</span>statechart<span style="color:#f92672">::</span>custom_reaction<span style="color:#f92672">&lt;</span> NullEvt <span style="color:#f92672">&gt;</span>,
+ boost<span style="color:#f92672">::</span>statechart<span style="color:#f92672">::</span>transition<span style="color:#f92672">&lt;</span> boost<span style="color:#f92672">::</span>statechart<span style="color:#f92672">::</span>event_base, Crashed <span style="color:#f92672">&gt;</span>
+ <span style="color:#f92672">&gt;</span> reactions;
+
+      boost<span style="color:#f92672">::</span>statechart<span style="color:#f92672">::</span>result react(<span style="color:#66d9ef">const</span> Load<span style="color:#f92672">&amp;</span>);
+      boost<span style="color:#f92672">::</span>statechart<span style="color:#f92672">::</span>result react(<span style="color:#66d9ef">const</span> MNotifyRec<span style="color:#f92672">&amp;</span>);
+      boost<span style="color:#f92672">::</span>statechart<span style="color:#f92672">::</span>result react(<span style="color:#66d9ef">const</span> MInfoRec<span style="color:#f92672">&amp;</span>);
+      boost<span style="color:#f92672">::</span>statechart<span style="color:#f92672">::</span>result react(<span style="color:#66d9ef">const</span> MLogRec<span style="color:#f92672">&amp;</span>);
+      boost<span style="color:#f92672">::</span>statechart<span style="color:#f92672">::</span>result react(<span style="color:#66d9ef">const</span> boost<span style="color:#f92672">::</span>statechart<span style="color:#f92672">::</span>event_base<span style="color:#f92672">&amp;</span>) {
+ <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">discard_event</span>();
+      }
+    };
+</code></pre></div><p>PG状态机主要包含的状态如下图:<br>
+<img src="https://zhxin.oss-cn-qingdao.aliyuncs.com/gp/PG%E7%8A%B6%E6%80%81%E6%9C%BA%E6%B1%87%E6%80%BB.png" alt="pg状态机"></p>
+<h3 id="primary-peering">Primary Peering</h3>
+<p>Primary Peering过程中状态机流程图如下图所示，并没有展示<code>从OSD</code>和<code>Recovery</code>、<code>Backfill</code>过程.<br>
+<img src="https://zhxin.oss-cn-qingdao.aliyuncs.com/gp/part_state_flow.png" alt="pg部分状态变化"><br>
+主OSD接受到pg_create消息开始创建PG</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#66d9ef">void</span> OSD<span style="color:#f92672">::</span>handle_pg_create(OpRequestRef op)
+{
+  MOSDPGCreate <span style="color:#f92672">*</span>m <span style="color:#f92672">=</span> (MOSDPGCreate<span style="color:#f92672">*</span>)op<span style="color:#f92672">-&gt;</span>get_req();
+  assert(m<span style="color:#f92672">-&gt;</span>get_type() <span style="color:#f92672">==</span> MSG_OSD_PG_CREATE);
+
+  dout(<span style="color:#ae81ff">10</span>) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;handle_pg_create &#34;</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#f92672">*</span>m <span style="color:#f92672">&lt;&lt;</span> dendl;
+
+...
+</code></pre></div><p>依次调用<code>handle_pg_create</code>-&gt; <code>handle_pg_peering_evt</code> -&gt; <code>_create_lock_pg</code> -&gt; <code>_open_lock_pg</code> -&gt; <code>_make_pg</code>,创建PG.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">PG<span style="color:#f92672">*</span> OSD<span style="color:#f92672">::</span>_make_pg(
+  OSDMapRef createmap,
+  spg_t pgid)
+{
+  dout(<span style="color:#ae81ff">10</span>) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;_open_lock_pg &#34;</span> <span style="color:#f92672">&lt;&lt;</span> pgid <span style="color:#f92672">&lt;&lt;</span> dendl;
+  PGPool pool <span style="color:#f92672">=</span> _get_pool(pgid.pool(), createmap);
+
+  <span style="color:#75715e">// create
+</span><span style="color:#75715e"></span>  PG <span style="color:#f92672">*</span>pg;
+  <span style="color:#66d9ef">if</span> (createmap<span style="color:#f92672">-&gt;</span>get_pg_type(pgid.pgid) <span style="color:#f92672">==</span> pg_pool_t<span style="color:#f92672">::</span>TYPE_REPLICATED <span style="color:#f92672">||</span>
+      createmap<span style="color:#f92672">-&gt;</span>get_pg_type(pgid.pgid) <span style="color:#f92672">==</span> pg_pool_t<span style="color:#f92672">::</span>TYPE_ERASURE)
+    pg <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ReplicatedPG(<span style="color:#f92672">&amp;</span>service, createmap, pool, pgid);
+  <span style="color:#66d9ef">else</span>
+    <span style="color:#a6e22e">assert</span>(<span style="color:#ae81ff">0</span>);
+
+  <span style="color:#66d9ef">return</span> pg;
+}
+
+</code></pre></div><p>创建PG完成之后,在<code>handle_pg_create</code> -&gt; <code>handle_pg_peering_evt</code> -&gt; <code>handle_create</code> 函数中,开始进行事件投递和事件的处理.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#66d9ef">void</span> PG<span style="color:#f92672">::</span>handle_create(RecoveryCtx <span style="color:#f92672">*</span>rctx)
+{
+  dout(<span style="color:#ae81ff">10</span>) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;handle_create&#34;</span> <span style="color:#f92672">&lt;&lt;</span> dendl;
+  rctx<span style="color:#f92672">-&gt;</span>created_pgs.insert(<span style="color:#66d9ef">this</span>);
+  Initialize evt;
+  recovery_state.handle_event(evt, rctx);
+  ActMap evt2;
+  recovery_state.handle_event(evt2, rctx);
+}
+</code></pre></div><p>在创建之初，状态机处于<code>Initial</code>状态，在此状态下创建一个<code>Initialize</code>事件，状态机的<code>handle_event</code>函数会调用<code>process_event</code>函数将事件投递出去.</p>
+<p>可以看到在<code>Initial</code>状态下接受到<code>Initialize</code>事件之后，状态机直接转换为<code>Reset</code>状态.先调用<code>Reset</code>构造函数,然后带着状态重新回到<code>handle_create</code>函数处，继续创建<code>ActMap</code>事件然后投递出去.<br>
+<code>Reset</code>状态下接收到<code>ActMap</code>事件后在对应定义的<code>react</code>函数中进行处理.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">boost<span style="color:#f92672">::</span>statechart<span style="color:#f92672">::</span>result PG<span style="color:#f92672">::</span>RecoveryState<span style="color:#f92672">::</span>Reset<span style="color:#f92672">::</span>react(<span style="color:#66d9ef">const</span> ActMap<span style="color:#f92672">&amp;</span>)
+{
+  PG <span style="color:#f92672">*</span>pg <span style="color:#f92672">=</span> context<span style="color:#f92672">&lt;</span> RecoveryMachine <span style="color:#f92672">&gt;</span>().pg;
+  <span style="color:#66d9ef">if</span> (pg<span style="color:#f92672">-&gt;</span>should_send_notify() <span style="color:#f92672">&amp;&amp;</span> pg<span style="color:#f92672">-&gt;</span>get_primary().osd <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">0</span>) {
+    context<span style="color:#f92672">&lt;</span> RecoveryMachine <span style="color:#f92672">&gt;</span>().send_notify(
+      pg<span style="color:#f92672">-&gt;</span>get_primary(),
+      pg_notify_t(
+ pg<span style="color:#f92672">-&gt;</span>get_primary().shard, pg<span style="color:#f92672">-&gt;</span>pg_whoami.shard,
+ pg<span style="color:#f92672">-&gt;</span>get_osdmap()<span style="color:#f92672">-&gt;</span>get_epoch(),
+ pg<span style="color:#f92672">-&gt;</span>get_osdmap()<span style="color:#f92672">-&gt;</span>get_epoch(),
+ pg<span style="color:#f92672">-&gt;</span>info),
+      pg<span style="color:#f92672">-&gt;</span>past_intervals);
+  }
+
+  pg<span style="color:#f92672">-&gt;</span>update_heartbeat_peers();
+  pg<span style="color:#f92672">-&gt;</span>take_waiters();
+
+  <span style="color:#66d9ef">return</span> transit<span style="color:#f92672">&lt;</span> Started <span style="color:#f92672">&gt;</span>();
+}
+</code></pre></div><p>在react函数中，状态直接转换到<code>Started状态</code>, <code>Started</code>状态定义了子状态，则直接跳转到<code>Start</code>子状态.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">    <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Started</span> <span style="color:#f92672">:</span> boost<span style="color:#f92672">::</span>statechart<span style="color:#f92672">::</span>state<span style="color:#f92672">&lt;</span> Started, RecoveryMachine, Start <span style="color:#f92672">&gt;</span>, NamedState {
+      <span style="color:#66d9ef">explicit</span> <span style="color:#a6e22e">Started</span>(my_context ctx);
+      <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">exit</span>();
+
+      <span style="color:#66d9ef">typedef</span> boost<span style="color:#f92672">::</span>mpl<span style="color:#f92672">::</span>list <span style="color:#f92672">&lt;</span>
+ boost<span style="color:#f92672">::</span>statechart<span style="color:#f92672">::</span>custom_reaction<span style="color:#f92672">&lt;</span> QueryState <span style="color:#f92672">&gt;</span>,
+ boost<span style="color:#f92672">::</span>statechart<span style="color:#f92672">::</span>custom_reaction<span style="color:#f92672">&lt;</span> AdvMap <span style="color:#f92672">&gt;</span>,
+ boost<span style="color:#f92672">::</span>statechart<span style="color:#f92672">::</span>custom_reaction<span style="color:#f92672">&lt;</span> NullEvt <span style="color:#f92672">&gt;</span>,
+ boost<span style="color:#f92672">::</span>statechart<span style="color:#f92672">::</span>custom_reaction<span style="color:#f92672">&lt;</span> FlushedEvt <span style="color:#f92672">&gt;</span>,
+ boost<span style="color:#f92672">::</span>statechart<span style="color:#f92672">::</span>custom_reaction<span style="color:#f92672">&lt;</span> IntervalFlush <span style="color:#f92672">&gt;</span>,
+ boost<span style="color:#f92672">::</span>statechart<span style="color:#f92672">::</span>transition<span style="color:#f92672">&lt;</span> boost<span style="color:#f92672">::</span>statechart<span style="color:#f92672">::</span>event_base, Crashed <span style="color:#f92672">&gt;</span>
+ <span style="color:#f92672">&gt;</span> reactions;
+      boost<span style="color:#f92672">::</span>statechart<span style="color:#f92672">::</span>result react(<span style="color:#66d9ef">const</span> QueryState<span style="color:#f92672">&amp;</span> q);
+      boost<span style="color:#f92672">::</span>statechart<span style="color:#f92672">::</span>result react(<span style="color:#66d9ef">const</span> AdvMap<span style="color:#f92672">&amp;</span>);
+      boost<span style="color:#f92672">::</span>statechart<span style="color:#f92672">::</span>result react(<span style="color:#66d9ef">const</span> FlushedEvt<span style="color:#f92672">&amp;</span>);
+      boost<span style="color:#f92672">::</span>statechart<span style="color:#f92672">::</span>result react(<span style="color:#66d9ef">const</span> IntervalFlush<span style="color:#f92672">&amp;</span>);
+      boost<span style="color:#f92672">::</span>statechart<span style="color:#f92672">::</span>result react(<span style="color:#66d9ef">const</span> boost<span style="color:#f92672">::</span>statechart<span style="color:#f92672">::</span>event_base<span style="color:#f92672">&amp;</span>) {
+ <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">discard_event</span>();
+      }
+    };
+</code></pre></div><p>查看Start状态的构造函数</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">/*-------Start---------*/</span>
+PG<span style="color:#f92672">::</span>RecoveryState<span style="color:#f92672">::</span>Start<span style="color:#f92672">::</span>Start(my_context ctx)
+  <span style="color:#f92672">:</span> my_base(ctx),
+    NamedState(context<span style="color:#f92672">&lt;</span> RecoveryMachine <span style="color:#f92672">&gt;</span>().pg<span style="color:#f92672">-&gt;</span>cct, <span style="color:#e6db74">&#34;Start&#34;</span>)
+{
+  context<span style="color:#f92672">&lt;</span> RecoveryMachine <span style="color:#f92672">&gt;</span>().log_enter(state_name);
+
+  PG <span style="color:#f92672">*</span>pg <span style="color:#f92672">=</span> context<span style="color:#f92672">&lt;</span> RecoveryMachine <span style="color:#f92672">&gt;</span>().pg;
+  <span style="color:#66d9ef">if</span> (pg<span style="color:#f92672">-&gt;</span>is_primary()) {
+    dout(<span style="color:#ae81ff">1</span>) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;transitioning to Primary&#34;</span> <span style="color:#f92672">&lt;&lt;</span> dendl;
+    post_event(MakePrimary());
+  } <span style="color:#66d9ef">else</span> { <span style="color:#75715e">//is_stray
+</span><span style="color:#75715e"></span>    dout(<span style="color:#ae81ff">1</span>) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;transitioning to Stray&#34;</span> <span style="color:#f92672">&lt;&lt;</span> dendl;
+    post_event(MakeStray());
+  }
+}
+</code></pre></div><p>首先获取当前处理的PG，判断当前osd是不是该pg的主osd，如果是的话则投递<code>MakePrimary</code>事件，否则投递<code>MakeStray</code>事件，如果进入<code>Stray</code>状态则对应PG实例需要由当前<code>Primary</code>按照Peering的进度和结果进一步确认其身份.<br>
+按照主OSD的路径继续走, 在<code>Start</code>状态下接受到<code>MakePrimary</code>事件后，状态机会依次进入到<code>Started/Primary/Peering/Getinfo</code>，进入peering阶段。<br>
+GetInfo过程获取该PG在其他OSD上的pg_info_t信息。<br>
+调用函数generate_past_intervals计算past intervals的值.
+调用函数build_prior构造获取pg_info_t信息的OSD列表<br>
+调用get_infos给参与的OSD发送获取请求</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">/*--------GetInfo---------*/</span>
+PG<span style="color:#f92672">::</span>RecoveryState<span style="color:#f92672">::</span>GetInfo<span style="color:#f92672">::</span>GetInfo(my_context ctx)
+  <span style="color:#f92672">:</span> my_base(ctx),
+    NamedState(context<span style="color:#f92672">&lt;</span> RecoveryMachine <span style="color:#f92672">&gt;</span>().pg<span style="color:#f92672">-&gt;</span>cct, <span style="color:#e6db74">&#34;Started/Primary/Peering/GetInfo&#34;</span>)
+{
+  context<span style="color:#f92672">&lt;</span> RecoveryMachine <span style="color:#f92672">&gt;</span>().log_enter(state_name);
+
+  PG <span style="color:#f92672">*</span>pg <span style="color:#f92672">=</span> context<span style="color:#f92672">&lt;</span> RecoveryMachine <span style="color:#f92672">&gt;</span>().pg;
+  pg<span style="color:#f92672">-&gt;</span>generate_past_intervals();
+  unique_ptr<span style="color:#f92672">&lt;</span>PriorSet<span style="color:#f92672">&gt;</span> <span style="color:#f92672">&amp;</span>prior_set <span style="color:#f92672">=</span> context<span style="color:#f92672">&lt;</span> Peering <span style="color:#f92672">&gt;</span>().prior_set;
+
+  assert(pg<span style="color:#f92672">-&gt;</span>blocked_by.empty());
+
+  <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>prior_set.get())
+    pg<span style="color:#f92672">-&gt;</span>build_prior(prior_set);
+
+  pg<span style="color:#f92672">-&gt;</span>reset_min_peer_features();
+  get_infos();
+  <span style="color:#66d9ef">if</span> (peer_info_requested.empty() <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">!</span>prior_set<span style="color:#f92672">-&gt;</span>pg_down) {
+    post_event(GotInfo());
+  }
+}
+</code></pre></div><p>主OSD收到pg_info的ACK信息后封装成<code>MNotifyRec</code>事件发送给状态机.<br>
+在对应react函数中对拉取的pg_info进行处理，在<code>GetInfo</code>状态下如果所有的副本OSD都成功将信息返回，则会投递<code>GotInfo</code>事件.<br>
+状态机收到<code>GotInfo</code>事件后，跳转到<code>GetLog</code>状态，在<code>GetLog</code>的构造函数中</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C++" data-lang="C++"><span style="color:#75715e">/*------GetLog------------*/</span>
+PG<span style="color:#f92672">::</span>RecoveryState<span style="color:#f92672">::</span>GetLog<span style="color:#f92672">::</span>GetLog(my_context ctx)
+  <span style="color:#f92672">:</span> my_base(ctx),
+    NamedState(
+      context<span style="color:#f92672">&lt;</span> RecoveryMachine <span style="color:#f92672">&gt;</span>().pg<span style="color:#f92672">-&gt;</span>cct, <span style="color:#e6db74">&#34;Started/Primary/Peering/GetLog&#34;</span>),
+    msg(<span style="color:#ae81ff">0</span>)
+{
+  context<span style="color:#f92672">&lt;</span> RecoveryMachine <span style="color:#f92672">&gt;</span>().log_enter(state_name);
+
+  PG <span style="color:#f92672">*</span>pg <span style="color:#f92672">=</span> context<span style="color:#f92672">&lt;</span> RecoveryMachine <span style="color:#f92672">&gt;</span>().pg;
+
+  <span style="color:#75715e">// adjust acting?
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>pg<span style="color:#f92672">-&gt;</span>choose_acting(auth_log_shard, false,
+    <span style="color:#f92672">&amp;</span>context<span style="color:#f92672">&lt;</span> Peering <span style="color:#f92672">&gt;</span>().history_les_bound)) {
+    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>pg<span style="color:#f92672">-&gt;</span>want_acting.empty()) {
+      post_event(NeedActingChange());
+    } <span style="color:#66d9ef">else</span> {
+      post_event(IsIncomplete());
+    }
+    <span style="color:#66d9ef">return</span>;
+  }
+...
+</code></pre></div><p>调用choose_acting函数选出具有权威日志的OSD并计算wan_acting列表<br>
+如果自己就是权威日志，则不需要拉取，直接投递<code>GotLog</code>事件进入下一状态<br>
+如果自己不是权威日志，则需要去具有权威日志的OSD上去拉取，并与本地日志合并.通过发送<code>pg_query_t::LOG</code>事件到具有权威日志的OSD进行拉取,当收到权威日志后，封装成<code>MLogRec</code>类型事件</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">boost<span style="color:#f92672">::</span>statechart<span style="color:#f92672">::</span>result PG<span style="color:#f92672">::</span>RecoveryState<span style="color:#f92672">::</span>GetLog<span style="color:#f92672">::</span>react(<span style="color:#66d9ef">const</span> MLogRec<span style="color:#f92672">&amp;</span> logevt)
+{
+  assert(<span style="color:#f92672">!</span>msg);
+  <span style="color:#66d9ef">if</span> (logevt.from <span style="color:#f92672">!=</span> auth_log_shard) {
+    dout(<span style="color:#ae81ff">10</span>) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;GetLog: discarding log from &#34;</span>
+      <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;non-auth_log_shard osd.&#34;</span> <span style="color:#f92672">&lt;&lt;</span> logevt.from <span style="color:#f92672">&lt;&lt;</span> dendl;
+    <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">discard_event</span>();
+  }
+  dout(<span style="color:#ae81ff">10</span>) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;GetLog: received master log from osd&#34;</span>
+    <span style="color:#f92672">&lt;&lt;</span> logevt.from <span style="color:#f92672">&lt;&lt;</span> dendl;
+  msg <span style="color:#f92672">=</span> logevt.msg;
+  post_event(GotLog());
+  <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">discard_event</span>();
+}
+</code></pre></div><p>投递<code>GotLog</code>事件后，转移到<code>GetMissing</code>状态,进入<code>GetMissing</code>构造函数</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">/*------GetMissing--------*/</span>
+PG<span style="color:#f92672">::</span>RecoveryState<span style="color:#f92672">::</span>GetMissing<span style="color:#f92672">::</span>GetMissing(my_context ctx)
+  <span style="color:#f92672">:</span> my_base(ctx),
+    NamedState(context<span style="color:#f92672">&lt;</span> RecoveryMachine <span style="color:#f92672">&gt;</span>().pg<span style="color:#f92672">-&gt;</span>cct, <span style="color:#e6db74">&#34;Started/Primary/Peering/GetMissing&#34;</span>)
+{
+  context<span style="color:#f92672">&lt;</span> RecoveryMachine <span style="color:#f92672">&gt;</span>().log_enter(state_name);
+
+  PG <span style="color:#f92672">*</span>pg <span style="color:#f92672">=</span> context<span style="color:#f92672">&lt;</span> RecoveryMachine <span style="color:#f92672">&gt;</span>().pg;
+  assert(<span style="color:#f92672">!</span>pg<span style="color:#f92672">-&gt;</span>actingbackfill.empty());
+  <span style="color:#66d9ef">for</span> (set<span style="color:#f92672">&lt;</span>pg_shard_t<span style="color:#f92672">&gt;::</span>iterator i <span style="color:#f92672">=</span> pg<span style="color:#f92672">-&gt;</span>actingbackfill.begin();
+       i <span style="color:#f92672">!=</span> pg<span style="color:#f92672">-&gt;</span>actingbackfill.end();
+       <span style="color:#f92672">++</span>i) {
+    <span style="color:#66d9ef">if</span> (<span style="color:#f92672">*</span>i <span style="color:#f92672">==</span> pg<span style="color:#f92672">-&gt;</span>get_primary()) <span style="color:#66d9ef">continue</span>;
+    <span style="color:#66d9ef">const</span> pg_info_t<span style="color:#f92672">&amp;</span> pi <span style="color:#f92672">=</span> pg<span style="color:#f92672">-&gt;</span>peer_info[<span style="color:#f92672">*</span>i];
+
+    <span style="color:#66d9ef">if</span> (pi.is_empty())
+      <span style="color:#66d9ef">continue</span>;                                <span style="color:#75715e">// no pg data, nothing divergent
+</span><span style="color:#75715e"></span>
+    <span style="color:#66d9ef">if</span> (pi.last_update <span style="color:#f92672">&lt;</span> pg<span style="color:#f92672">-&gt;</span>pg_log.get_tail()) {
+      dout(<span style="color:#ae81ff">10</span>) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; osd.&#34;</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#f92672">*</span>i <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; is not contiguous, will restart backfill&#34;</span> <span style="color:#f92672">&lt;&lt;</span> dendl;
+      pg<span style="color:#f92672">-&gt;</span>peer_missing[<span style="color:#f92672">*</span>i];
+      <span style="color:#66d9ef">continue</span>;
+    }
+    <span style="color:#66d9ef">if</span> (pi.last_backfill <span style="color:#f92672">==</span> hobject_t()) {
+      dout(<span style="color:#ae81ff">10</span>) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; osd.&#34;</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#f92672">*</span>i <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; will fully backfill; can infer empty missing set&#34;</span> <span style="color:#f92672">&lt;&lt;</span> dendl;
+      pg<span style="color:#f92672">-&gt;</span>peer_missing[<span style="color:#f92672">*</span>i];
+      <span style="color:#66d9ef">continue</span>;
+    }
+...
+</code></pre></div><p><code>GetMissing</code>处理过程中首先拉取各个从OSD的有效日志，然后用主OSD的权威日止与各个从OSD的日志进行对比，从而计算出各个从OSD上不一致的对象并保存在对应的pg_missing_t结构体中，作为后续数据修复依据.<br>
+如果所有获取日志的请求都返回并处理完成，则调用<code>Activate(pg-&gt;get_osdmap()-&gt;get_epoch())</code> 进入<code>Active</code>状态</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">    <span style="color:#75715e">// all good!
+</span><span style="color:#75715e"></span>    post_event(Activate(pg<span style="color:#f92672">-&gt;</span>get_osdmap()<span style="color:#f92672">-&gt;</span>get_epoch()));
+</code></pre></div><p>到本阶段则可以说Peering主要工作已经完成,不过在接受客户端读写之前还需要执行active操作激活各个副本，该操作主要目的为固化本地peering成果，以保证其不致因为系统掉电而前功尽弃，同时还需要初始化后续在后台执行Recovery或者Backfill所依赖的关键元数据信息.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">  pg<span style="color:#f92672">-&gt;</span>activate(<span style="color:#f92672">*</span>context<span style="color:#f92672">&lt;</span> RecoveryMachine <span style="color:#f92672">&gt;</span>().get_cur_transaction(),
+        pg<span style="color:#f92672">-&gt;</span>get_osdmap()<span style="color:#f92672">-&gt;</span>get_epoch(),
+        <span style="color:#f92672">*</span>context<span style="color:#f92672">&lt;</span> RecoveryMachine <span style="color:#f92672">&gt;</span>().get_on_safe_context_list(),
+        <span style="color:#f92672">*</span>context<span style="color:#f92672">&lt;</span> RecoveryMachine <span style="color:#f92672">&gt;</span>().get_query_map(),
+        context<span style="color:#f92672">&lt;</span> RecoveryMachine <span style="color:#f92672">&gt;</span>().get_info_map(),
+        context<span style="color:#f92672">&lt;</span> RecoveryMachine <span style="color:#f92672">&gt;</span>().get_recovery_ctx());
+</code></pre></div><p>如果所有副本都被激活则投递<code>AllReplicasActivated</code>事件，在<code>Active</code>状态下处理该事件,处理过程中调用<code>pg-&gt;on_activate()</code>函数</p>
+<p>在该函数中查看是否需要Recovery需要则触发DoRecovery事件；查看是否需要Backfill操作，需要则触发RequestBackfill操作.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">
+<span style="color:#66d9ef">void</span> ReplicatedPG<span style="color:#f92672">::</span>on_activate()
+{
+  <span style="color:#75715e">// all clean?
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">if</span> (needs_recovery()) {
+    dout(<span style="color:#ae81ff">10</span>) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;activate not all replicas are up-to-date, queueing recovery&#34;</span> <span style="color:#f92672">&lt;&lt;</span> dendl;
+    queue_peering_event(
+      CephPeeringEvtRef(
+ std<span style="color:#f92672">::</span>make_shared<span style="color:#f92672">&lt;</span>CephPeeringEvt<span style="color:#f92672">&gt;</span>(
+   get_osdmap()<span style="color:#f92672">-&gt;</span>get_epoch(),
+   get_osdmap()<span style="color:#f92672">-&gt;</span>get_epoch(),
+   DoRecovery())));
+  } <span style="color:#66d9ef">else</span> <span style="color:#a6e22e">if</span> (needs_backfill()) {
+    dout(<span style="color:#ae81ff">10</span>) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;activate queueing backfill&#34;</span> <span style="color:#f92672">&lt;&lt;</span> dendl;
+    queue_peering_event(
+      CephPeeringEvtRef(
+ std<span style="color:#f92672">::</span>make_shared<span style="color:#f92672">&lt;</span>CephPeeringEvt<span style="color:#f92672">&gt;</span>(
+   get_osdmap()<span style="color:#f92672">-&gt;</span>get_epoch(),
+   get_osdmap()<span style="color:#f92672">-&gt;</span>get_epoch(),
+   RequestBackfill())));
+  } <span style="color:#66d9ef">else</span> {
+    dout(<span style="color:#ae81ff">10</span>) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;activate all replicas clean, no recovery&#34;</span> <span style="color:#f92672">&lt;&lt;</span> dendl;
+    queue_peering_event(
+      CephPeeringEvtRef(
+ std<span style="color:#f92672">::</span>make_shared<span style="color:#f92672">&lt;</span>CephPeeringEvt<span style="color:#f92672">&gt;</span>(
+   get_osdmap()<span style="color:#f92672">-&gt;</span>get_epoch(),
+   get_osdmap()<span style="color:#f92672">-&gt;</span>get_epoch(),
+   AllReplicasRecovered())));
+  }
+...
+</code></pre></div><h3 id="recovery">Recovery</h3>
+<p>如果Primary检测自身或者任意一个Peer存在待修复的对象，将通过向状态机投递<code>DoRecovery</code>事件，切换到<code>Started/Primary/Active/WaitLocalRecoveryReserved</code>状态，开始准备执行Recovery.<br>
+Recovery 是仅依据PG日志中的缺失记录来修复不一致的对象.<br>
+在<code>Activating</code>状态接受到<code>DoRecovery</code>事件后，转换到<code>WaitLocalRecoveryReserved</code>状态.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">    <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">Activating</span> <span style="color:#f92672">:</span> boost<span style="color:#f92672">::</span>statechart<span style="color:#f92672">::</span>state<span style="color:#f92672">&lt;</span> Activating, Active <span style="color:#f92672">&gt;</span>, NamedState {
+      <span style="color:#66d9ef">typedef</span> boost<span style="color:#f92672">::</span>mpl<span style="color:#f92672">::</span>list <span style="color:#f92672">&lt;</span>
+ boost<span style="color:#f92672">::</span>statechart<span style="color:#f92672">::</span>transition<span style="color:#f92672">&lt;</span> AllReplicasRecovered, Recovered <span style="color:#f92672">&gt;</span>,
+ boost<span style="color:#f92672">::</span>statechart<span style="color:#f92672">::</span>transition<span style="color:#f92672">&lt;</span> DoRecovery, WaitLocalRecoveryReserved <span style="color:#f92672">&gt;</span>,
+ boost<span style="color:#f92672">::</span>statechart<span style="color:#f92672">::</span>transition<span style="color:#f92672">&lt;</span> RequestBackfill, WaitLocalBackfillReserved <span style="color:#f92672">&gt;</span>
+ <span style="color:#f92672">&gt;</span> reactions;
+      <span style="color:#66d9ef">explicit</span> <span style="color:#a6e22e">Activating</span>(my_context ctx);
+      <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">exit</span>();
+    };
+...
+</code></pre></div><p>在<code>WaitLocalRecoveryReserved</code>构造函数中，通过request_reservation函数进行资源预留请求，资源预留是为了控制一个OSD上正在修复的PG最大数目，在主OSD和从OSD上都需要预约。当收到<code>LocalRecoveryReserved</code>事件后，标志本地资源预约完成.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">PG<span style="color:#f92672">::</span>RecoveryState<span style="color:#f92672">::</span>WaitLocalRecoveryReserved<span style="color:#f92672">::</span>WaitLocalRecoveryReserved(my_context ctx)
+  <span style="color:#f92672">:</span> my_base(ctx),
+    NamedState(context<span style="color:#f92672">&lt;</span> RecoveryMachine <span style="color:#f92672">&gt;</span>().pg<span style="color:#f92672">-&gt;</span>cct, <span style="color:#e6db74">&#34;Started/Primary/Active/WaitLocalRecoveryReserved&#34;</span>)
+{
+  context<span style="color:#f92672">&lt;</span> RecoveryMachine <span style="color:#f92672">&gt;</span>().log_enter(state_name);
+  PG <span style="color:#f92672">*</span>pg <span style="color:#f92672">=</span> context<span style="color:#f92672">&lt;</span> RecoveryMachine <span style="color:#f92672">&gt;</span>().pg;
+  pg<span style="color:#f92672">-&gt;</span>state_set(PG_STATE_RECOVERY_WAIT);
+  pg<span style="color:#f92672">-&gt;</span>osd<span style="color:#f92672">-&gt;</span>local_reserver.request_reservation(
+    pg<span style="color:#f92672">-&gt;</span>info.pgid,
+    <span style="color:#66d9ef">new</span> QueuePeeringEvt<span style="color:#f92672">&lt;</span>LocalRecoveryReserved<span style="color:#f92672">&gt;</span>(
+      pg, pg<span style="color:#f92672">-&gt;</span>get_osdmap()<span style="color:#f92672">-&gt;</span>get_epoch(),
+      LocalRecoveryReserved()),
+    pg<span style="color:#f92672">-&gt;</span>get_recovery_priority());
+  pg<span style="color:#f92672">-&gt;</span>publish_stats_to_osd();
+}
+</code></pre></div><p>当收到<code>LocalRecoveryReserved</code>事件后，标志本地资源预约完成，然后转移到<code>WaitRemoteRecoveryReserved</code>状态</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">    <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">WaitLocalRecoveryReserved</span> <span style="color:#f92672">:</span> boost<span style="color:#f92672">::</span>statechart<span style="color:#f92672">::</span>state<span style="color:#f92672">&lt;</span> WaitLocalRecoveryReserved, Active <span style="color:#f92672">&gt;</span>, NamedState {
+      <span style="color:#66d9ef">typedef</span> boost<span style="color:#f92672">::</span>mpl<span style="color:#f92672">::</span>list <span style="color:#f92672">&lt;</span>
+ boost<span style="color:#f92672">::</span>statechart<span style="color:#f92672">::</span>transition<span style="color:#f92672">&lt;</span> LocalRecoveryReserved, WaitRemoteRecoveryReserved <span style="color:#f92672">&gt;</span>
+ <span style="color:#f92672">&gt;</span> reactions;
+      <span style="color:#66d9ef">explicit</span> <span style="color:#a6e22e">WaitLocalRecoveryReserved</span>(my_context ctx);
+      <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">exit</span>();
+    };
+</code></pre></div><p>在<code>WaitRemoteRecoveryReserved</code>状态下，完成远程资源的预约，当接收到<code>RemoteRecoveryReserved</code>后表明资源都预约完成，然后投递<code>AllRemotesReserved</code>事件，标志着该PG在所有参与数据修复的从OSD上完成资源预约，进入<code>Recovery</code>状态.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">PG<span style="color:#f92672">::</span>RecoveryState<span style="color:#f92672">::</span>Recovering<span style="color:#f92672">::</span>Recovering(my_context ctx)
+  <span style="color:#f92672">:</span> my_base(ctx),
+    NamedState(context<span style="color:#f92672">&lt;</span> RecoveryMachine <span style="color:#f92672">&gt;</span>().pg<span style="color:#f92672">-&gt;</span>cct, <span style="color:#e6db74">&#34;Started/Primary/Active/Recovering&#34;</span>)
+{
+  context<span style="color:#f92672">&lt;</span> RecoveryMachine <span style="color:#f92672">&gt;</span>().log_enter(state_name);
+
+  PG <span style="color:#f92672">*</span>pg <span style="color:#f92672">=</span> context<span style="color:#f92672">&lt;</span> RecoveryMachine <span style="color:#f92672">&gt;</span>().pg;
+  pg<span style="color:#f92672">-&gt;</span>state_clear(PG_STATE_RECOVERY_WAIT);
+  pg<span style="color:#f92672">-&gt;</span>state_set(PG_STATE_RECOVERING);
+  pg<span style="color:#f92672">-&gt;</span>publish_stats_to_osd();
+  pg<span style="color:#f92672">-&gt;</span>osd<span style="color:#f92672">-&gt;</span>queue_for_recovery(pg);
+}
+</code></pre></div><p>在<code>Recoverying</code>状态完成实际的数据修复工作<br>
+把PG状态设置为PG_STATE_RECOVERING，并把PG添加到recovery_wq工作队列中，开始启动数据修复.<br>
+Recovery过程由PG的主OSD来触发并控制，先修复主的，然后修复从的。<br>
+在recovery_wq中，工作队列的线程池的处理函数调用do_recovery函数执行实际的数据修复工作.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">_process</span>(PG <span style="color:#f92672">*</span>pg, ThreadPool<span style="color:#f92672">::</span>TPHandle <span style="color:#f92672">&amp;</span>handle) <span style="color:#66d9ef">override</span> {
+      osd<span style="color:#f92672">-&gt;</span>do_recovery(pg, handle);
+      pg<span style="color:#f92672">-&gt;</span>put(<span style="color:#e6db74">&#34;RecoveryWQ&#34;</span>);
+    }
+</code></pre></div><p><code>ReplicatedPG::start_recovery_ops</code>函数完成副本类型PG的修复工作.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#66d9ef">bool</span> ReplicatedPG<span style="color:#f92672">::</span>start_recovery_ops(
+  <span style="color:#66d9ef">int</span> max, ThreadPool<span style="color:#f92672">::</span>TPHandle <span style="color:#f92672">&amp;</span>handle,
+  <span style="color:#66d9ef">int</span> <span style="color:#f92672">*</span>ops_started)
+{
+  <span style="color:#66d9ef">int</span><span style="color:#f92672">&amp;</span> started <span style="color:#f92672">=</span> <span style="color:#f92672">*</span>ops_started;
+  started <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+  <span style="color:#66d9ef">bool</span> work_in_progress <span style="color:#f92672">=</span> false;
+  ...
+  started <span style="color:#f92672">=</span> recover_replicas(max, handle);
+  }
+  <span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>started) {
+    <span style="color:#75715e">// We still have missing objects that we should grab from replicas.
+</span><span style="color:#75715e"></span>    started <span style="color:#f92672">+=</span> recover_primary(max, handle);
+  }
+  ...
+</code></pre></div><p>函数<code>ReplicatedPG::recover_primary</code>完成PG主OSD缺失对象的修复<br>
+如果在<code>Recoverying</code>状态完成Recovery操作后，如果需要Backfill工作则接受<code>RequestBackfill</code>事件，进入Backfill流程<br>
+如果没有Backfill工作，直接接受<code>AllReplicasRecovered</code>事件，转入<code>Recovered</code>状态
+转入<code>Recovered</code>状态之后，意味着完成数据修复工作，当收到<code>GoClean</code>事件后，PG进入clean状态.</p>
+<h3 id="backfill">Backfill</h3>
+<p>和Recovery类似，如果Primary发现还有副本需要通过Backfill才能修复，则进行Backfill。<br>
+Backfill是PG通过重新扫描所有的对象，对比发现确实的对象，通过整体拷贝来修复。和Recovery一样需要进行资源预约.<br>
+这部分过程就不写了&hellip;</p>
+
+        </div>
+
+        
+        
+        <div class="article-toc" style="display:none;">
+            <h3></h3>
+            <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#pg">PG</a></li>
+        <li><a href="#状态机">状态机</a></li>
+        <li><a href="#primary-peering">Primary Peering</a></li>
+        <li><a href="#recovery">Recovery</a></li>
+        <li><a href="#backfill">Backfill</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+        </div>
+        
+        
+
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.slim.min.js" integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc=" crossorigin="anonymous"></script>
+        <script>
+            (function() {
+                var $toc = $('#TableOfContents');
+                if ($toc.length > 0) {
+                    var $window = $(window);
+
+                    function onScroll(){
+                        var currentScroll = $window.scrollTop();
+                        var h = $('.article-entry h1, .article-entry h2, .article-entry h3, .article-entry h4, .article-entry h5, .article-entry h6');
+                        var id = "";
+                        h.each(function (i, e) {
+                            e = $(e);
+                            if (e.offset().top - 10 <= currentScroll) {
+                                id = e.attr('id');
+                            }
+                        });
+                        var active = $toc.find('a.active');
+                        if (active.length == 1 && active.eq(0).attr('href') == '#' + id) return true;
+
+                        active.each(function (i, e) {
+                            $(e).removeClass('active').siblings('ul').hide();
+                        });
+                        $toc.find('a[href="#' + id + '"]').parentsUntil('#TableOfContents').each(function (i, e) {
+                            $(e).children('a').addClass('active').siblings('ul').show();
+                        });
+                    }
+
+                    $window.on('scroll', onScroll);
+                    $(document).ready(function() {
+                        $toc.find('a').parent('li').find('ul').hide();
+                        onScroll();
+                        document.getElementsByClassName('article-toc')[0].style.display = '';
+                    });
+                }
+            })();
+        </script>
+        
+
+
+        
+        <footer class="article-footer">
+            <ul class="article-tag-list">
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="//zhxin.github.io/tags/ceph">ceph
+                    </a>
+                </li>
+                
+            </ul>
+        </footer>
+        
+    </div>
+    
+<nav id="article-nav">
+    
+    <a href="/%E5%B8%B8%E7%94%A8ceph%E5%91%BD%E4%BB%A4/" id="article-nav-newer" class="article-nav-link-wrap">
+        <div class="article-nav-title"><span>&lt;</span>&nbsp;
+            常用ceph命令
+        </div>
+    </a>
+    
+    
+    <a href="/%E6%88%91%E7%9A%84%E5%A4%A9%E6%89%8D%E5%A5%B3%E5%8F%8B%E8%AF%BB%E5%90%8E%E6%84%9F/" id="article-nav-older" class="article-nav-link-wrap">
+        <div class="article-nav-title">我的天才女友读后感&nbsp;<span>&gt;</span></div>
+    </a>
+    
+</nav>
+
+
+</article>
+
+        
+    </section>
+    <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2021 zhxin.xyz
+            <br />
+            Powered by <a href="https://gohugo.io" target="_blank">Hugo</a> with theme <a href="https://github.com/carsonip/hugo-theme-minos" target="_blank">Minos</a>
+        </div>
+    </div>
+    
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/tomorrow-night.min.css" integrity="sha256-2wL88NKUqvJi/ExflDzkzUumjUM73mcK2gBvBBeLvTk=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+    <script>
+        document.getElementById('main-nav-toggle').addEventListener('click', function () {
+            var header = document.getElementById('header');
+            if (header.classList.contains('mobile-on')) {
+                header.classList.remove('mobile-on');
+            } else {
+                header.classList.add('mobile-on');
+            }
+        });
+    </script>
+</footer>
+
+</div>
+</body>
+</html>
