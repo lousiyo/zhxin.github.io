@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>文章 on zhxin.xyz</title>
@@ -6,11 +6,7 @@
     <description>Recent content in 文章 on zhxin.xyz</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 11 Jul 2018 15:46:20 +0800</lastBuildDate>
-    
-	<atom:link href="//zhxin.github.io/categories/%E6%96%87%E7%AB%A0/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Wed, 11 Jul 2018 15:46:20 +0800</lastBuildDate><atom:link href="//zhxin.github.io/categories/%E6%96%87%E7%AB%A0/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>我的天才女友读后感</title>
       <link>//zhxin.github.io/%E6%88%91%E7%9A%84%E5%A4%A9%E6%89%8D%E5%A5%B3%E5%8F%8B%E8%AF%BB%E5%90%8E%E6%84%9F/</link>
