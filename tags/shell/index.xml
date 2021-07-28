@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>shell on zhxin</title>
+    <link>//zhxin.github.io/tags/shell/</link>
+    <description>Recent content in shell on zhxin</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language><atom:link href="//zhxin.github.io/tags/shell/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Shell编程基础</title>
+      <link>//zhxin.github.io/shell%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//zhxin.github.io/shell%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/</guid>
+      <description>变量 脚本开头使用#!/bin/bash指定要使用的shell,shell会通过PATH环境变量来查找脚本中使用的命令，可以使用echo $PATH来看下脚本会在哪些目录下查找命令，如果脚本中执行的命令没有在PATH环境变量中，也可以通过绝对或相对路径来引用. 在脚本中可以使用shell维护的环境变量也可以定义和使用自己的用户变量. 赋值等号两边不能存在空格 环境变量： 可以使用set命令查看当前环境变量列表,例如$HOME、$HOSTNAME、$USER等; 用户变量： 由字母数字下划线组成，长度不超过二十，</description>
+    </item>
+    
+  </channel>
+</rss>

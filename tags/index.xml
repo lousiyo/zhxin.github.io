@@ -5,12 +5,11 @@
     <link>//zhxin.github.io/tags/</link>
     <description>Recent content in Tags on zhxin</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Fri, 05 Jun 2020 15:46:20 +0800</lastBuildDate><atom:link href="//zhxin.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <language>en-us</language><atom:link href="//zhxin.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>ceph</title>
       <link>//zhxin.github.io/tags/ceph/</link>
-      <pubDate>Fri, 05 Jun 2020 15:46:20 +0800</pubDate>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>//zhxin.github.io/tags/ceph/</guid>
       <description></description>
@@ -19,9 +18,18 @@
     <item>
       <title>git</title>
       <link>//zhxin.github.io/tags/git/</link>
-      <pubDate>Mon, 19 Sep 2016 15:46:20 +0800</pubDate>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>//zhxin.github.io/tags/git/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>shell</title>
+      <link>//zhxin.github.io/tags/shell/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//zhxin.github.io/tags/shell/</guid>
       <description></description>
     </item>
     

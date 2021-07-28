@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Shell编程基础 // zhxin</title>
+
+    <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    
+    
+    
+
+        <meta property="og:title" content="Shell编程基础" />
+    <meta property="og:description" content="" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="zh-cn" />
+    <meta property="og:url" content="//zhxin.github.io/shell%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/" />
+    
+
+    <link rel="shortcut icon" href="/favicon.ico">
+
+    <link href="//zhxin.github.io/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
+    <link href="//zhxin.github.io/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="//zhxin.github.io/css/style.css">
+    
+
+    <meta name="generator" content="Hugo 0.84.0" />
+</head>
+
+
+<body>
+<div id="container">
+    <header id="header">
+    <div id="header-outer" class="outer">
+        <div id="header-inner" class="inner">
+            <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
+            <a id="logo" class="logo-text" href="//zhxin.github.io/">zhxin</a>
+            <nav id="main-nav">
+                
+            </nav>
+            <nav id="sub-nav">
+                <div id="search-form-wrap">
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+
+    <section id="main" class="outer">
+        <article class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        <header class="article-header">
+            <h1 class="article-title" itemprop="name">Shell编程基础</h1>
+        </header>
+        
+        <div class="article-meta">
+            <a href="/shell%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/" class="article-date">
+                <time datetime='0001-01-01T00:00:00.000&#43;00:00' itemprop="datePublished">0001-01-01</time>
+            </a>
+            
+            
+            <div class="post-categories">
+                <div class="article-category">
+                    
+                    
+                    <a class="article-category-link" href="//zhxin.github.io//categories/%E7%BC%96%E7%A8%8B">编程</a>
+                    
+                </div>
+            </div>
+            
+            
+        </div>
+        <div class="article-entry" itemprop="articleBody">
+            <h2 id="变量">变量</h2>
+<p>脚本开头使用<code>#!/bin/bash</code>指定要使用的shell,shell会通过PATH环境变量来查找脚本中使用的命令，可以使用<code>echo $PATH</code>来看下脚本会在哪些目录下查找命令，如果脚本中执行的命令没有在PATH环境变量中，也可以通过绝对或相对路径来引用.<br>
+在脚本中可以使用shell维护的环境变量也可以定义和使用自己的用户变量.<br>
+赋值等号两边不能存在空格</p>
+<ul>
+<li>
+<p>环境变量：<br>
+可以使用set命令查看当前环境变量列表,例如<code>$HOME</code>、<code>$HOSTNAME</code>、<code>$USER</code>等;</p>
+</li>
+<li>
+<p>用户变量：<br>
+由字母数字下划线组成，长度不超过二十，区分大小写，变量、等号、值之间不能有空格，在shell脚本结束时会被删除掉，使用美元符号引用，例如<code>name=&quot;test&quot;</code>。<br>
+使用用户变量保存命令执行结果：<code>testing=$(date)</code></p>
+</li>
+<li>
+<p>特殊参数变量</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">参数</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">$0 $1 $2</td>
+<td style="text-align:left">入参</td>
+</tr>
+<tr>
+<td style="text-align:left">$#</td>
+<td style="text-align:left">参数个数</td>
+</tr>
+<tr>
+<td style="text-align:left">$*</td>
+<td style="text-align:left">入参列表，将所有参数当作单个参数</td>
+</tr>
+<tr>
+<td style="text-align:left">$@</td>
+<td style="text-align:left">入参列表，单独处理每个参</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<h2 id="重定向输入输出">重定向输入输出</h2>
+<p>输出重定向: <code>&gt;</code> 追加：<code>&gt;&gt;</code><br>
+输入重定向: <code>&lt;</code>
+在脚本中使用<code>&lt; &gt;</code> 需要进行转义<code>\&lt; \&gt;</code><br>
+内联输入重定向：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">command <span style="color:#e6db74">&lt;&lt; marker  
+</span><span style="color:#e6db74"> content  
+</span><span style="color:#e6db74">marker</span>  
+<span style="color:#75715e"># 例如：  </span>
+wc -l <span style="color:#e6db74">&lt;&lt;EOF  
+</span><span style="color:#e6db74">echo &#34;aaa&#34;  
+</span><span style="color:#e6db74">echo &#34;BBB&#34;  
+</span><span style="color:#e6db74">EOF</span>  
+</code></pre></div><p>内联重定向到文件</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cat &gt;&gt; demo.txt <span style="color:#e6db74">&lt;&lt;EOF  
+</span><span style="color:#e6db74"> some content  
+</span><span style="color:#e6db74">EOF</span>  
+</code></pre></div><table>
+<thead>
+<tr>
+<th style="text-align:left">文件描述符</th>
+<th style="text-align:left">缩写</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">0</td>
+<td style="text-align:left">STDIN</td>
+<td style="text-align:left">标准输入</td>
+</tr>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:left">STDOUT</td>
+<td style="text-align:left">标准输出</td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:left">STDERR</td>
+<td style="text-align:left">标准错误</td>
+</tr>
+</tbody>
+</table>
+<p><code>&amp;&gt;</code> 符号会将所有输出重定向到一个文件内<br>
+<code>exec 1&gt;testout</code> 在脚本中将STDOUT永久重定向到testout<br>
+<code>exec 3&gt;./testfile</code> 创建写描述符3<br>
+<code>exec 3&gt;&amp;-</code>   关闭文件描述符3<br>
+<code>cat /dev/null &gt; file.log</code> 可快速清空日志</p>
+<h2 id="脚本中执行数学运算">脚本中执行数学运算</h2>
+<ol>
+<li>
+<p>使用美元符和方括号，只支持整型计算<br>
+<code>var1=$[1 + 5]</code><br>
+<code>var2=$[$var1 * 2]</code><br>
+<code>var3=$[2 / 3]</code></p>
+</li>
+<li>
+<p>通过bc进行浮点型计算:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">var1<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>echo <span style="color:#e6db74">&#34;scale=4; 3.44 / 5&#34;</span> | bc<span style="color:#66d9ef">)</span>  
+var1<span style="color:#f92672">=</span>10.46  
+var2<span style="color:#f92672">=</span>43.67  
+var3<span style="color:#f92672">=</span>33.2  
+var4<span style="color:#f92672">=</span><span style="color:#ae81ff">71</span>  
+var5<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>bc<span style="color:#e6db74">&lt;&lt;EOF  
+</span><span style="color:#e6db74">scale = 4  
+</span><span style="color:#e6db74">a1=($var1 * $var2)  
+</span><span style="color:#e6db74">b1=($var3 * $var4)  
+</span><span style="color:#e6db74">a1+b1  
+</span><span style="color:#e6db74">EOF</span>  
+<span style="color:#66d9ef">)</span>  
+echo <span style="color:#e6db74">&#34;</span>$var5<span style="color:#e6db74">&#34;</span>  
+</code></pre></div><p>``</p>
+</li>
+</ol>
+<h2 id="退出脚本">退出脚本</h2>
+<p>默认情况shell会以脚本最后一个命令的退出状态码退出(0-255)<br>
+可以使用exit命令指定脚本的退出码，并通过<code>echo $?</code>查看程序是否执行成功</p>
+<h2 id="结构化命令">结构化命令</h2>
+<h3 id="if语句">if语句</h3>
+<p>根据命令执行是否成功走不同分支</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#66d9ef">if</span> command1; <span style="color:#66d9ef">then</span>  
+ comands  
+<span style="color:#66d9ef">elif</span> comand2; <span style="color:#66d9ef">then</span>  
+ comands  
+<span style="color:#66d9ef">else</span>  
+ comands  
+<span style="color:#66d9ef">fi</span>  
+</code></pre></div><p>或者使用条件测试的方式</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> condition <span style="color:#f92672">]</span>;<span style="color:#66d9ef">then</span>  
+ comands  
+<span style="color:#66d9ef">fi</span>  
+</code></pre></div><h3 id="条件测试">条件测试</h3>
+<ol>
+<li>
+<p>数值比较</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">比较</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">n1 -eq n2</td>
+<td style="text-align:left">检查相等</td>
+</tr>
+<tr>
+<td style="text-align:left">n1 -ge n2</td>
+<td style="text-align:left">检查n1是否大于或等于n2</td>
+</tr>
+<tr>
+<td style="text-align:left">n1 -gt n2</td>
+<td style="text-align:left">检查n1是否大于n2</td>
+</tr>
+<tr>
+<td style="text-align:left">n1 -le n2</td>
+<td style="text-align:left">检查n1是否小于或等于n2</td>
+</tr>
+<tr>
+<td style="text-align:left">n1 -lt n2</td>
+<td style="text-align:left">检查n1是否小于n2</td>
+</tr>
+<tr>
+<td style="text-align:left">n1 -ne n2</td>
+<td style="text-align:left">检查n1是否不等于n2</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>字符串比较</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">比较</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">str1 = str2</td>
+<td style="text-align:left">是否相同</td>
+</tr>
+<tr>
+<td style="text-align:left">str1 != str2</td>
+<td style="text-align:left">是否不同</td>
+</tr>
+<tr>
+<td style="text-align:left">str1 &lt; str2</td>
+<td style="text-align:left">str1是否比str2大</td>
+</tr>
+<tr>
+<td style="text-align:left">str1 &gt; str2</td>
+<td style="text-align:left">str1是否比str2小</td>
+</tr>
+<tr>
+<td style="text-align:left">-n str1</td>
+<td style="text-align:left">检查str1的长度是否非0</td>
+</tr>
+<tr>
+<td style="text-align:left">-z str1</td>
+<td style="text-align:left">检查str1的长度是否为0</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>文件比较</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">比较</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">-d file</td>
+<td style="text-align:left">file是否存在并是目录</td>
+</tr>
+<tr>
+<td style="text-align:left">-e file</td>
+<td style="text-align:left">file是否存在</td>
+</tr>
+<tr>
+<td style="text-align:left">-f file</td>
+<td style="text-align:left">file是否存在并是文件</td>
+</tr>
+<tr>
+<td style="text-align:left">-r file</td>
+<td style="text-align:left">是否存在并可读</td>
+</tr>
+<tr>
+<td style="text-align:left">-s file</td>
+<td style="text-align:left">是否存在并非空</td>
+</tr>
+<tr>
+<td style="text-align:left">-w file</td>
+<td style="text-align:left">是否存在并可写</td>
+</tr>
+<tr>
+<td style="text-align:left">-x file</td>
+<td style="text-align:left">是否存在并可执行</td>
+</tr>
+<tr>
+<td style="text-align:left">-O file</td>
+<td style="text-align:left">是否存在并属于当前用户所有</td>
+</tr>
+<tr>
+<td style="text-align:left">-G file</td>
+<td style="text-align:left">是否存在并默认组与当前用户相同</td>
+</tr>
+<tr>
+<td style="text-align:left">file1 -nt file2</td>
+<td style="text-align:left">file1是否比file2新</td>
+</tr>
+<tr>
+<td style="text-align:left">file1 -ot file2</td>
+<td style="text-align:left">file1是否比file2旧</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>复合条件测试<br>
+<code>[ conditon1 ] &amp;&amp; [ condition2 ]</code><br>
+<code>[ conditon1 ] || [ condition2 ]</code></p>
+</li>
+<li>
+<p>使用双括号进行数学运算判断<br>
+<code>(( expression ))</code>，支持的运算符号除普通运算符外还包括如下，大于小于符号不用转义 .
+<code>val++</code> 、<code>val--</code>、 <code>++val</code>、 <code>--val</code> ：自增自减<br>
+<code>!</code> :求反 <code>~</code>:位求反 <code>**</code>:幂运算 <code>&lt;&lt;</code>：左位移 <code>&gt;&gt;</code>:右位移 <code>&amp;</code>:位布尔和<code>|</code>：位布尔或 <code>&amp;&amp;</code>：逻辑和 <code>||</code>:逻辑或</p>
+</li>
+</ol>
+<p>可以在if语句中使用双括号命令，也可以在脚本中的普通命令里使用来赋值</p>
+<ol start="6">
+<li>使用双方括号进行字符串比较<br>
+<code>[[ express ]]</code><br>
+bash shell支持模式匹配: <code>if [[ $USER == r* ]]</code></li>
+</ol>
+<h3 id="case语句">case语句</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#66d9ef">case</span> variable in  
+pattern1 | pattern2<span style="color:#f92672">)</span> commands1;;  
+pattern3<span style="color:#f92672">)</span> comands2;;  
+*<span style="color:#f92672">)</span> default commands;;  
+<span style="color:#66d9ef">esac</span>  
+</code></pre></div><h3 id="for语句">for语句</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#66d9ef">for</span> var in list  
+<span style="color:#66d9ef">do</span>  
+ commands:$var  
+<span style="color:#66d9ef">done</span>  
+</code></pre></div><p>有时候使用<code>for line in $(cat $file)</code>读取文本文件，默认会以空格分隔而不是换行符,需要修改IFS.<br>
+IFS值：内部字段分隔符</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">IFS.OLD<span style="color:#f92672">=</span>$IFS  
+IFS<span style="color:#f92672">=</span>$’<span style="color:#ae81ff">\n</span>’  
+<span style="color:#75715e">#&lt;在代码中使用新的IFS值&gt;  </span>
+IFS<span style="color:#f92672">=</span>$IFS.OLD  
+</code></pre></div><p>C语言风格for语句</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#66d9ef">for</span>  <span style="color:#f92672">((</span> i<span style="color:#f92672">=</span>1; i &lt;<span style="color:#f92672">=</span>10; i++ <span style="color:#f92672">))</span>  
+<span style="color:#66d9ef">do</span>  
+...  
+<span style="color:#66d9ef">done</span>  
+</code></pre></div><h3 id="while语句">while语句</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#66d9ef">while</span> <span style="color:#f92672">[</span> condition <span style="color:#f92672">]</span>  
+<span style="color:#66d9ef">do</span>  
+ other commands  
+<span style="color:#66d9ef">done</span>  
+</code></pre></div><p><code>break</code>: 跳出内部循环<br>
+<code>continue</code>: 跳过本次循环<br>
+<code>break n</code>: 可跳出外部循环<br>
+<code>continue n</code> : 继续循环层级n的循环</p>
+<h2 id="处理用户输入">处理用户输入</h2>
+<p>利用getopts处理用户输入参数</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#66d9ef">while</span> getopts :ab:c opt  
+<span style="color:#66d9ef">do</span>  
+ <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;</span>$opt<span style="color:#e6db74">&#34;</span> in  
+      a<span style="color:#f92672">)</span> echo <span style="color:#e6db74">&#34;found -a option&#34;</span> ;;  
+      b<span style="color:#f92672">)</span> echo <span style="color:#e6db74">&#34;found -b option ,with value </span>$OPTARG<span style="color:#e6db74">&#34;</span> ;;  
+      c<span style="color:#f92672">)</span> echo <span style="color:#e6db74">&#34;found -c option&#34;</span> ;;  
+      *<span style="color:#f92672">)</span> echo <span style="color:#e6db74">&#34;Unknown option: </span>$opt<span style="color:#e6db74">&#34;</span> ;;  
+      <span style="color:#66d9ef">esac</span>  
+<span style="color:#66d9ef">done</span>  
+shift $<span style="color:#f92672">[</span> $OPTIND - <span style="color:#ae81ff">1</span> <span style="color:#f92672">]</span>  
+count<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>  
+<span style="color:#66d9ef">for</span> param in <span style="color:#e6db74">&#34;</span>$@<span style="color:#e6db74">&#34;</span>  
+<span style="color:#66d9ef">do</span>  
+    echo <span style="color:#e6db74">&#34;Parameter </span>$count<span style="color:#e6db74">: </span>$param<span style="color:#e6db74">&#34;</span>  
+    count<span style="color:#f92672">=</span>$<span style="color:#f92672">[</span> $count + 1<span style="color:#f92672">]</span>  
+<span style="color:#66d9ef">done</span>  
+</code></pre></div><p>获取用户输入</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#66d9ef">if</span> read -t <span style="color:#ae81ff">10</span> -p <span style="color:#e6db74">&#34;Please enter your name: &#34;</span> name  
+<span style="color:#66d9ef">then</span>  
+ echo <span style="color:#e6db74">&#34;ok: </span>$name<span style="color:#e6db74">&#34;</span>  
+<span style="color:#66d9ef">else</span>  
+ echo <span style="color:#e6db74">&#34;too slow&#34;</span>  
+ exit <span style="color:#ae81ff">1</span>  
+<span style="color:#66d9ef">fi</span>  
+</code></pre></div><h2 id="使用临时文件">使用临时文件</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">tempfile<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>mktemp tmp.XXXXXX<span style="color:#66d9ef">)</span>  
+exec 3&gt;$tempfile  
+echo “test” &gt;&amp;<span style="color:#ae81ff">3</span>  
+exec 3&gt;&amp;-  
+rm -f $tempfile 2&gt;/dev/null  
+mktemp -t 生成在/tmp/目录下，返回全路径  
+</code></pre></div><h2 id="控制脚本">控制脚本</h2>
+<ol>
+<li>
+<p>记录消息<br>
+<code>date | tee -a testfile</code></p>
+</li>
+<li>
+<p>trap捕获处理信号</p>
+</li>
+</ol>
+<p><code>trap commands signals</code><br>
+<code>trap “echo ‘ sorry i have trapped Ctrl-C’” SIGINT</code><br>
+<code>trap -- SIGINT</code> 删除捕获</p>
+<ol start="3">
+<li>后台作业相关<br>
+<code>command &amp;</code>：后台运行<br>
+<code>nohup comand</code>: 后台运行<br>
+<code>jobs</code>: 列举作业<br>
+<code>bg</code>: 后台重启作业<br>
+<code>fg</code>: 将后台作业调到前台继续执行,可指定job号<br>
+<code>nice renice</code>: 调整作业优先级<br>
+<code>at</code>: 定时执行作业<br>
+<code>atq</code>: 定时作业队列<br>
+<code>atrm</code>: 删除作业<br>
+<code>crontab</code>定时任务时间表：<br>
+min hour dayofmonth month dayofweek command<br>
+<code>anacron</code>:开机执行错过作业</li>
+</ol>
+<h3 id="shell函数">shell函数</h3>
+<ul>
+<li>函数名必须唯一，否则会有问题</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#66d9ef">function</span> name<span style="color:#f92672">{</span>  
+ commands  
+<span style="color:#f92672">}</span>  
+<span style="color:#75715e">#或者  </span>
+name<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>  
+ commands  
+<span style="color:#f92672">}</span>  
+</code></pre></div><ul>
+<li>
+<p>return 可以返回函数值：必须函数一结束就取<code>$?</code>;退出的状态码必须是0-255</p>
+</li>
+<li>
+<p>超出255值可以使用 <code>result=$(func1)</code> 方式</p>
+</li>
+<li>
+<p>每个函数可以单独使用自己的<code>$# $1 $2</code> 环境参数</p>
+</li>
+<li>
+<p>变量作用域：</p>
+</li>
+<li>
+<p>全局变量：不管在函数内外定义，脚本所有位置都可访问</p>
+</li>
+<li>
+<p>局部变量：必须用<code>local</code>关键字显式声明<br>
+<code>local temp=$[ $value + 5]</code></p>
+</li>
+</ul>
+<p>数组相关：<br>
+函数参数是数组情况处理：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#66d9ef">function</span> testit <span style="color:#f92672">{</span>  
+ local newarray  
+ newarray<span style="color:#f92672">=(</span><span style="color:#e6db74">&#39;echo &#34;$@&#34;&#39;</span><span style="color:#f92672">)</span>  
+ echo “The new array value is: <span style="color:#e6db74">${</span>newarray[*]<span style="color:#e6db74">}</span>”  
+<span style="color:#f92672">}</span>  
+myarray<span style="color:#f92672">=(</span><span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">3</span> <span style="color:#ae81ff">4</span> 5<span style="color:#f92672">)</span>  
+testit <span style="color:#e6db74">${</span>myarray[*]<span style="color:#e6db74">}</span>  
+</code></pre></div><h2 id="工具推荐">工具推荐</h2>
+<p><a href="ftp://ftp.gnu.org/gnu/shtool/">shtool</a><br>
+<a href="https://github.com/koalaman/shellcheck">ShellCheck</a></p>
+
+        </div>
+
+        
+        
+        <div class="article-toc" style="display:none;">
+            <h3></h3>
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#变量">变量</a></li>
+    <li><a href="#重定向输入输出">重定向输入输出</a></li>
+    <li><a href="#脚本中执行数学运算">脚本中执行数学运算</a></li>
+    <li><a href="#退出脚本">退出脚本</a></li>
+    <li><a href="#结构化命令">结构化命令</a>
+      <ul>
+        <li><a href="#if语句">if语句</a></li>
+        <li><a href="#条件测试">条件测试</a></li>
+        <li><a href="#case语句">case语句</a></li>
+        <li><a href="#for语句">for语句</a></li>
+        <li><a href="#while语句">while语句</a></li>
+      </ul>
+    </li>
+    <li><a href="#处理用户输入">处理用户输入</a></li>
+    <li><a href="#使用临时文件">使用临时文件</a></li>
+    <li><a href="#控制脚本">控制脚本</a>
+      <ul>
+        <li><a href="#shell函数">shell函数</a></li>
+      </ul>
+    </li>
+    <li><a href="#工具推荐">工具推荐</a></li>
+  </ul>
+</nav>
+        </div>
+        
+        
+
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.slim.min.js" integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc=" crossorigin="anonymous"></script>
+        <script>
+            (function() {
+                var $toc = $('#TableOfContents');
+                if ($toc.length > 0) {
+                    var $window = $(window);
+
+                    function onScroll(){
+                        var currentScroll = $window.scrollTop();
+                        var h = $('.article-entry h1, .article-entry h2, .article-entry h3, .article-entry h4, .article-entry h5, .article-entry h6');
+                        var id = "";
+                        h.each(function (i, e) {
+                            e = $(e);
+                            if (e.offset().top - 10 <= currentScroll) {
+                                id = e.attr('id');
+                            }
+                        });
+                        var active = $toc.find('a.active');
+                        if (active.length == 1 && active.eq(0).attr('href') == '#' + id) return true;
+
+                        active.each(function (i, e) {
+                            $(e).removeClass('active').siblings('ul').hide();
+                        });
+                        $toc.find('a[href="#' + id + '"]').parentsUntil('#TableOfContents').each(function (i, e) {
+                            $(e).children('a').addClass('active').siblings('ul').show();
+                        });
+                    }
+
+                    $window.on('scroll', onScroll);
+                    $(document).ready(function() {
+                        $toc.find('a').parent('li').find('ul').hide();
+                        onScroll();
+                        document.getElementsByClassName('article-toc')[0].style.display = '';
+                    });
+                }
+            })();
+        </script>
+        
+
+
+        
+        <footer class="article-footer">
+            <ul class="article-tag-list">
+                
+                <li class="article-tag-list-item">
+                    <a class="article-tag-list-link" href="//zhxin.github.io/tags/shell">shell
+                    </a>
+                </li>
+                
+            </ul>
+        </footer>
+        
+    </div>
+    
+
+</article>
+
+        
+    </section>
+    <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2021 zhxin
+            <br />
+            Powered by <a href="https://gohugo.io" target="_blank">Hugo</a> with theme <a href="https://github.com/carsonip/hugo-theme-minos" target="_blank">Minos</a>
+        </div>
+    </div>
+    
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/tomorrow-night.min.css" integrity="sha256-2wL88NKUqvJi/ExflDzkzUumjUM73mcK2gBvBBeLvTk=" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+    <script>
+        document.getElementById('main-nav-toggle').addEventListener('click', function () {
+            var header = document.getElementById('header');
+            if (header.classList.contains('mobile-on')) {
+                header.classList.remove('mobile-on');
+            } else {
+                header.classList.add('mobile-on');
+            }
+        });
+    </script>
+</footer>
+
+</div>
+</body>
+</html>

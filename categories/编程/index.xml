@@ -5,19 +5,27 @@
     <link>//zhxin.github.io/categories/%E7%BC%96%E7%A8%8B/</link>
     <description>Recent content in 编程 on zhxin</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Tue, 24 Dec 2019 15:46:20 +0800</lastBuildDate><atom:link href="//zhxin.github.io/categories/%E7%BC%96%E7%A8%8B/index.xml" rel="self" type="application/rss+xml" />
+    <language>en-us</language><atom:link href="//zhxin.github.io/categories/%E7%BC%96%E7%A8%8B/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Shell编程基础</title>
+      <link>//zhxin.github.io/shell%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//zhxin.github.io/shell%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/</guid>
+      <description>变量 脚本开头使用#!/bin/bash指定要使用的shell,shell会通过PATH环境变量来查找脚本中使用的命令，可以使用echo $PATH来看下脚本会在哪些目录下查找命令，如果脚本中执行的命令没有在PATH环境变量中，也可以通过绝对或相对路径来引用. 在脚本中可以使用shell维护的环境变量也可以定义和使用自己的用户变量. 赋值等号两边不能存在空格 环境变量： 可以使用set命令查看当前环境变量列表,例如$HOME、$HOSTNAME、$USER等; 用户变量： 由字母数字下划线组成，长度不超过二十，</description>
+    </item>
+    
     <item>
       <title>常用ceph命令</title>
       <link>//zhxin.github.io/%E5%B8%B8%E7%94%A8ceph%E5%91%BD%E4%BB%A4/</link>
-      <pubDate>Tue, 24 Dec 2019 15:46:20 +0800</pubDate>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>//zhxin.github.io/%E5%B8%B8%E7%94%A8ceph%E5%91%BD%E4%BB%A4/</guid>
       <description>&lt;p&gt;工作中遇到的比较常用的命令,特此整理以备忘.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;查看集群状态&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;ceph -s &lt;span style=&#34;color:#75715e&#34;&gt;#查看状态&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;ceph -s &lt;span style=&#34;color:#75715e&#34;&gt;#查看状态&lt;/span&gt;
 ceph -v &lt;span style=&#34;color:#75715e&#34;&gt;#查看版本&lt;/span&gt;
 ceph df &lt;span style=&#34;color:#75715e&#34;&gt;#查询集群存储容量&lt;/span&gt;
 ceph health detail &lt;span style=&#34;color:#75715e&#34;&gt;#集群详细健康信息&lt;/span&gt;

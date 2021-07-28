@@ -5,28 +5,59 @@
     <link>//zhxin.github.io/post/</link>
     <description>Recent content in Posts on zhxin</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Fri, 05 Jun 2020 15:46:20 +0800</lastBuildDate><atom:link href="//zhxin.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <language>en-us</language><atom:link href="//zhxin.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>[转载]ceph存储引擎bluestore解析</title>
       <link>//zhxin.github.io/%E8%BD%AC%E8%BD%BDceph%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8Ebluestore%E8%A7%A3%E6%9E%90/</link>
-      <pubDate>Fri, 05 Jun 2020 15:46:20 +0800</pubDate>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>//zhxin.github.io/%E8%BD%AC%E8%BD%BDceph%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8Ebluestore%E8%A7%A3%E6%9E%90/</guid>
       <description>转载自sysnote,如有侵权请联系删除 ceph后端支持多种存储引擎，以插件式的方式来进行管理使用，目前支持filestore，kvstore，memstore以及最新的bluestore，目前默认使用的filestore，但是因为filestore在写数据前需要先写journal，会有一倍的写放大，并且filestore一开始只是对于机械盘进行设计的，没有专门针对ssd做优化考虑，因此诞生的bluestore初衷就是为了减少写放大，并针对ssd做优化，而且直接管理裸盘，从理论上进一步减少文件系</description>
     </item>
     
     <item>
+      <title>Git客户端初始配置</title>
+      <link>//zhxin.github.io/git%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%88%9D%E5%A7%8B%E9%85%8D%E7%BD%AE/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//zhxin.github.io/git%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%88%9D%E5%A7%8B%E9%85%8D%E7%BD%AE/</guid>
+      <description>&lt;ul&gt;
+&lt;li&gt;安装完成GIT之后配置相关用户名邮箱.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;git config --global user.name &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;zhxin&amp;#34;&lt;/span&gt;
+git config --global user.email zhxin@outlook.com
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
+    <item>
+      <title>PG Peering过程状态变化代码走读</title>
+      <link>//zhxin.github.io/pg-peering%E8%BF%87%E7%A8%8B%E7%8A%B6%E6%80%81%E5%8F%98%E5%8C%96%E4%BB%A3%E7%A0%81%E8%B5%B0%E8%AF%BB/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//zhxin.github.io/pg-peering%E8%BF%87%E7%A8%8B%E7%8A%B6%E6%80%81%E5%8F%98%E5%8C%96%E4%BB%A3%E7%A0%81%E8%B5%B0%E8%AF%BB/</guid>
+      <description>最近看了PG状态转换的过程,代码细节没有仔细研究，先粗略过了一遍代码，特此记录. PG PG是存储池的基本单元，是一些对象的集合，多副本和纠删的数据备份策略依托PG实现. PG有多种状态，状态之间的变化通过状态机实现. 有两个场景会触发peering流程： 在pg创建时 在OSD启动、停止导致OSDMap变化进而导致pg的acting set发生变化时 状态机 状态机在创建PG进行初始化. class RecoveryMachine : public boost::statechart::state_machine&amp;lt; RecoveryMachine, Initial &amp;gt; { RecoveryState *state; public: PG *pg; utime_t event_time; uint64_t event_count; ... boost::statechat包含对象： state_machine: 状态机 state: 状态 event：事件 可通过proces</description>
+    </item>
+    
+    <item>
+      <title>Shell编程基础</title>
+      <link>//zhxin.github.io/shell%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>//zhxin.github.io/shell%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/</guid>
+      <description>变量 脚本开头使用#!/bin/bash指定要使用的shell,shell会通过PATH环境变量来查找脚本中使用的命令，可以使用echo $PATH来看下脚本会在哪些目录下查找命令，如果脚本中执行的命令没有在PATH环境变量中，也可以通过绝对或相对路径来引用. 在脚本中可以使用shell维护的环境变量也可以定义和使用自己的用户变量. 赋值等号两边不能存在空格 环境变量： 可以使用set命令查看当前环境变量列表,例如$HOME、$HOSTNAME、$USER等; 用户变量： 由字母数字下划线组成，长度不超过二十，</description>
+    </item>
+    
+    <item>
       <title>常用ceph命令</title>
       <link>//zhxin.github.io/%E5%B8%B8%E7%94%A8ceph%E5%91%BD%E4%BB%A4/</link>
-      <pubDate>Tue, 24 Dec 2019 15:46:20 +0800</pubDate>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>//zhxin.github.io/%E5%B8%B8%E7%94%A8ceph%E5%91%BD%E4%BB%A4/</guid>
       <description>&lt;p&gt;工作中遇到的比较常用的命令,特此整理以备忘.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;查看集群状态&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;ceph -s &lt;span style=&#34;color:#75715e&#34;&gt;#查看状态&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;ceph -s &lt;span style=&#34;color:#75715e&#34;&gt;#查看状态&lt;/span&gt;
 ceph -v &lt;span style=&#34;color:#75715e&#34;&gt;#查看版本&lt;/span&gt;
 ceph df &lt;span style=&#34;color:#75715e&#34;&gt;#查询集群存储容量&lt;/span&gt;
 ceph health detail &lt;span style=&#34;color:#75715e&#34;&gt;#集群详细健康信息&lt;/span&gt;
@@ -34,35 +65,12 @@ ceph health detail &lt;span style=&#34;color:#75715e&#34;&gt;#集群详细健康
     </item>
     
     <item>
-      <title>PG Peering过程状态变化代码走读</title>
-      <link>//zhxin.github.io/pg-peering%E8%BF%87%E7%A8%8B%E7%8A%B6%E6%80%81%E5%8F%98%E5%8C%96%E4%BB%A3%E7%A0%81%E8%B5%B0%E8%AF%BB/</link>
-      <pubDate>Fri, 06 Dec 2019 15:39:40 +0800</pubDate>
-      
-      <guid>//zhxin.github.io/pg-peering%E8%BF%87%E7%A8%8B%E7%8A%B6%E6%80%81%E5%8F%98%E5%8C%96%E4%BB%A3%E7%A0%81%E8%B5%B0%E8%AF%BB/</guid>
-      <description>最近看了PG状态转换的过程,代码细节没有仔细研究，先粗略过了一遍代码，特此记录. PG PG是存储池的基本单元，是一些对象的集合，多副本和纠删的数据备份策略依托PG实现. PG有多种状态，状态之间的变化通过状态机实现. 有两个场景会触发peering流程： 在pg创建时 在OSD启动、停止导致OSDMap变化进而导致pg的acting set发生变化时 状态机 状态机在创建PG进行初始化. class RecoveryMachine : public boost::statechart::state_machine&amp;lt; RecoveryMachine, Initial &amp;gt; { RecoveryState *state; public: PG *pg; utime_t event_time; uint64_t event_count; ... boost::statechat包含对象： state_machine: 状态机 state: 状态 event：事件 可通过proces</description>
-    </item>
-    
-    <item>
       <title>我的天才女友读后感</title>
       <link>//zhxin.github.io/%E6%88%91%E7%9A%84%E5%A4%A9%E6%89%8D%E5%A5%B3%E5%8F%8B%E8%AF%BB%E5%90%8E%E6%84%9F/</link>
-      <pubDate>Wed, 11 Jul 2018 15:46:20 +0800</pubDate>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>//zhxin.github.io/%E6%88%91%E7%9A%84%E5%A4%A9%E6%89%8D%E5%A5%B3%E5%8F%8B%E8%AF%BB%E5%90%8E%E6%84%9F/</guid>
       <description>你很自由,而她却是囚徒 在看了四集HBO拍的 我的天才女友 的剧之后,就迫不及待的抱起书来看了.之前并没有听过这本书,也没有了解过埃莱娜费兰特这个作家,纯粹只是最近在微博上看到很多人在推荐这部剧,就好奇来看.追完更新之后,要一周的时间才能看到下一集(在这方面不得不夸奖Netflix),没耐心就去kindle上下载了书,花了大概三周的时间把那不勒斯四部曲给看完. 故事讲述的是莉娜和莱农两个女孩从童年到老年持续一生的故事,她们是朋友也是对手,有温情也不乏冷漠,她们互为影子却又迥然不同.书中以莱农的视角讲述两</description>
-    </item>
-    
-    <item>
-      <title>Git客户端初始配置</title>
-      <link>//zhxin.github.io/git%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%88%9D%E5%A7%8B%E9%85%8D%E7%BD%AE/</link>
-      <pubDate>Mon, 19 Sep 2016 15:46:20 +0800</pubDate>
-      
-      <guid>//zhxin.github.io/git%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%88%9D%E5%A7%8B%E9%85%8D%E7%BD%AE/</guid>
-      <description>&lt;ul&gt;
-&lt;li&gt;安装完成GIT之后配置相关用户名邮箱.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;git config --global user.name &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;zhxin&amp;#34;&lt;/span&gt;
-git config --global user.email zhxin@outlook.com
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
   </channel>

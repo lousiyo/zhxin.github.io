@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="//zhxin.github.io/css/style.css">
     
 
-    <meta name="generator" content="Hugo 0.86.0" />
+    <meta name="generator" content="Hugo 0.84.0" />
 </head>
 
 
@@ -57,7 +57,7 @@
         
         <div class="article-meta">
             <a href="/%E5%B8%B8%E7%94%A8ceph%E5%91%BD%E4%BB%A4/" class="article-date">
-                <time datetime='2019-12-24T15:46:20.000&#43;08:00' itemprop="datePublished">2019-12-24</time>
+                <time datetime='0001-01-01T00:00:00.000&#43;00:00' itemprop="datePublished">0001-01-01</time>
             </a>
             
             
@@ -77,14 +77,14 @@
 <ul>
 <li>查看集群状态</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ceph -s <span style="color:#75715e">#查看状态</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ceph -s <span style="color:#75715e">#查看状态</span>
 ceph -v <span style="color:#75715e">#查看版本</span>
 ceph df <span style="color:#75715e">#查询集群存储容量</span>
 ceph health detail <span style="color:#75715e">#集群详细健康信息</span>
 </code></pre></div><ul>
 <li>查询集群组件信息相关命令</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">rados lspools <span style="color:#75715e">#查询池子列表</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">rados lspools <span style="color:#75715e">#查询池子列表</span>
 ceph osd dump | grep pool <span style="color:#75715e">#查询所有池子信息</span>
 rados -p &lt;pool&gt; ls <span style="color:#75715e">#池子下对象</span>
 rados --pgid &lt;pgid&gt; ls <span style="color:#75715e">#查看pg下对象</span>
@@ -110,7 +110,7 @@ ceph pg dump_stuck unclean
 </code></pre></div><ul>
 <li>systemctl管理服务</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">systemctl reset-failed ceph-osd@*   <span style="color:#75715e">#重置失败服务</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">systemctl reset-failed ceph-osd@*   <span style="color:#75715e">#重置失败服务</span>
 systemctl start ceph-osd.target     <span style="color:#75715e">#重启osd服务</span>
 systemctl restart ceph.target   <span style="color:#75715e">#重启ceph服务</span>
 systemctl stop ceph-osd@0   <span style="color:#75715e">#停止单个osd服务</span>
@@ -118,13 +118,13 @@ systemctl status ceph-osd@1 <span style="color:#75715e">#查看服务状态</spa
 </code></pre></div><ul>
 <li>集群操作命令</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ceph osd pool delete &lt;pool&gt; &lt;pool&gt; --yes-i-really-really-mean-it    <span style="color:#75715e">#删除池</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ceph osd pool delete &lt;pool&gt; &lt;pool&gt; --yes-i-really-really-mean-it    <span style="color:#75715e">#删除池</span>
 rados put &lt;oid&gt; &lt;filename&gt; --pool<span style="color:#f92672">=</span>&lt;pool&gt; <span style="color:#75715e">#在池中添加对象</span>
 eph osd pool create &lt;pool&gt; &lt;pgnum&gt; &lt;pgnum&gt; -r &lt;host、osd&gt;  <span style="color:#75715e">#创建池</span>
 </code></pre></div><ul>
 <li>crush相关操作</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ceph osd crush dump
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ceph osd crush dump
 ceph osd crush rule list
 ceph osd crush rule dump &lt;crush rule name&gt;
 <span style="color:#75715e">#在线修改crush rule</span>
@@ -136,7 +136,7 @@ ceph osd setcrushmap -i &lt;map_new&gt;     <span style="color:#75715e">#将map�
 </code></pre></div><ul>
 <li>块设备管理命令</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ceph osd pool create &lt;rbd&gt; &lt;pgnum&gt; &lt;pgnum&gt;
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ceph osd pool create &lt;rbd&gt; &lt;pgnum&gt; &lt;pgnum&gt;
 ceph osd pool set &lt;rbd&gt; size &lt;repnum&gt;
 rbd create --image &lt;my_image&gt; --size &lt;1T&gt; --pool &lt;rbd&gt;
 rbd ls -p &lt;pool_name&gt; <span style="color:#75715e">#查看指定pool中的卷</span>
@@ -146,7 +146,7 @@ rbd trash remove/rm &lt;ID&gt; -p &lt;pool_name&gt; <span style="color:#75715e">
 </code></pre></div><ul>
 <li>配置命令</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ceph --show-config <span style="color:#75715e">#查询集群默认配置</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ceph --show-config <span style="color:#75715e">#查询集群默认配置</span>
 
 ceph daemon &lt;mon.5&gt; config show | grep &lt;mon_osd_down_out_interval&gt; <span style="color:#75715e">#查询进程配置信息</span>
 <span style="color:#75715e">#修改运行配置信息 临时生效</span>
@@ -224,21 +224,6 @@ ceph tell osd.0 injectargs <span style="color:#e6db74">&#39;--debug-osd 0/5&#39;
         
     </div>
     
-<nav id="article-nav">
-    
-    <a href="/%E8%BD%AC%E8%BD%BDceph%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8Ebluestore%E8%A7%A3%E6%9E%90/" id="article-nav-newer" class="article-nav-link-wrap">
-        <div class="article-nav-title"><span>&lt;</span>&nbsp;
-            [转载]ceph存储引擎bluestore解析
-        </div>
-    </a>
-    
-    
-    <a href="/pg-peering%E8%BF%87%E7%A8%8B%E7%8A%B6%E6%80%81%E5%8F%98%E5%8C%96%E4%BB%A3%E7%A0%81%E8%B5%B0%E8%AF%BB/" id="article-nav-older" class="article-nav-link-wrap">
-        <div class="article-nav-title">PG Peering过程状态变化代码走读&nbsp;<span>&gt;</span></div>
-    </a>
-    
-</nav>
-
 
 </article>
 
