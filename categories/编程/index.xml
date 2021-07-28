@@ -5,11 +5,12 @@
     <link>//zhxin.github.io/categories/%E7%BC%96%E7%A8%8B/</link>
     <description>Recent content in 编程 on zhxin</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language><atom:link href="//zhxin.github.io/categories/%E7%BC%96%E7%A8%8B/index.xml" rel="self" type="application/rss+xml" />
+    <language>en-us</language>
+    <lastBuildDate>Mon, 28 Jun 2021 22:49:38 +0800</lastBuildDate><atom:link href="//zhxin.github.io/categories/%E7%BC%96%E7%A8%8B/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Shell编程基础</title>
       <link>//zhxin.github.io/shell%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <pubDate>Mon, 28 Jun 2021 22:49:38 +0800</pubDate>
       
       <guid>//zhxin.github.io/shell%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/</guid>
       <description>变量 脚本开头使用#!/bin/bash指定要使用的shell,shell会通过PATH环境变量来查找脚本中使用的命令，可以使用echo $PATH来看下脚本会在哪些目录下查找命令，如果脚本中执行的命令没有在PATH环境变量中，也可以通过绝对或相对路径来引用. 在脚本中可以使用shell维护的环境变量也可以定义和使用自己的用户变量. 赋值等号两边不能存在空格 环境变量： 可以使用set命令查看当前环境变量列表,例如$HOME、$HOSTNAME、$USER等; 用户变量： 由字母数字下划线组成，长度不超过二十，</description>
@@ -18,7 +19,7 @@
     <item>
       <title>常用ceph命令</title>
       <link>//zhxin.github.io/%E5%B8%B8%E7%94%A8ceph%E5%91%BD%E4%BB%A4/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <pubDate>Sun, 28 Feb 2021 22:49:38 +0800</pubDate>
       
       <guid>//zhxin.github.io/%E5%B8%B8%E7%94%A8ceph%E5%91%BD%E4%BB%A4/</guid>
       <description>&lt;p&gt;工作中遇到的比较常用的命令,特此整理以备忘.&lt;/p&gt;

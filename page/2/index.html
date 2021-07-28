@@ -53,12 +53,12 @@
                 
                 
                 <header class="article-header">
-                    <h1 itemprop="name"><a class="article-title" href="/%E6%88%91%E7%9A%84%E5%A4%A9%E6%89%8D%E5%A5%B3%E5%8F%8B%E8%AF%BB%E5%90%8E%E6%84%9F/">我的天才女友读后感</a></h1>
+                    <h1 itemprop="name"><a class="article-title" href="/%E8%BD%AC%E8%BD%BDceph%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8Ebluestore%E8%A7%A3%E6%9E%90/">[转载]ceph存储引擎bluestore解析</a></h1>
                 </header>
                 
                 <div class="article-meta">
-                    <a href="/%E6%88%91%E7%9A%84%E5%A4%A9%E6%89%8D%E5%A5%B3%E5%8F%8B%E8%AF%BB%E5%90%8E%E6%84%9F/" class="article-date">
-                        <time datetime='0001-01-01T00:00:00.000&#43;00:00' itemprop="datePublished">0001-01-01</time>
+                    <a href="/%E8%BD%AC%E8%BD%BDceph%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8Ebluestore%E8%A7%A3%E6%9E%90/" class="article-date">
+                        <time datetime='2021-01-28T22:49:38.000&#43;08:00' itemprop="datePublished">2021-01-28</time>
                     </a>
                     
                     
@@ -66,7 +66,7 @@
                         <div class="article-category">
                             
                             
-                            <a class="article-category-link" href="//zhxin.github.io//categories/%E6%96%87%E7%AB%A0">文章</a>
+                            <a class="article-category-link" href="//zhxin.github.io//categories/ceph">ceph</a>
                             
                         </div>
                     </div>
@@ -76,13 +76,24 @@
                 <div class="article-entry" itemprop="articleBody">
                     <p>
                         
-                    你很自由,而她却是囚徒 在看了四集HBO拍的 我的天才女友 的剧之后,就迫不及待的抱起书来看了.之前并没有听过这本书,也没有了解过埃莱娜费兰特这个作家,纯粹只是最近在微博上看到很多人在推荐这部剧,就好奇来看.追完更新之后,要一周的时间才能看到下一集(在这方面不得不夸奖Netflix),没耐心就去kindle上下载了书,花了大概三周的时间把那不勒斯四部曲给看完. 故事讲述的是莉娜和莱农两个女孩从童年到老年持续一生的故事,她们是朋友也是对手,有温情也不乏冷漠,她们互为影子却又迥然不同.书中以莱农的视角讲述两
+                    转载自sysnote,如有侵权请联系删除 ceph后端支持多种存储引擎，以插件式的方式来进行管理使用，目前支持filestore，kvstore，memstore以及最新的bluestore，目前默认使用的filestore，但是因为filestore在写数据前需要先写journal，会有一倍的写放大，并且filestore一开始只是对于机械盘进行设计的，没有专门针对ssd做优化考虑，因此诞生的bluestore初衷就是为了减少写放大，并针对ssd做优化，而且直接管理裸盘，从理论上进一步减少文件系
                     </p>
                     <p class="article-more-link">
-                        <a href="/%E6%88%91%E7%9A%84%E5%A4%A9%E6%89%8D%E5%A5%B3%E5%8F%8B%E8%AF%BB%E5%90%8E%E6%84%9F/"></a>
+                        <a href="/%E8%BD%AC%E8%BD%BDceph%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8Ebluestore%E8%A7%A3%E6%9E%90/"></a>
                     </p>
                 </div>
 
+                
+                <footer class="article-footer">
+                    <ul class="article-tag-list">
+                        
+                        <li class="article-tag-list-item">
+                            <a class="article-tag-list-link" href="//zhxin.github.io/tags/ceph">ceph
+                            </a>
+                        </li>
+                        
+                    </ul>
+                </footer>
                 
             </div>
         </article>
