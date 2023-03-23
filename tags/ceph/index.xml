@@ -35,11 +35,11 @@
 &lt;ul&gt;
 &lt;li&gt;查看集群状态&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ceph -s &lt;span style=&#34;color:#75715e&#34;&gt;#查看状态&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ceph -v &lt;span style=&#34;color:#75715e&#34;&gt;#查看版本&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ceph df &lt;span style=&#34;color:#75715e&#34;&gt;#查询集群存储容量&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ceph health detail &lt;span style=&#34;color:#75715e&#34;&gt;#集群详细健康信息&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;ceph -s &lt;span style=&#34;color:#75715e&#34;&gt;#查看状态&lt;/span&gt;
+ceph -v &lt;span style=&#34;color:#75715e&#34;&gt;#查看版本&lt;/span&gt;
+ceph df &lt;span style=&#34;color:#75715e&#34;&gt;#查询集群存储容量&lt;/span&gt;
+ceph health detail &lt;span style=&#34;color:#75715e&#34;&gt;#集群详细健康信息&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
   </channel>

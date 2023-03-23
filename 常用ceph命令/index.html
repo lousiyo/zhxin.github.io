@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="//zhxin.github.io/css/style.css">
     
 
-    <meta name="generator" content="Hugo 0.98.0" />
+    <meta name="generator" content="Hugo 0.92.2" />
 </head>
 
 
@@ -77,82 +77,82 @@
 <ul>
 <li>查看集群状态</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ceph -s <span style="color:#75715e">#查看状态</span>
-</span></span><span style="display:flex;"><span>ceph -v <span style="color:#75715e">#查看版本</span>
-</span></span><span style="display:flex;"><span>ceph df <span style="color:#75715e">#查询集群存储容量</span>
-</span></span><span style="display:flex;"><span>ceph health detail <span style="color:#75715e">#集群详细健康信息</span>
-</span></span></code></pre></div><ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ceph -s <span style="color:#75715e">#查看状态</span>
+ceph -v <span style="color:#75715e">#查看版本</span>
+ceph df <span style="color:#75715e">#查询集群存储容量</span>
+ceph health detail <span style="color:#75715e">#集群详细健康信息</span>
+</code></pre></div><ul>
 <li>查询集群组件信息相关命令</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>rados lspools <span style="color:#75715e">#查询池子列表</span>
-</span></span><span style="display:flex;"><span>ceph osd dump | grep pool <span style="color:#75715e">#查询所有池子信息</span>
-</span></span><span style="display:flex;"><span>rados -p &lt;pool&gt; ls <span style="color:#75715e">#池子下对象</span>
-</span></span><span style="display:flex;"><span>rados --pgid &lt;pgid&gt; ls <span style="color:#75715e">#查看pg下对象</span>
-</span></span><span style="display:flex;"><span>ceph osd map &lt;pool&gt; object <span style="color:#75715e">#查看对象信息</span>
-</span></span><span style="display:flex;"><span>ceph-objectstore-tool --data-path &lt;datapath&gt; --journal-path &lt;journalpath&gt; &lt;objname&gt; dump <span style="color:#75715e">#输出对象元数据信息</span>
-</span></span><span style="display:flex;"><span>ceph-admin-disktool --getdisks  <span style="color:#75715e">#获取磁盘信息</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#mon信息</span>
-</span></span><span style="display:flex;"><span>ceph mon stat
-</span></span><span style="display:flex;"><span>ceph mon dump
-</span></span><span style="display:flex;"><span>ceph quorum_status
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#osd信息</span>
-</span></span><span style="display:flex;"><span>ceph osd tree
-</span></span><span style="display:flex;"><span>ceph osd dump
-</span></span><span style="display:flex;"><span>ceph osd find &lt;numeric_osd_id&gt;
-</span></span><span style="display:flex;"><span>ceph osd df tree <span style="color:#75715e">#查看集群空间使用率</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#pg信息</span>
-</span></span><span style="display:flex;"><span>ceph pg stat
-</span></span><span style="display:flex;"><span>ceph pg dump
-</span></span><span style="display:flex;"><span>ceph pg dump_stuck unclean
-</span></span></code></pre></div><ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">rados lspools <span style="color:#75715e">#查询池子列表</span>
+ceph osd dump | grep pool <span style="color:#75715e">#查询所有池子信息</span>
+rados -p &lt;pool&gt; ls <span style="color:#75715e">#池子下对象</span>
+rados --pgid &lt;pgid&gt; ls <span style="color:#75715e">#查看pg下对象</span>
+ceph osd map &lt;pool&gt; object <span style="color:#75715e">#查看对象信息</span>
+ceph-objectstore-tool --data-path &lt;datapath&gt; --journal-path &lt;journalpath&gt; &lt;objname&gt; dump <span style="color:#75715e">#输出对象元数据信息</span>
+ceph-admin-disktool --getdisks  <span style="color:#75715e">#获取磁盘信息</span>
+
+<span style="color:#75715e">#mon信息</span>
+ceph mon stat
+ceph mon dump
+ceph quorum_status
+
+<span style="color:#75715e">#osd信息</span>
+ceph osd tree
+ceph osd dump
+ceph osd find &lt;numeric_osd_id&gt;
+ceph osd df tree <span style="color:#75715e">#查看集群空间使用率</span>
+
+<span style="color:#75715e">#pg信息</span>
+ceph pg stat
+ceph pg dump
+ceph pg dump_stuck unclean
+</code></pre></div><ul>
 <li>systemctl管理服务</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>systemctl reset-failed ceph-osd@*   <span style="color:#75715e">#重置失败服务</span>
-</span></span><span style="display:flex;"><span>systemctl start ceph-osd.target     <span style="color:#75715e">#重启osd服务</span>
-</span></span><span style="display:flex;"><span>systemctl restart ceph.target   <span style="color:#75715e">#重启ceph服务</span>
-</span></span><span style="display:flex;"><span>systemctl stop ceph-osd@0   <span style="color:#75715e">#停止单个osd服务</span>
-</span></span><span style="display:flex;"><span>systemctl status ceph-osd@1 <span style="color:#75715e">#查看服务状态</span>
-</span></span></code></pre></div><ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">systemctl reset-failed ceph-osd@*   <span style="color:#75715e">#重置失败服务</span>
+systemctl start ceph-osd.target     <span style="color:#75715e">#重启osd服务</span>
+systemctl restart ceph.target   <span style="color:#75715e">#重启ceph服务</span>
+systemctl stop ceph-osd@0   <span style="color:#75715e">#停止单个osd服务</span>
+systemctl status ceph-osd@1 <span style="color:#75715e">#查看服务状态</span>
+</code></pre></div><ul>
 <li>集群操作命令</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ceph osd pool delete &lt;pool&gt; &lt;pool&gt; --yes-i-really-really-mean-it    <span style="color:#75715e">#删除池</span>
-</span></span><span style="display:flex;"><span>rados put &lt;oid&gt; &lt;filename&gt; --pool<span style="color:#f92672">=</span>&lt;pool&gt; <span style="color:#75715e">#在池中添加对象</span>
-</span></span><span style="display:flex;"><span>eph osd pool create &lt;pool&gt; &lt;pgnum&gt; &lt;pgnum&gt; -r &lt;host、osd&gt;  <span style="color:#75715e">#创建池</span>
-</span></span></code></pre></div><ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ceph osd pool delete &lt;pool&gt; &lt;pool&gt; --yes-i-really-really-mean-it    <span style="color:#75715e">#删除池</span>
+rados put &lt;oid&gt; &lt;filename&gt; --pool<span style="color:#f92672">=</span>&lt;pool&gt; <span style="color:#75715e">#在池中添加对象</span>
+eph osd pool create &lt;pool&gt; &lt;pgnum&gt; &lt;pgnum&gt; -r &lt;host、osd&gt;  <span style="color:#75715e">#创建池</span>
+</code></pre></div><ul>
 <li>crush相关操作</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ceph osd crush dump
-</span></span><span style="display:flex;"><span>ceph osd crush rule list
-</span></span><span style="display:flex;"><span>ceph osd crush rule dump &lt;crush rule name&gt;
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#在线修改crush rule</span>
-</span></span><span style="display:flex;"><span>ceph osd getcrushmap -o &lt;map_old&gt;    <span style="color:#75715e">#导出map</span>
-</span></span><span style="display:flex;"><span>crushtool -d &lt;map_old&gt; -o &lt;map_old.txt&gt;  <span style="color:#75715e">#转化成可编辑格式</span>
-</span></span><span style="display:flex;"><span>vi map_old.txt <span style="color:#75715e">#修改rule replicated_ruleset step chooseleaf firstn 0 type *osd*</span>
-</span></span><span style="display:flex;"><span>crushtool -c &lt;map_old.txt&gt; -o &lt;map_new&gt;  <span style="color:#75715e">#还原为map</span>
-</span></span><span style="display:flex;"><span>ceph osd setcrushmap -i &lt;map_new&gt;     <span style="color:#75715e">#将map导入ceph</span>
-</span></span></code></pre></div><ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ceph osd crush dump
+ceph osd crush rule list
+ceph osd crush rule dump &lt;crush rule name&gt;
+<span style="color:#75715e">#在线修改crush rule</span>
+ceph osd getcrushmap -o &lt;map_old&gt;    <span style="color:#75715e">#导出map</span>
+crushtool -d &lt;map_old&gt; -o &lt;map_old.txt&gt;  <span style="color:#75715e">#转化成可编辑格式</span>
+vi map_old.txt <span style="color:#75715e">#修改rule replicated_ruleset step chooseleaf firstn 0 type *osd*</span>
+crushtool -c &lt;map_old.txt&gt; -o &lt;map_new&gt;  <span style="color:#75715e">#还原为map</span>
+ceph osd setcrushmap -i &lt;map_new&gt;     <span style="color:#75715e">#将map导入ceph</span>
+</code></pre></div><ul>
 <li>块设备管理命令</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ceph osd pool create &lt;rbd&gt; &lt;pgnum&gt; &lt;pgnum&gt;
-</span></span><span style="display:flex;"><span>ceph osd pool set &lt;rbd&gt; size &lt;repnum&gt;
-</span></span><span style="display:flex;"><span>rbd create --image &lt;my_image&gt; --size &lt;1T&gt; --pool &lt;rbd&gt;
-</span></span><span style="display:flex;"><span>rbd ls -p &lt;pool_name&gt; <span style="color:#75715e">#查看指定pool中的卷</span>
-</span></span><span style="display:flex;"><span>rbd trash move/mv &lt;images_name&gt; -p &lt;pool_name&gt; <span style="color:#75715e">#将卷丢到回收站</span>
-</span></span><span style="display:flex;"><span>rbd trash restore &lt;ID&gt; -p &lt;pool_name&gt; <span style="color:#75715e">#将回收站中的卷还原</span>
-</span></span><span style="display:flex;"><span>rbd trash remove/rm &lt;ID&gt; -p &lt;pool_name&gt; <span style="color:#75715e">#清除回收站中的卷</span>
-</span></span></code></pre></div><ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ceph osd pool create &lt;rbd&gt; &lt;pgnum&gt; &lt;pgnum&gt;
+ceph osd pool set &lt;rbd&gt; size &lt;repnum&gt;
+rbd create --image &lt;my_image&gt; --size &lt;1T&gt; --pool &lt;rbd&gt;
+rbd ls -p &lt;pool_name&gt; <span style="color:#75715e">#查看指定pool中的卷</span>
+rbd trash move/mv &lt;images_name&gt; -p &lt;pool_name&gt; <span style="color:#75715e">#将卷丢到回收站</span>
+rbd trash restore &lt;ID&gt; -p &lt;pool_name&gt; <span style="color:#75715e">#将回收站中的卷还原</span>
+rbd trash remove/rm &lt;ID&gt; -p &lt;pool_name&gt; <span style="color:#75715e">#清除回收站中的卷</span>
+</code></pre></div><ul>
 <li>配置命令</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ceph --show-config <span style="color:#75715e">#查询集群默认配置</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>ceph daemon &lt;mon.5&gt; config show | grep &lt;mon_osd_down_out_interval&gt; <span style="color:#75715e">#查询进程配置信息</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#修改运行配置信息 临时生效</span>
-</span></span><span style="display:flex;"><span>ceph tell &lt;daemon-type&gt;.&lt;daemon id or *&gt; injectargs --&lt;name&gt; &lt;value&gt;
-</span></span><span style="display:flex;"><span>ceph tell osd.0 injectargs <span style="color:#e6db74">&#39;--debug-osd 0/5&#39;</span>
-</span></span></code></pre></div><ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ceph --show-config <span style="color:#75715e">#查询集群默认配置</span>
+
+ceph daemon &lt;mon.5&gt; config show | grep &lt;mon_osd_down_out_interval&gt; <span style="color:#75715e">#查询进程配置信息</span>
+<span style="color:#75715e">#修改运行配置信息 临时生效</span>
+ceph tell &lt;daemon-type&gt;.&lt;daemon id or *&gt; injectargs --&lt;name&gt; &lt;value&gt;
+ceph tell osd.0 injectargs <span style="color:#e6db74">&#39;--debug-osd 0/5&#39;</span>
+</code></pre></div><ul>
 <li>其他</li>
 </ul>
 <ol>
@@ -232,7 +232,7 @@
     <footer id="footer">
     <div class="outer">
         <div id="footer-info" class="inner">
-            &copy; 2022 zhxin@outlook.com
+            &copy; 2023 zhxin@outlook.com
             <br />
             calm down and relax
             

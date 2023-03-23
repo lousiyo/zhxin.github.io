@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="//zhxin.github.io/css/style.css">
     
 
-    <meta name="generator" content="Hugo 0.98.0" />
+    <meta name="generator" content="Hugo 0.92.2" />
 </head>
 
 
@@ -122,19 +122,19 @@
 输入重定向: <code>&lt;</code>
 在脚本中使用<code>&lt; &gt;</code> 需要进行转义<code>\&lt; \&gt;</code><br>
 内联输入重定向：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>command <span style="color:#e6db74">&lt;&lt; marker  
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> content  
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">marker</span>  
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 例如：  </span>
-</span></span><span style="display:flex;"><span>wc -l <span style="color:#e6db74">&lt;&lt;EOF  
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">echo &#34;aaa&#34;  
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">echo &#34;BBB&#34;  
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>  
-</span></span></code></pre></div><p>内联重定向到文件</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cat &gt;&gt; demo.txt <span style="color:#e6db74">&lt;&lt;EOF  
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74"> some content  
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>  
-</span></span></code></pre></div><table>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">command <span style="color:#e6db74">&lt;&lt; marker  
+</span><span style="color:#e6db74"> content  
+</span><span style="color:#e6db74">marker</span>  
+<span style="color:#75715e"># 例如：  </span>
+wc -l <span style="color:#e6db74">&lt;&lt;EOF  
+</span><span style="color:#e6db74">echo &#34;aaa&#34;  
+</span><span style="color:#e6db74">echo &#34;BBB&#34;  
+</span><span style="color:#e6db74">EOF</span>  
+</code></pre></div><p>内联重定向到文件</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cat &gt;&gt; demo.txt <span style="color:#e6db74">&lt;&lt;EOF  
+</span><span style="color:#e6db74"> some content  
+</span><span style="color:#e6db74">EOF</span>  
+</code></pre></div><table>
 <thead>
 <tr>
 <th style="text-align:left">文件描述符</th>
@@ -175,20 +175,20 @@
 </li>
 <li>
 <p>通过bc进行浮点型计算:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>var1<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>echo <span style="color:#e6db74">&#34;scale=4; 3.44 / 5&#34;</span> | bc<span style="color:#66d9ef">)</span>  
-</span></span><span style="display:flex;"><span>var1<span style="color:#f92672">=</span>10.46  
-</span></span><span style="display:flex;"><span>var2<span style="color:#f92672">=</span>43.67  
-</span></span><span style="display:flex;"><span>var3<span style="color:#f92672">=</span>33.2  
-</span></span><span style="display:flex;"><span>var4<span style="color:#f92672">=</span><span style="color:#ae81ff">71</span>  
-</span></span><span style="display:flex;"><span>var5<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>bc<span style="color:#e6db74">&lt;&lt;EOF  
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">scale = 4  
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">a1=($var1 * $var2)  
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">b1=($var3 * $var4)  
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">a1+b1  
-</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>  
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">)</span>  
-</span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#34;</span>$var5<span style="color:#e6db74">&#34;</span>  
-</span></span></code></pre></div></li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">var1<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>echo <span style="color:#e6db74">&#34;scale=4; 3.44 / 5&#34;</span> | bc<span style="color:#66d9ef">)</span>  
+var1<span style="color:#f92672">=</span>10.46  
+var2<span style="color:#f92672">=</span>43.67  
+var3<span style="color:#f92672">=</span>33.2  
+var4<span style="color:#f92672">=</span><span style="color:#ae81ff">71</span>  
+var5<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>bc<span style="color:#e6db74">&lt;&lt;EOF  
+</span><span style="color:#e6db74">scale = 4  
+</span><span style="color:#e6db74">a1=($var1 * $var2)  
+</span><span style="color:#e6db74">b1=($var3 * $var4)  
+</span><span style="color:#e6db74">a1+b1  
+</span><span style="color:#e6db74">EOF</span>  
+<span style="color:#66d9ef">)</span>  
+echo <span style="color:#e6db74">&#34;</span>$var5<span style="color:#e6db74">&#34;</span>  
+</code></pre></div></li>
 </ol>
 <h2 id="退出脚本">退出脚本</h2>
 <p>默认情况shell会以脚本最后一个命令的退出状态码退出(0-255)<br>
@@ -196,18 +196,18 @@
 <h2 id="结构化命令">结构化命令</h2>
 <h3 id="if语句">if语句</h3>
 <p>根据命令执行是否成功走不同分支</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> command1; <span style="color:#66d9ef">then</span>  
-</span></span><span style="display:flex;"><span> comands  
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">elif</span> comand2; <span style="color:#66d9ef">then</span>  
-</span></span><span style="display:flex;"><span> comands  
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">else</span>  
-</span></span><span style="display:flex;"><span> comands  
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">fi</span>  
-</span></span></code></pre></div><p>或者使用条件测试的方式</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> condition <span style="color:#f92672">]</span>;<span style="color:#66d9ef">then</span>  
-</span></span><span style="display:flex;"><span> comands  
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">fi</span>  
-</span></span></code></pre></div><h3 id="条件测试">条件测试</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#66d9ef">if</span> command1; <span style="color:#66d9ef">then</span>  
+ comands  
+<span style="color:#66d9ef">elif</span> comand2; <span style="color:#66d9ef">then</span>  
+ comands  
+<span style="color:#66d9ef">else</span>  
+ comands  
+<span style="color:#66d9ef">fi</span>  
+</code></pre></div><p>或者使用条件测试的方式</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> condition <span style="color:#f92672">]</span>;<span style="color:#66d9ef">then</span>  
+ comands  
+<span style="color:#66d9ef">fi</span>  
+</code></pre></div><h3 id="条件测试">条件测试</h3>
 <ol>
 <li>
 <p>数值比较</p>
@@ -359,70 +359,70 @@
 bash shell支持模式匹配: <code>if [[ $USER == r* ]]</code></li>
 </ol>
 <h3 id="case语句">case语句</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#66d9ef">case</span> variable in  
-</span></span><span style="display:flex;"><span>pattern1 | pattern2<span style="color:#f92672">)</span> commands1;;  
-</span></span><span style="display:flex;"><span>pattern3<span style="color:#f92672">)</span> comands2;;  
-</span></span><span style="display:flex;"><span>*<span style="color:#f92672">)</span> default commands;;  
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">esac</span>  
-</span></span></code></pre></div><h3 id="for语句">for语句</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#66d9ef">for</span> var in list  
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">do</span>  
-</span></span><span style="display:flex;"><span> commands:$var  
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">done</span>  
-</span></span></code></pre></div><p>有时候使用<code>for line in $(cat $file)</code>读取文本文件，默认会以空格分隔而不是换行符,需要修改IFS.<br>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#66d9ef">case</span> variable in  
+pattern1 | pattern2<span style="color:#f92672">)</span> commands1;;  
+pattern3<span style="color:#f92672">)</span> comands2;;  
+*<span style="color:#f92672">)</span> default commands;;  
+<span style="color:#66d9ef">esac</span>  
+</code></pre></div><h3 id="for语句">for语句</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#66d9ef">for</span> var in list  
+<span style="color:#66d9ef">do</span>  
+ commands:$var  
+<span style="color:#66d9ef">done</span>  
+</code></pre></div><p>有时候使用<code>for line in $(cat $file)</code>读取文本文件，默认会以空格分隔而不是换行符,需要修改IFS.<br>
 IFS值：内部字段分隔符</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>IFS.OLD<span style="color:#f92672">=</span>$IFS  
-</span></span><span style="display:flex;"><span>IFS<span style="color:#f92672">=</span>$’<span style="color:#ae81ff">\n</span>’  
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#&lt;在代码中使用新的IFS值&gt;  </span>
-</span></span><span style="display:flex;"><span>IFS<span style="color:#f92672">=</span>$IFS.OLD  
-</span></span></code></pre></div><p>C语言风格for语句</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#66d9ef">for</span>  <span style="color:#f92672">((</span> i<span style="color:#f92672">=</span>1; i &lt;<span style="color:#f92672">=</span>10; i++ <span style="color:#f92672">))</span>  
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">do</span>  
-</span></span><span style="display:flex;"><span>...  
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">done</span>  
-</span></span></code></pre></div><h3 id="while语句">while语句</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#66d9ef">while</span> <span style="color:#f92672">[</span> condition <span style="color:#f92672">]</span>  
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">do</span>  
-</span></span><span style="display:flex;"><span> other commands  
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">done</span>  
-</span></span></code></pre></div><p><code>break</code>: 跳出内部循环<br>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">IFS.OLD<span style="color:#f92672">=</span>$IFS  
+IFS<span style="color:#f92672">=</span>$’<span style="color:#ae81ff">\n</span>’  
+<span style="color:#75715e">#&lt;在代码中使用新的IFS值&gt;  </span>
+IFS<span style="color:#f92672">=</span>$IFS.OLD  
+</code></pre></div><p>C语言风格for语句</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#66d9ef">for</span>  <span style="color:#f92672">((</span> i<span style="color:#f92672">=</span>1; i &lt;<span style="color:#f92672">=</span>10; i++ <span style="color:#f92672">))</span>  
+<span style="color:#66d9ef">do</span>  
+...  
+<span style="color:#66d9ef">done</span>  
+</code></pre></div><h3 id="while语句">while语句</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#66d9ef">while</span> <span style="color:#f92672">[</span> condition <span style="color:#f92672">]</span>  
+<span style="color:#66d9ef">do</span>  
+ other commands  
+<span style="color:#66d9ef">done</span>  
+</code></pre></div><p><code>break</code>: 跳出内部循环<br>
 <code>continue</code>: 跳过本次循环<br>
 <code>break n</code>: 可跳出外部循环<br>
 <code>continue n</code> : 继续循环层级n的循环</p>
 <h2 id="处理用户输入">处理用户输入</h2>
 <p>利用getopts处理用户输入参数</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#66d9ef">while</span> getopts :ab:c opt  
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">do</span>  
-</span></span><span style="display:flex;"><span> <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;</span>$opt<span style="color:#e6db74">&#34;</span> in  
-</span></span><span style="display:flex;"><span>      a<span style="color:#f92672">)</span> echo <span style="color:#e6db74">&#34;found -a option&#34;</span> ;;  
-</span></span><span style="display:flex;"><span>      b<span style="color:#f92672">)</span> echo <span style="color:#e6db74">&#34;found -b option ,with value </span>$OPTARG<span style="color:#e6db74">&#34;</span> ;;  
-</span></span><span style="display:flex;"><span>      c<span style="color:#f92672">)</span> echo <span style="color:#e6db74">&#34;found -c option&#34;</span> ;;  
-</span></span><span style="display:flex;"><span>      *<span style="color:#f92672">)</span> echo <span style="color:#e6db74">&#34;Unknown option: </span>$opt<span style="color:#e6db74">&#34;</span> ;;  
-</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">esac</span>  
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">done</span>  
-</span></span><span style="display:flex;"><span>shift $<span style="color:#f92672">[</span> $OPTIND - <span style="color:#ae81ff">1</span> <span style="color:#f92672">]</span>  
-</span></span><span style="display:flex;"><span>count<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>  
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> param in <span style="color:#e6db74">&#34;</span>$@<span style="color:#e6db74">&#34;</span>  
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">do</span>  
-</span></span><span style="display:flex;"><span>    echo <span style="color:#e6db74">&#34;Parameter </span>$count<span style="color:#e6db74">: </span>$param<span style="color:#e6db74">&#34;</span>  
-</span></span><span style="display:flex;"><span>    count<span style="color:#f92672">=</span>$<span style="color:#f92672">[</span> $count + 1<span style="color:#f92672">]</span>  
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">done</span>  
-</span></span></code></pre></div><p>获取用户输入</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> read -t <span style="color:#ae81ff">10</span> -p <span style="color:#e6db74">&#34;Please enter your name: &#34;</span> name  
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">then</span>  
-</span></span><span style="display:flex;"><span> echo <span style="color:#e6db74">&#34;ok: </span>$name<span style="color:#e6db74">&#34;</span>  
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">else</span>  
-</span></span><span style="display:flex;"><span> echo <span style="color:#e6db74">&#34;too slow&#34;</span>  
-</span></span><span style="display:flex;"><span> exit <span style="color:#ae81ff">1</span>  
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">fi</span>  
-</span></span></code></pre></div><h2 id="使用临时文件">使用临时文件</h2>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>tempfile<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>mktemp tmp.XXXXXX<span style="color:#66d9ef">)</span>  
-</span></span><span style="display:flex;"><span>exec 3&gt;$tempfile  
-</span></span><span style="display:flex;"><span>echo “test” &gt;&amp;<span style="color:#ae81ff">3</span>  
-</span></span><span style="display:flex;"><span>exec 3&gt;&amp;-  
-</span></span><span style="display:flex;"><span>rm -f $tempfile 2&gt;/dev/null  
-</span></span><span style="display:flex;"><span>mktemp -t 生成在/tmp/目录下，返回全路径  
-</span></span></code></pre></div><h2 id="控制脚本">控制脚本</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#66d9ef">while</span> getopts :ab:c opt  
+<span style="color:#66d9ef">do</span>  
+ <span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;</span>$opt<span style="color:#e6db74">&#34;</span> in  
+      a<span style="color:#f92672">)</span> echo <span style="color:#e6db74">&#34;found -a option&#34;</span> ;;  
+      b<span style="color:#f92672">)</span> echo <span style="color:#e6db74">&#34;found -b option ,with value </span>$OPTARG<span style="color:#e6db74">&#34;</span> ;;  
+      c<span style="color:#f92672">)</span> echo <span style="color:#e6db74">&#34;found -c option&#34;</span> ;;  
+      *<span style="color:#f92672">)</span> echo <span style="color:#e6db74">&#34;Unknown option: </span>$opt<span style="color:#e6db74">&#34;</span> ;;  
+      <span style="color:#66d9ef">esac</span>  
+<span style="color:#66d9ef">done</span>  
+shift $<span style="color:#f92672">[</span> $OPTIND - <span style="color:#ae81ff">1</span> <span style="color:#f92672">]</span>  
+count<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>  
+<span style="color:#66d9ef">for</span> param in <span style="color:#e6db74">&#34;</span>$@<span style="color:#e6db74">&#34;</span>  
+<span style="color:#66d9ef">do</span>  
+    echo <span style="color:#e6db74">&#34;Parameter </span>$count<span style="color:#e6db74">: </span>$param<span style="color:#e6db74">&#34;</span>  
+    count<span style="color:#f92672">=</span>$<span style="color:#f92672">[</span> $count + 1<span style="color:#f92672">]</span>  
+<span style="color:#66d9ef">done</span>  
+</code></pre></div><p>获取用户输入</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#66d9ef">if</span> read -t <span style="color:#ae81ff">10</span> -p <span style="color:#e6db74">&#34;Please enter your name: &#34;</span> name  
+<span style="color:#66d9ef">then</span>  
+ echo <span style="color:#e6db74">&#34;ok: </span>$name<span style="color:#e6db74">&#34;</span>  
+<span style="color:#66d9ef">else</span>  
+ echo <span style="color:#e6db74">&#34;too slow&#34;</span>  
+ exit <span style="color:#ae81ff">1</span>  
+<span style="color:#66d9ef">fi</span>  
+</code></pre></div><h2 id="使用临时文件">使用临时文件</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">tempfile<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>mktemp tmp.XXXXXX<span style="color:#66d9ef">)</span>  
+exec 3&gt;$tempfile  
+echo “test” &gt;&amp;<span style="color:#ae81ff">3</span>  
+exec 3&gt;&amp;-  
+rm -f $tempfile 2&gt;/dev/null  
+mktemp -t 生成在/tmp/目录下，返回全路径  
+</code></pre></div><h2 id="控制脚本">控制脚本</h2>
 <ol>
 <li>
 <p>记录消息<br>
@@ -454,14 +454,14 @@ min hour dayofmonth month dayofweek command<br>
 <ul>
 <li>函数名必须唯一，否则会有问题</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#66d9ef">function</span> name<span style="color:#f92672">{</span>  
-</span></span><span style="display:flex;"><span> commands  
-</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>  
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#或者  </span>
-</span></span><span style="display:flex;"><span>name<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>  
-</span></span><span style="display:flex;"><span> commands  
-</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>  
-</span></span></code></pre></div><ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#66d9ef">function</span> name<span style="color:#f92672">{</span>  
+ commands  
+<span style="color:#f92672">}</span>  
+<span style="color:#75715e">#或者  </span>
+name<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>  
+ commands  
+<span style="color:#f92672">}</span>  
+</code></pre></div><ul>
 <li>
 <p>return 可以返回函数值：必须函数一结束就取<code>$?</code>;退出的状态码必须是0-255</p>
 </li>
@@ -484,14 +484,14 @@ min hour dayofmonth month dayofweek command<br>
 </ul>
 <p>数组相关：<br>
 函数参数是数组情况处理：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#66d9ef">function</span> testit <span style="color:#f92672">{</span>  
-</span></span><span style="display:flex;"><span> local newarray  
-</span></span><span style="display:flex;"><span> newarray<span style="color:#f92672">=(</span><span style="color:#e6db74">&#39;echo &#34;$@&#34;&#39;</span><span style="color:#f92672">)</span>  
-</span></span><span style="display:flex;"><span> echo “The new array value is: <span style="color:#e6db74">${</span>newarray[*]<span style="color:#e6db74">}</span>”  
-</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>  
-</span></span><span style="display:flex;"><span>myarray<span style="color:#f92672">=(</span><span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">3</span> <span style="color:#ae81ff">4</span> 5<span style="color:#f92672">)</span>  
-</span></span><span style="display:flex;"><span>testit <span style="color:#e6db74">${</span>myarray[*]<span style="color:#e6db74">}</span>  
-</span></span></code></pre></div><h2 id="工具推荐">工具推荐</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#66d9ef">function</span> testit <span style="color:#f92672">{</span>  
+ local newarray  
+ newarray<span style="color:#f92672">=(</span><span style="color:#e6db74">&#39;echo &#34;$@&#34;&#39;</span><span style="color:#f92672">)</span>  
+ echo “The new array value is: <span style="color:#e6db74">${</span>newarray[*]<span style="color:#e6db74">}</span>”  
+<span style="color:#f92672">}</span>  
+myarray<span style="color:#f92672">=(</span><span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">3</span> <span style="color:#ae81ff">4</span> 5<span style="color:#f92672">)</span>  
+testit <span style="color:#e6db74">${</span>myarray[*]<span style="color:#e6db74">}</span>  
+</code></pre></div><h2 id="工具推荐">工具推荐</h2>
 <p><a href="ftp://ftp.gnu.org/gnu/shtool/">shtool</a><br>
 <a href="https://github.com/koalaman/shellcheck">ShellCheck</a></p>
 
@@ -593,7 +593,7 @@ min hour dayofmonth month dayofweek command<br>
     <footer id="footer">
     <div class="outer">
         <div id="footer-info" class="inner">
-            &copy; 2022 zhxin@outlook.com
+            &copy; 2023 zhxin@outlook.com
             <br />
             calm down and relax
             
