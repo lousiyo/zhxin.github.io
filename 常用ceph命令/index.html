@@ -1,20 +1,47 @@
 <!DOCTYPE html>
-<html><head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
-    <link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+<html lang="en-us"><head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+   <meta name="description" content="工作中遇到的比较常用的命令,特此整理以备忘.
+
+查看集群状态
+
+ceph -s #查看状态
+ceph -v #查看版本
+ceph df #查询集群存储容量
+ceph health detail #集群详细健康信息
+">  
+
+  <title>
     
+      常用ceph命令
     
-    <title>zhxin | 常用ceph命令</title>
+  </title>
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/" />
+  
+  
+  
+  <link rel="stylesheet" href="//zhxin.github.io/css/main.ebe15b0394daa6798b8a40aa572a71b5a7a1beb8cc02c392f5c142e7d08ddb6052e049639385106440b538f394884685082b7441eef27a6a8315ec723155dc15.css" integrity="sha512-6&#43;FbA5TapnmLikCqVypxtaehvrjMAsOS9cFC59CN22BS4Eljk4UQZEC1OPOUiEaFCCt0Qe7yemqDFexyMVXcFQ==" />
+  
 </head>
-<body><div id="content">
-<main class="main_section">
-    <h2 id="title">常用ceph命令</h2>
-      <div>
-        <article id="content">
-           <p>工作中遇到的比较常用的命令,特此整理以备忘.</p>
+<body a="auto">
+        <main class="page-content" aria-label="Content">
+            <div class="w">
+<a href="/">..</a>
+
+<article>
+    <p class="post-meta">
+        <time datetime="2021-02-28 22:49:38 &#43;0800 CST">
+            2021-02-28
+        </time>
+    </p>
+
+    <h1>常用ceph命令</h1>
+
+    <p>工作中遇到的比较常用的命令,特此整理以备忘.</p>
 <ul>
 <li>查看集群状态</li>
 </ul>
@@ -99,21 +126,9 @@ ceph tell osd.0 injectargs <span style="color:#e6db74">&#39;--debug-osd 0/5&#39;
 <ol>
 <li><em>出现由于mon服务没有起来导致的admin_socket问题，可能原因是mon对所在分区目录空间的要求不满足(默认5%）清除部分空间即可;</em></li>
 </ol>
-        </article>
-      </div>
-    <aside id="meta">
-        <div>
-        <h5 id="date"> Feb 28, 2021 </h5>
-        
-          [
-            
-              <a href="/tags/ceph" style="display: inline;">ceph</a>
-            
-          ]
-        
-        </div>
-    </aside>
-</main>
+</article>
 
-        </div></body>
+            </div>
+        </main>
+    </body>
 </html>

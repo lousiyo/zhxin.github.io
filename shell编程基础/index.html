@@ -1,20 +1,39 @@
 <!DOCTYPE html>
-<html><head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
-    <link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+<html lang="en-us"><head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+   <meta name="description" content="变量 脚本开头使用#!/bin/bash指定要使用的shell,shell会通过PATH环境变量来查找脚本中使用的命令，可以使用echo $PATH来看下脚本会在哪些目录下查找命令，如果脚本中执行的命令没有在PATH环境变量中，也可以通过绝对或相对路径来引用. 在脚本中可以使用shell维护的环境变量也可以定义和使用自己的用户变量. 赋值等号两边不能存在空格 环境变量： 可以使用set命令查看当前环境变量列表,例如$HOME、$HOSTNAME、$USER等; 用户变量： 由字母数字下划线组成，长度不超过二十，">  
+
+  <title>
     
+      Shell编程基础
     
-    <title>zhxin | Shell编程基础</title>
+  </title>
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/" />
+  
+  
+  
+  <link rel="stylesheet" href="//zhxin.github.io/css/main.ebe15b0394daa6798b8a40aa572a71b5a7a1beb8cc02c392f5c142e7d08ddb6052e049639385106440b538f394884685082b7441eef27a6a8315ec723155dc15.css" integrity="sha512-6&#43;FbA5TapnmLikCqVypxtaehvrjMAsOS9cFC59CN22BS4Eljk4UQZEC1OPOUiEaFCCt0Qe7yemqDFexyMVXcFQ==" />
+  
 </head>
-<body><div id="content">
-<main class="main_section">
-    <h2 id="title">Shell编程基础</h2>
-      <div>
-        <article id="content">
-           <h2 id="变量">变量</h2>
+<body a="auto">
+        <main class="page-content" aria-label="Content">
+            <div class="w">
+<a href="/">..</a>
+
+<article>
+    <p class="post-meta">
+        <time datetime="2021-06-28 22:49:38 &#43;0800 CST">
+            2021-06-28
+        </time>
+    </p>
+
+    <h1>Shell编程基础</h1>
+
+    <h2 id="变量">变量</h2>
 <p>脚本开头使用<code>#!/bin/bash</code>指定要使用的shell,shell会通过PATH环境变量来查找脚本中使用的命令，可以使用<code>echo $PATH</code>来看下脚本会在哪些目录下查找命令，如果脚本中执行的命令没有在PATH环境变量中，也可以通过绝对或相对路径来引用.<br>
 在脚本中可以使用shell维护的环境变量也可以定义和使用自己的用户变量.<br>
 赋值等号两边不能存在空格</p>
@@ -436,21 +455,9 @@ testit <span style="color:#e6db74">${</span>myarray[*]<span style="color:#e6db74
 <p><a href="ftp://ftp.gnu.org/gnu/shtool/">shtool</a><br>
 <a href="https://github.com/koalaman/shellcheck">ShellCheck</a></p>
 
-        </article>
-      </div>
-    <aside id="meta">
-        <div>
-        <h5 id="date"> Jun 28, 2021 </h5>
-        
-          [
-            
-              <a href="/tags/shell" style="display: inline;">shell</a>
-            
-          ]
-        
-        </div>
-    </aside>
-</main>
+</article>
 
-        </div></body>
+            </div>
+        </main>
+    </body>
 </html>

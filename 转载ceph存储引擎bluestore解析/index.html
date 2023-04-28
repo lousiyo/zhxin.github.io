@@ -1,20 +1,39 @@
 <!DOCTYPE html>
-<html><head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
-    <link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+<html lang="en-us"><head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+   <meta name="description" content="转载自sysnote,如有侵权请联系删除 ceph后端支持多种存储引擎，以插件式的方式来进行管理使用，目前支持filestore，kvstore，memstore以及最新的bluestore，目前默认使用的filestore，但是因为filestore在写数据前需要先写journal，会有一倍的写放大，并且filestore一开始只是对于机械盘进行设计的，没有专门针对ssd做优化考虑，因此诞生的bluestore初衷就是为了减少写放大，并针对ssd做优化，而且直接管理裸盘，从理论上进一步减少文件系">  
+
+  <title>
     
+      [转载]ceph存储引擎bluestore解析
     
-    <title>zhxin | [转载]ceph存储引擎bluestore解析</title>
+  </title>
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/" />
+  
+  
+  
+  <link rel="stylesheet" href="//zhxin.github.io/css/main.ebe15b0394daa6798b8a40aa572a71b5a7a1beb8cc02c392f5c142e7d08ddb6052e049639385106440b538f394884685082b7441eef27a6a8315ec723155dc15.css" integrity="sha512-6&#43;FbA5TapnmLikCqVypxtaehvrjMAsOS9cFC59CN22BS4Eljk4UQZEC1OPOUiEaFCCt0Qe7yemqDFexyMVXcFQ==" />
+  
 </head>
-<body><div id="content">
-<main class="main_section">
-    <h2 id="title">[转载]ceph存储引擎bluestore解析</h2>
-      <div>
-        <article id="content">
-           <p><em>转载自<a href="https://sysnote.github.com/">sysnote</a>,如有侵权请联系删除</em></p>
+<body a="auto">
+        <main class="page-content" aria-label="Content">
+            <div class="w">
+<a href="/">..</a>
+
+<article>
+    <p class="post-meta">
+        <time datetime="2021-02-28 22:49:38 &#43;0800 CST">
+            2021-02-28
+        </time>
+    </p>
+
+    <h1>[转载]ceph存储引擎bluestore解析</h1>
+
+    <p><em>转载自<a href="https://sysnote.github.com/">sysnote</a>,如有侵权请联系删除</em></p>
 <p>ceph后端支持多种存储引擎，以插件式的方式来进行管理使用，目前支持filestore，kvstore，memstore以及最新的bluestore，目前默认使用的filestore，但是因为filestore在写数据前需要先写journal，会有一倍的写放大，并且filestore一开始只是对于机械盘进行设计的，没有专门针对ssd做优化考虑，因此诞生的bluestore初衷就是为了减少写放大，并针对ssd做优化，而且直接管理裸盘，从理论上进一步减少文件系统如ext4/xfs等部分的开销，目前bluestore还处于开发优化阶段，在jewel版本还是试用版本，并且最新的master相比jewel已经做了大的重构，预期会在后续的大版本中稳定下来成为默认的存储引擎。本文基于master分支对bluestore存储引擎进行分析。</p>
 <h2 id="bluestore整体架构">bluestore整体架构</h2>
 <p><img src="https://zhxin.oss-cn-qingdao.aliyuncs.com/bluestore/arch.png" alt="arch"></p>
@@ -63,21 +82,9 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
 <h2 id="小结">小结</h2>
 <p>本文总体上介绍了bluestore的架构、相关元数据及内部I/O映射的逻辑，这还只是bluestore的冰山一角，后续会陆续对bluestore的处理流程、空间分配器、缓存管理、压缩等实现进行分析。</p>
 
-        </article>
-      </div>
-    <aside id="meta">
-        <div>
-        <h5 id="date"> Feb 28, 2021 </h5>
-        
-          [
-            
-              <a href="/tags/ceph" style="display: inline;">ceph</a>
-            
-          ]
-        
-        </div>
-    </aside>
-</main>
+</article>
 
-        </div></body>
+            </div>
+        </main>
+    </body>
 </html>
