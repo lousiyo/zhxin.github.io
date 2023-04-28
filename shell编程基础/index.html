@@ -1,79 +1,20 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <title>Shell编程基础 // zhxin</title>
-
+<html><head>
     <meta charset="utf-8">
-    <meta http-equiv="content-type" content="text/html; charset=utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
     
     
-    
-
-        <meta property="og:title" content="Shell编程基础" />
-    <meta property="og:description" content="" />
-    <meta property="og:type" content="website" />
-    <meta property="og:locale" content="zh-cn" />
-    <meta property="og:url" content="//zhxin.github.io/shell%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/" />
-    
-
-    <link rel="shortcut icon" href="/favicon.ico">
-
-    <link href="//zhxin.github.io/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
-    <link href="//zhxin.github.io/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
-
-    <link rel="stylesheet" href="//zhxin.github.io/css/style.css">
-    
-
-    <meta name="generator" content="Hugo 0.92.2" />
+    <title>zhxin | Shell编程基础</title>
 </head>
-
-
-<body>
-<div id="container">
-    <header id="header">
-    <div id="header-outer" class="outer">
-        <div id="header-inner" class="inner">
-            <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
-            <a id="logo" class="logo-text" href="//zhxin.github.io/">zhxin</a>
-            <nav id="main-nav">
-                
-            </nav>
-            <nav id="sub-nav">
-                <div id="search-form-wrap">
-                </div>
-            </nav>
-        </div>
-    </div>
-</header>
-
-    <section id="main" class="outer">
-        <article class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        <header class="article-header">
-            <h1 class="article-title" itemprop="name">Shell编程基础</h1>
-        </header>
-        
-        <div class="article-meta">
-            <a href="/shell%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/" class="article-date">
-                <time datetime='2021-06-28T22:49:38.000&#43;08:00' itemprop="datePublished">2021-06-28</time>
-            </a>
-            
-            
-            <div class="post-categories">
-                <div class="article-category">
-                    
-                    
-                    <a class="article-category-link" href="//zhxin.github.io//categories/%E7%BC%96%E7%A8%8B">编程</a>
-                    
-                </div>
-            </div>
-            
-            
-        </div>
-        <div class="article-entry" itemprop="articleBody">
-            <h2 id="变量">变量</h2>
+<body><div id="content">
+<main class="main_section">
+    <h2 id="title">Shell编程基础</h2>
+      <div>
+        <article id="content">
+           <h2 id="变量">变量</h2>
 <p>脚本开头使用<code>#!/bin/bash</code>指定要使用的shell,shell会通过PATH环境变量来查找脚本中使用的命令，可以使用<code>echo $PATH</code>来看下脚本会在哪些目录下查找命令，如果脚本中执行的命令没有在PATH环境变量中，也可以通过绝对或相对路径来引用.<br>
 在脚本中可以使用shell维护的环境变量也可以定义和使用自己的用户变量.<br>
 赋值等号两边不能存在空格</p>
@@ -495,140 +436,21 @@ testit <span style="color:#e6db74">${</span>myarray[*]<span style="color:#e6db74
 <p><a href="ftp://ftp.gnu.org/gnu/shtool/">shtool</a><br>
 <a href="https://github.com/koalaman/shellcheck">ShellCheck</a></p>
 
-        </div>
-
+        </article>
+      </div>
+    <aside id="meta">
+        <div>
+        <h5 id="date"> Jun 28, 2021 </h5>
         
-        
-        <div class="article-toc" style="display:none;">
-            <h3></h3>
-            <nav id="TableOfContents">
-  <ul>
-    <li><a href="#变量">变量</a></li>
-    <li><a href="#重定向输入输出">重定向输入输出</a></li>
-    <li><a href="#脚本中执行数学运算">脚本中执行数学运算</a></li>
-    <li><a href="#退出脚本">退出脚本</a></li>
-    <li><a href="#结构化命令">结构化命令</a>
-      <ul>
-        <li><a href="#if语句">if语句</a></li>
-        <li><a href="#条件测试">条件测试</a></li>
-        <li><a href="#case语句">case语句</a></li>
-        <li><a href="#for语句">for语句</a></li>
-        <li><a href="#while语句">while语句</a></li>
-      </ul>
-    </li>
-    <li><a href="#处理用户输入">处理用户输入</a></li>
-    <li><a href="#使用临时文件">使用临时文件</a></li>
-    <li><a href="#控制脚本">控制脚本</a>
-      <ul>
-        <li><a href="#shell函数">shell函数</a></li>
-      </ul>
-    </li>
-    <li><a href="#工具推荐">工具推荐</a></li>
-  </ul>
-</nav>
-        </div>
-        
-        
-
-        
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.slim.min.js" integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc=" crossorigin="anonymous"></script>
-        <script>
-            (function() {
-                var $toc = $('#TableOfContents');
-                if ($toc.length > 0) {
-                    var $window = $(window);
-
-                    function onScroll(){
-                        var currentScroll = $window.scrollTop();
-                        var h = $('.article-entry h1, .article-entry h2, .article-entry h3, .article-entry h4, .article-entry h5, .article-entry h6');
-                        var id = "";
-                        h.each(function (i, e) {
-                            e = $(e);
-                            if (e.offset().top - 10 <= currentScroll) {
-                                id = e.attr('id');
-                            }
-                        });
-                        var active = $toc.find('a.active');
-                        if (active.length == 1 && active.eq(0).attr('href') == '#' + id) return true;
-
-                        active.each(function (i, e) {
-                            $(e).removeClass('active').siblings('ul').hide();
-                        });
-                        $toc.find('a[href="#' + id + '"]').parentsUntil('#TableOfContents').each(function (i, e) {
-                            $(e).children('a').addClass('active').siblings('ul').show();
-                        });
-                    }
-
-                    $window.on('scroll', onScroll);
-                    $(document).ready(function() {
-                        $toc.find('a').parent('li').find('ul').hide();
-                        onScroll();
-                        document.getElementsByClassName('article-toc')[0].style.display = '';
-                    });
-                }
-            })();
-        </script>
-        
-
-
-        
-        <footer class="article-footer">
-            <ul class="article-tag-list">
-                
-                <li class="article-tag-list-item">
-                    <a class="article-tag-list-link" href="//zhxin.github.io/tags/shell">shell
-                    </a>
-                </li>
-                
-            </ul>
-        </footer>
-        
-    </div>
-    
-
-</article>
-
-        
-    </section>
-    <footer id="footer">
-    <div class="outer">
-        <div id="footer-info" class="inner">
-            &copy; 2023 zhxin@outlook.com
-            <br />
-            calm down and relax
+          [
             
+              <a href="/tags/shell" style="display: inline;">shell</a>
+            
+          ]
+        
         </div>
-    </div>
-    
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-109514401-1', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
+    </aside>
+</main>
 
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/tomorrow-night.min.css" integrity="sha256-2wL88NKUqvJi/ExflDzkzUumjUM73mcK2gBvBBeLvTk=" crossorigin="anonymous" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
-
-    
-    <script>
-        document.getElementById('main-nav-toggle').addEventListener('click', function () {
-            var header = document.getElementById('header');
-            if (header.classList.contains('mobile-on')) {
-                header.classList.remove('mobile-on');
-            } else {
-                header.classList.add('mobile-on');
-            }
-        });
-    </script>
-</footer>
-
-</div>
-</body>
+        </div></body>
 </html>

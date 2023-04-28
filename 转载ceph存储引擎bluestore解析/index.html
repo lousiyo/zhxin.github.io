@@ -1,79 +1,20 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <title>[转载]ceph存储引擎bluestore解析 // zhxin</title>
-
+<html><head>
     <meta charset="utf-8">
-    <meta http-equiv="content-type" content="text/html; charset=utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
     
     
-    
-
-        <meta property="og:title" content="[转载]ceph存储引擎bluestore解析" />
-    <meta property="og:description" content="" />
-    <meta property="og:type" content="website" />
-    <meta property="og:locale" content="zh-cn" />
-    <meta property="og:url" content="//zhxin.github.io/%E8%BD%AC%E8%BD%BDceph%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8Ebluestore%E8%A7%A3%E6%9E%90/" />
-    
-
-    <link rel="shortcut icon" href="/favicon.ico">
-
-    <link href="//zhxin.github.io/webfonts/ptserif/main.css" rel='stylesheet' type='text/css'>
-    <link href="//zhxin.github.io/webfonts/source-code-pro/main.css" rel="stylesheet" type="text/css">
-
-    <link rel="stylesheet" href="//zhxin.github.io/css/style.css">
-    
-
-    <meta name="generator" content="Hugo 0.92.2" />
+    <title>zhxin | [转载]ceph存储引擎bluestore解析</title>
 </head>
-
-
-<body>
-<div id="container">
-    <header id="header">
-    <div id="header-outer" class="outer">
-        <div id="header-inner" class="inner">
-            <a id="main-nav-toggle" class="nav-icon" href="javascript:;"></a>
-            <a id="logo" class="logo-text" href="//zhxin.github.io/">zhxin</a>
-            <nav id="main-nav">
-                
-            </nav>
-            <nav id="sub-nav">
-                <div id="search-form-wrap">
-                </div>
-            </nav>
-        </div>
-    </div>
-</header>
-
-    <section id="main" class="outer">
-        <article class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        <header class="article-header">
-            <h1 class="article-title" itemprop="name">[转载]ceph存储引擎bluestore解析</h1>
-        </header>
-        
-        <div class="article-meta">
-            <a href="/%E8%BD%AC%E8%BD%BDceph%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8Ebluestore%E8%A7%A3%E6%9E%90/" class="article-date">
-                <time datetime='2021-02-28T22:49:38.000&#43;08:00' itemprop="datePublished">2021-02-28</time>
-            </a>
-            
-            
-            <div class="post-categories">
-                <div class="article-category">
-                    
-                    
-                    <a class="article-category-link" href="//zhxin.github.io//categories/ceph">ceph</a>
-                    
-                </div>
-            </div>
-            
-            
-        </div>
-        <div class="article-entry" itemprop="articleBody">
-            <p><em>转载自<a href="https://sysnote.github.com/">sysnote</a>,如有侵权请联系删除</em></p>
+<body><div id="content">
+<main class="main_section">
+    <h2 id="title">[转载]ceph存储引擎bluestore解析</h2>
+      <div>
+        <article id="content">
+           <p><em>转载自<a href="https://sysnote.github.com/">sysnote</a>,如有侵权请联系删除</em></p>
 <p>ceph后端支持多种存储引擎，以插件式的方式来进行管理使用，目前支持filestore，kvstore，memstore以及最新的bluestore，目前默认使用的filestore，但是因为filestore在写数据前需要先写journal，会有一倍的写放大，并且filestore一开始只是对于机械盘进行设计的，没有专门针对ssd做优化考虑，因此诞生的bluestore初衷就是为了减少写放大，并针对ssd做优化，而且直接管理裸盘，从理论上进一步减少文件系统如ext4/xfs等部分的开销，目前bluestore还处于开发优化阶段，在jewel版本还是试用版本，并且最新的master相比jewel已经做了大的重构，预期会在后续的大版本中稳定下来成为默认的存储引擎。本文基于master分支对bluestore存储引擎进行分析。</p>
 <h2 id="bluestore整体架构">bluestore整体架构</h2>
 <p><img src="https://zhxin.oss-cn-qingdao.aliyuncs.com/bluestore/arch.png" alt="arch"></p>
@@ -122,129 +63,21 @@
 <h2 id="小结">小结</h2>
 <p>本文总体上介绍了bluestore的架构、相关元数据及内部I/O映射的逻辑，这还只是bluestore的冰山一角，后续会陆续对bluestore的处理流程、空间分配器、缓存管理、压缩等实现进行分析。</p>
 
-        </div>
-
+        </article>
+      </div>
+    <aside id="meta">
+        <div>
+        <h5 id="date"> Feb 28, 2021 </h5>
         
-        
-        <div class="article-toc" style="display:none;">
-            <h3></h3>
-            <nav id="TableOfContents">
-  <ul>
-    <li><a href="#bluestore整体架构">bluestore整体架构</a></li>
-    <li><a href="#bluestore元数据">bluestore元数据</a></li>
-    <li><a href="#io读写映射逻辑">I/O读写映射逻辑</a>
-      <ul>
-        <li><a href="#写io处理">写I/O处理</a></li>
-        <li><a href="#读io的处理">读I/O的处理</a></li>
-      </ul>
-    </li>
-    <li><a href="#clone及extent共享">clone及extent共享</a></li>
-    <li><a href="#小结">小结</a></li>
-  </ul>
-</nav>
-        </div>
-        
-        
-
-        
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.slim.min.js" integrity="sha256-/SIrNqv8h6QGKDuNoLGA4iret+kyesCkHGzVUUV0shc=" crossorigin="anonymous"></script>
-        <script>
-            (function() {
-                var $toc = $('#TableOfContents');
-                if ($toc.length > 0) {
-                    var $window = $(window);
-
-                    function onScroll(){
-                        var currentScroll = $window.scrollTop();
-                        var h = $('.article-entry h1, .article-entry h2, .article-entry h3, .article-entry h4, .article-entry h5, .article-entry h6');
-                        var id = "";
-                        h.each(function (i, e) {
-                            e = $(e);
-                            if (e.offset().top - 10 <= currentScroll) {
-                                id = e.attr('id');
-                            }
-                        });
-                        var active = $toc.find('a.active');
-                        if (active.length == 1 && active.eq(0).attr('href') == '#' + id) return true;
-
-                        active.each(function (i, e) {
-                            $(e).removeClass('active').siblings('ul').hide();
-                        });
-                        $toc.find('a[href="#' + id + '"]').parentsUntil('#TableOfContents').each(function (i, e) {
-                            $(e).children('a').addClass('active').siblings('ul').show();
-                        });
-                    }
-
-                    $window.on('scroll', onScroll);
-                    $(document).ready(function() {
-                        $toc.find('a').parent('li').find('ul').hide();
-                        onScroll();
-                        document.getElementsByClassName('article-toc')[0].style.display = '';
-                    });
-                }
-            })();
-        </script>
-        
-
-
-        
-        <footer class="article-footer">
-            <ul class="article-tag-list">
-                
-                <li class="article-tag-list-item">
-                    <a class="article-tag-list-link" href="//zhxin.github.io/tags/ceph">ceph
-                    </a>
-                </li>
-                
-            </ul>
-        </footer>
-        
-    </div>
-    
-
-</article>
-
-        
-    </section>
-    <footer id="footer">
-    <div class="outer">
-        <div id="footer-info" class="inner">
-            &copy; 2023 zhxin@outlook.com
-            <br />
-            calm down and relax
+          [
             
+              <a href="/tags/ceph" style="display: inline;">ceph</a>
+            
+          ]
+        
         </div>
-    </div>
-    
-<script type="application/javascript">
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-	ga('create', 'UA-109514401-1', 'auto');
-	
-	ga('send', 'pageview');
-}
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
+    </aside>
+</main>
 
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/tomorrow-night.min.css" integrity="sha256-2wL88NKUqvJi/ExflDzkzUumjUM73mcK2gBvBBeLvTk=" crossorigin="anonymous" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js" integrity="sha256-KbfTjB0WZ8vvXngdpJGY3Yp3xKk+tttbqClO11anCIU=" crossorigin="anonymous"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
-
-    
-    <script>
-        document.getElementById('main-nav-toggle').addEventListener('click', function () {
-            var header = document.getElementById('header');
-            if (header.classList.contains('mobile-on')) {
-                header.classList.remove('mobile-on');
-            } else {
-                header.classList.add('mobile-on');
-            }
-        });
-    </script>
-</footer>
-
-</div>
-</body>
+        </div></body>
 </html>
