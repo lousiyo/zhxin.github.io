@@ -2,35 +2,34 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on zhxin</title>
-    <link>//zhxin.github.io/tags/</link>
+    <link>https://zhxin.xyz/tags/</link>
     <description>Recent content in Tags on zhxin</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Mon, 28 Jun 2021 22:49:38 +0800</lastBuildDate><atom:link href="//zhxin.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 28 Jun 2021 22:49:38 +0800</lastBuildDate><atom:link href="https://zhxin.xyz/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>shell</title>
-      <link>//zhxin.github.io/tags/shell/</link>
+      <link>https://zhxin.xyz/tags/shell/</link>
       <pubDate>Mon, 28 Jun 2021 22:49:38 +0800</pubDate>
       
-      <guid>//zhxin.github.io/tags/shell/</guid>
+      <guid>https://zhxin.xyz/tags/shell/</guid>
       <description></description>
     </item>
     
     <item>
       <title>ceph</title>
-      <link>//zhxin.github.io/tags/ceph/</link>
+      <link>https://zhxin.xyz/tags/ceph/</link>
       <pubDate>Fri, 28 May 2021 22:49:38 +0800</pubDate>
       
-      <guid>//zhxin.github.io/tags/ceph/</guid>
+      <guid>https://zhxin.xyz/tags/ceph/</guid>
       <description></description>
     </item>
     
     <item>
       <title>git</title>
-      <link>//zhxin.github.io/tags/git/</link>
+      <link>https://zhxin.xyz/tags/git/</link>
       <pubDate>Sun, 28 Mar 2021 22:49:38 +0800</pubDate>
       
-      <guid>//zhxin.github.io/tags/git/</guid>
+      <guid>https://zhxin.xyz/tags/git/</guid>
       <description></description>
     </item>
     

@@ -1,0 +1,406 @@
+<!doctype html><html lang><head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge">
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=description content="最近看了PG状态转换的过程,代码细节没有仔细研究，先粗略过了一遍代码，特此记录.
+PG PG是存储池的基本单元，是一些对象的集合，多副本和纠删的数据备份策略依托PG实现. PG有多种状态，状态之间的变化通过状态机实现.
+有两个场景会触发peering流程：
+ 在pg创建时 在OSD启动、停止导致OSDMap变化进而导致pg的acting set发生变化时  状态机 状态机在创建PG进行初始化.
+class RecoveryMachine : public boost::statechart::state_machine< RecoveryMachine, Initial > { RecoveryState *state; public: PG *pg; utime_t event_time; uint64_t event_count; ... boost::statechat包含对象：
+ state_machine: 状态机 state: 状态 event：事件 可通过process_event函数进行事件投递 transition / custom_reaction: 转移/反应 custom_reaction通过对于react函数进行处理 PG状态机的对象、状态及时间处理主要在PG.h、PG.cc文件中.  struct Initial : boost::statechart::state< Initial, RecoveryMachine >, NamedState { explicit Initial(my_context ctx); void exit(); typedef boost::mpl::list < boost::statechart::transition< Initialize, Reset >, boost::statechart::custom_reaction< Load >, boost::statechart::custom_reaction< NullEvt >, boost::statechart::transition< boost::statechart::event_base, Crashed > > reactions; boost::statechart::result react(const Load&); boost::statechart::result react(const MNotifyRec&); boost::statechart::result react(const MInfoRec&); boost::statechart::result react(const MLogRec&); boost::statechart::result react(const boost::statechart::event_base&) { return discard_event(); } }; PG状态机主要包含的状态如下图:">
+<title>
+PG Peering过程状态变化代码走读
+</title>
+<link rel="shortcut icon" type=image/x-icon href=/>
+<link rel=stylesheet href=/css/main.bef01a829bb1c9fd7cdb729389ad566cfc9307995368e1afee57d68d263c2a12021ef00b3fdc7fc093997f030ae50016cf41c40e8226eca398bf8df7da238d9e.css integrity="sha512-vvAagpuxyf1823KTia1WbPyTB5lTaOGv7lfWjSY8KhICHvALP9x/wJOZfwMK5QAWz0HEDoIm7KOYv4332iONng==">
+</head>
+<body a=light>
+<main class=page-content aria-label=Content>
+<div class=w>
+<a href=/>&lt;-</a>
+<article>
+<p class=post-meta>
+<time datetime="2021-05-28 22:49:38 +0800 CST">
+2021-05-28
+</time>
+</p>
+<h1>PG Peering过程状态变化代码走读</h1>
+<p>最近看了PG状态转换的过程,代码细节没有仔细研究，先粗略过了一遍代码，特此记录.</p>
+<h3 id=pg>PG</h3>
+<p>PG是存储池的基本单元，是一些对象的集合，多副本和纠删的数据备份策略依托PG实现. PG有多种状态，状态之间的变化通过状态机实现.<br>
+有两个场景会触发peering流程：</p>
+<ul>
+<li>在pg创建时</li>
+<li>在OSD启动、停止导致OSDMap变化进而导致pg的acting set发生变化时</li>
+</ul>
+<h3 id=状态机>状态机</h3>
+<p>状态机在创建PG进行初始化.</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++>  <span class=k>class</span> <span class=nc>RecoveryMachine</span> <span class=o>:</span> <span class=k>public</span> <span class=n>boost</span><span class=o>::</span><span class=n>statechart</span><span class=o>::</span><span class=n>state_machine</span><span class=o>&lt;</span> <span class=n>RecoveryMachine</span><span class=p>,</span> <span class=n>Initial</span> <span class=o>&gt;</span> <span class=p>{</span>
+      <span class=n>RecoveryState</span> <span class=o>*</span><span class=n>state</span><span class=p>;</span>
+    <span class=k>public</span><span class=o>:</span>
+      <span class=n>PG</span> <span class=o>*</span><span class=n>pg</span><span class=p>;</span>
+
+      <span class=n>utime_t</span> <span class=n>event_time</span><span class=p>;</span>
+      <span class=kt>uint64_t</span> <span class=n>event_count</span><span class=p>;</span>
+  <span class=p>...</span>
+</code></pre></div><p>boost::statechat包含对象：</p>
+<ul>
+<li>state_machine: 状态机</li>
+<li>state: 状态</li>
+<li>event：事件 可通过process_event函数进行事件投递</li>
+<li>transition / custom_reaction: 转移/反应 custom_reaction通过对于react函数进行处理
+PG状态机的对象、状态及时间处理主要在<code>PG.h</code>、<code>PG.cc</code>文件中.</li>
+</ul>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++>    <span class=k>struct</span> <span class=nc>Initial</span> <span class=o>:</span> <span class=n>boost</span><span class=o>::</span><span class=n>statechart</span><span class=o>::</span><span class=n>state</span><span class=o>&lt;</span> <span class=n>Initial</span><span class=p>,</span> <span class=n>RecoveryMachine</span> <span class=o>&gt;</span><span class=p>,</span> <span class=n>NamedState</span> <span class=p>{</span>
+      <span class=k>explicit</span> <span class=nf>Initial</span><span class=p>(</span><span class=n>my_context</span> <span class=n>ctx</span><span class=p>);</span>
+      <span class=kt>void</span> <span class=nf>exit</span><span class=p>();</span>
+
+      <span class=k>typedef</span> <span class=n>boost</span><span class=o>::</span><span class=n>mpl</span><span class=o>::</span><span class=n>list</span> <span class=o>&lt;</span>
+ <span class=n>boost</span><span class=o>::</span><span class=n>statechart</span><span class=o>::</span><span class=n>transition</span><span class=o>&lt;</span> <span class=n>Initialize</span><span class=p>,</span> <span class=n>Reset</span> <span class=o>&gt;</span><span class=p>,</span>
+ <span class=n>boost</span><span class=o>::</span><span class=n>statechart</span><span class=o>::</span><span class=n>custom_reaction</span><span class=o>&lt;</span> <span class=n>Load</span> <span class=o>&gt;</span><span class=p>,</span>
+ <span class=n>boost</span><span class=o>::</span><span class=n>statechart</span><span class=o>::</span><span class=n>custom_reaction</span><span class=o>&lt;</span> <span class=n>NullEvt</span> <span class=o>&gt;</span><span class=p>,</span>
+ <span class=n>boost</span><span class=o>::</span><span class=n>statechart</span><span class=o>::</span><span class=n>transition</span><span class=o>&lt;</span> <span class=n>boost</span><span class=o>::</span><span class=n>statechart</span><span class=o>::</span><span class=n>event_base</span><span class=p>,</span> <span class=n>Crashed</span> <span class=o>&gt;</span>
+ <span class=o>&gt;</span> <span class=n>reactions</span><span class=p>;</span>
+
+      <span class=n>boost</span><span class=o>::</span><span class=n>statechart</span><span class=o>::</span><span class=n>result</span> <span class=n>react</span><span class=p>(</span><span class=k>const</span> <span class=n>Load</span><span class=o>&amp;</span><span class=p>);</span>
+      <span class=n>boost</span><span class=o>::</span><span class=n>statechart</span><span class=o>::</span><span class=n>result</span> <span class=n>react</span><span class=p>(</span><span class=k>const</span> <span class=n>MNotifyRec</span><span class=o>&amp;</span><span class=p>);</span>
+      <span class=n>boost</span><span class=o>::</span><span class=n>statechart</span><span class=o>::</span><span class=n>result</span> <span class=n>react</span><span class=p>(</span><span class=k>const</span> <span class=n>MInfoRec</span><span class=o>&amp;</span><span class=p>);</span>
+      <span class=n>boost</span><span class=o>::</span><span class=n>statechart</span><span class=o>::</span><span class=n>result</span> <span class=n>react</span><span class=p>(</span><span class=k>const</span> <span class=n>MLogRec</span><span class=o>&amp;</span><span class=p>);</span>
+      <span class=n>boost</span><span class=o>::</span><span class=n>statechart</span><span class=o>::</span><span class=n>result</span> <span class=n>react</span><span class=p>(</span><span class=k>const</span> <span class=n>boost</span><span class=o>::</span><span class=n>statechart</span><span class=o>::</span><span class=n>event_base</span><span class=o>&amp;</span><span class=p>)</span> <span class=p>{</span>
+ <span class=k>return</span> <span class=nf>discard_event</span><span class=p>();</span>
+      <span class=p>}</span>
+    <span class=p>};</span>
+</code></pre></div><p>PG状态机主要包含的状态如下图:<br>
+<img src=https://zhxin.oss-cn-qingdao.aliyuncs.com/gp/PG%E7%8A%B6%E6%80%81%E6%9C%BA%E6%B1%87%E6%80%BB.png alt=pg状态机></p>
+<h3 id=primary-peering>Primary Peering</h3>
+<p>Primary Peering过程中状态机流程图如下图所示，并没有展示<code>从OSD</code>和<code>Recovery</code>、<code>Backfill</code>过程.<br>
+<img src=https://zhxin.oss-cn-qingdao.aliyuncs.com/gp/part_state_flow.png alt=pg部分状态变化><br>
+主OSD接受到pg_create消息开始创建PG</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++><span class=kt>void</span> <span class=n>OSD</span><span class=o>::</span><span class=n>handle_pg_create</span><span class=p>(</span><span class=n>OpRequestRef</span> <span class=n>op</span><span class=p>)</span>
+<span class=p>{</span>
+  <span class=n>MOSDPGCreate</span> <span class=o>*</span><span class=n>m</span> <span class=o>=</span> <span class=p>(</span><span class=n>MOSDPGCreate</span><span class=o>*</span><span class=p>)</span><span class=n>op</span><span class=o>-&gt;</span><span class=n>get_req</span><span class=p>();</span>
+  <span class=n>assert</span><span class=p>(</span><span class=n>m</span><span class=o>-&gt;</span><span class=n>get_type</span><span class=p>()</span> <span class=o>==</span> <span class=n>MSG_OSD_PG_CREATE</span><span class=p>);</span>
+
+  <span class=n>dout</span><span class=p>(</span><span class=mi>10</span><span class=p>)</span> <span class=o>&lt;&lt;</span> <span class=s>&#34;handle_pg_create &#34;</span> <span class=o>&lt;&lt;</span> <span class=o>*</span><span class=n>m</span> <span class=o>&lt;&lt;</span> <span class=n>dendl</span><span class=p>;</span>
+
+<span class=p>...</span>
+</code></pre></div><p>依次调用<code>handle_pg_create</code>-> <code>handle_pg_peering_evt</code> -> <code>_create_lock_pg</code> -> <code>_open_lock_pg</code> -> <code>_make_pg</code>,创建PG.</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++><span class=n>PG</span><span class=o>*</span> <span class=n>OSD</span><span class=o>::</span><span class=n>_make_pg</span><span class=p>(</span>
+  <span class=n>OSDMapRef</span> <span class=n>createmap</span><span class=p>,</span>
+  <span class=n>spg_t</span> <span class=n>pgid</span><span class=p>)</span>
+<span class=p>{</span>
+  <span class=n>dout</span><span class=p>(</span><span class=mi>10</span><span class=p>)</span> <span class=o>&lt;&lt;</span> <span class=s>&#34;_open_lock_pg &#34;</span> <span class=o>&lt;&lt;</span> <span class=n>pgid</span> <span class=o>&lt;&lt;</span> <span class=n>dendl</span><span class=p>;</span>
+  <span class=n>PGPool</span> <span class=n>pool</span> <span class=o>=</span> <span class=n>_get_pool</span><span class=p>(</span><span class=n>pgid</span><span class=p>.</span><span class=n>pool</span><span class=p>(),</span> <span class=n>createmap</span><span class=p>);</span>
+
+  <span class=c1>// create
+</span><span class=c1></span>  <span class=n>PG</span> <span class=o>*</span><span class=n>pg</span><span class=p>;</span>
+  <span class=k>if</span> <span class=p>(</span><span class=n>createmap</span><span class=o>-&gt;</span><span class=n>get_pg_type</span><span class=p>(</span><span class=n>pgid</span><span class=p>.</span><span class=n>pgid</span><span class=p>)</span> <span class=o>==</span> <span class=n>pg_pool_t</span><span class=o>::</span><span class=n>TYPE_REPLICATED</span> <span class=o>||</span>
+      <span class=n>createmap</span><span class=o>-&gt;</span><span class=n>get_pg_type</span><span class=p>(</span><span class=n>pgid</span><span class=p>.</span><span class=n>pgid</span><span class=p>)</span> <span class=o>==</span> <span class=n>pg_pool_t</span><span class=o>::</span><span class=n>TYPE_ERASURE</span><span class=p>)</span>
+    <span class=n>pg</span> <span class=o>=</span> <span class=k>new</span> <span class=n>ReplicatedPG</span><span class=p>(</span><span class=o>&amp;</span><span class=n>service</span><span class=p>,</span> <span class=n>createmap</span><span class=p>,</span> <span class=n>pool</span><span class=p>,</span> <span class=n>pgid</span><span class=p>);</span>
+  <span class=k>else</span>
+    <span class=nf>assert</span><span class=p>(</span><span class=mi>0</span><span class=p>);</span>
+
+  <span class=k>return</span> <span class=n>pg</span><span class=p>;</span>
+<span class=p>}</span>
+
+</code></pre></div><p>创建PG完成之后,在<code>handle_pg_create</code> -> <code>handle_pg_peering_evt</code> -> <code>handle_create</code> 函数中,开始进行事件投递和事件的处理.</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++><span class=kt>void</span> <span class=n>PG</span><span class=o>::</span><span class=n>handle_create</span><span class=p>(</span><span class=n>RecoveryCtx</span> <span class=o>*</span><span class=n>rctx</span><span class=p>)</span>
+<span class=p>{</span>
+  <span class=n>dout</span><span class=p>(</span><span class=mi>10</span><span class=p>)</span> <span class=o>&lt;&lt;</span> <span class=s>&#34;handle_create&#34;</span> <span class=o>&lt;&lt;</span> <span class=n>dendl</span><span class=p>;</span>
+  <span class=n>rctx</span><span class=o>-&gt;</span><span class=n>created_pgs</span><span class=p>.</span><span class=n>insert</span><span class=p>(</span><span class=k>this</span><span class=p>);</span>
+  <span class=n>Initialize</span> <span class=n>evt</span><span class=p>;</span>
+  <span class=n>recovery_state</span><span class=p>.</span><span class=n>handle_event</span><span class=p>(</span><span class=n>evt</span><span class=p>,</span> <span class=n>rctx</span><span class=p>);</span>
+  <span class=n>ActMap</span> <span class=n>evt2</span><span class=p>;</span>
+  <span class=n>recovery_state</span><span class=p>.</span><span class=n>handle_event</span><span class=p>(</span><span class=n>evt2</span><span class=p>,</span> <span class=n>rctx</span><span class=p>);</span>
+<span class=p>}</span>
+</code></pre></div><p>在创建之初，状态机处于<code>Initial</code>状态，在此状态下创建一个<code>Initialize</code>事件，状态机的<code>handle_event</code>函数会调用<code>process_event</code>函数将事件投递出去.</p>
+<p>可以看到在<code>Initial</code>状态下接受到<code>Initialize</code>事件之后，状态机直接转换为<code>Reset</code>状态.先调用<code>Reset</code>构造函数,然后带着状态重新回到<code>handle_create</code>函数处，继续创建<code>ActMap</code>事件然后投递出去.<br>
+<code>Reset</code>状态下接收到<code>ActMap</code>事件后在对应定义的<code>react</code>函数中进行处理.</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++><span class=n>boost</span><span class=o>::</span><span class=n>statechart</span><span class=o>::</span><span class=n>result</span> <span class=n>PG</span><span class=o>::</span><span class=n>RecoveryState</span><span class=o>::</span><span class=n>Reset</span><span class=o>::</span><span class=n>react</span><span class=p>(</span><span class=k>const</span> <span class=n>ActMap</span><span class=o>&amp;</span><span class=p>)</span>
+<span class=p>{</span>
+  <span class=n>PG</span> <span class=o>*</span><span class=n>pg</span> <span class=o>=</span> <span class=n>context</span><span class=o>&lt;</span> <span class=n>RecoveryMachine</span> <span class=o>&gt;</span><span class=p>().</span><span class=n>pg</span><span class=p>;</span>
+  <span class=k>if</span> <span class=p>(</span><span class=n>pg</span><span class=o>-&gt;</span><span class=n>should_send_notify</span><span class=p>()</span> <span class=o>&amp;&amp;</span> <span class=n>pg</span><span class=o>-&gt;</span><span class=n>get_primary</span><span class=p>().</span><span class=n>osd</span> <span class=o>&gt;=</span> <span class=mi>0</span><span class=p>)</span> <span class=p>{</span>
+    <span class=n>context</span><span class=o>&lt;</span> <span class=n>RecoveryMachine</span> <span class=o>&gt;</span><span class=p>().</span><span class=n>send_notify</span><span class=p>(</span>
+      <span class=n>pg</span><span class=o>-&gt;</span><span class=n>get_primary</span><span class=p>(),</span>
+      <span class=n>pg_notify_t</span><span class=p>(</span>
+ <span class=n>pg</span><span class=o>-&gt;</span><span class=n>get_primary</span><span class=p>().</span><span class=n>shard</span><span class=p>,</span> <span class=n>pg</span><span class=o>-&gt;</span><span class=n>pg_whoami</span><span class=p>.</span><span class=n>shard</span><span class=p>,</span>
+ <span class=n>pg</span><span class=o>-&gt;</span><span class=n>get_osdmap</span><span class=p>()</span><span class=o>-&gt;</span><span class=n>get_epoch</span><span class=p>(),</span>
+ <span class=n>pg</span><span class=o>-&gt;</span><span class=n>get_osdmap</span><span class=p>()</span><span class=o>-&gt;</span><span class=n>get_epoch</span><span class=p>(),</span>
+ <span class=n>pg</span><span class=o>-&gt;</span><span class=n>info</span><span class=p>),</span>
+      <span class=n>pg</span><span class=o>-&gt;</span><span class=n>past_intervals</span><span class=p>);</span>
+  <span class=p>}</span>
+
+  <span class=n>pg</span><span class=o>-&gt;</span><span class=n>update_heartbeat_peers</span><span class=p>();</span>
+  <span class=n>pg</span><span class=o>-&gt;</span><span class=n>take_waiters</span><span class=p>();</span>
+
+  <span class=k>return</span> <span class=n>transit</span><span class=o>&lt;</span> <span class=n>Started</span> <span class=o>&gt;</span><span class=p>();</span>
+<span class=p>}</span>
+</code></pre></div><p>在react函数中，状态直接转换到<code>Started状态</code>, <code>Started</code>状态定义了子状态，则直接跳转到<code>Start</code>子状态.</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++>    <span class=k>struct</span> <span class=nc>Started</span> <span class=o>:</span> <span class=n>boost</span><span class=o>::</span><span class=n>statechart</span><span class=o>::</span><span class=n>state</span><span class=o>&lt;</span> <span class=n>Started</span><span class=p>,</span> <span class=n>RecoveryMachine</span><span class=p>,</span> <span class=n>Start</span> <span class=o>&gt;</span><span class=p>,</span> <span class=n>NamedState</span> <span class=p>{</span>
+      <span class=k>explicit</span> <span class=nf>Started</span><span class=p>(</span><span class=n>my_context</span> <span class=n>ctx</span><span class=p>);</span>
+      <span class=kt>void</span> <span class=nf>exit</span><span class=p>();</span>
+
+      <span class=k>typedef</span> <span class=n>boost</span><span class=o>::</span><span class=n>mpl</span><span class=o>::</span><span class=n>list</span> <span class=o>&lt;</span>
+ <span class=n>boost</span><span class=o>::</span><span class=n>statechart</span><span class=o>::</span><span class=n>custom_reaction</span><span class=o>&lt;</span> <span class=n>QueryState</span> <span class=o>&gt;</span><span class=p>,</span>
+ <span class=n>boost</span><span class=o>::</span><span class=n>statechart</span><span class=o>::</span><span class=n>custom_reaction</span><span class=o>&lt;</span> <span class=n>AdvMap</span> <span class=o>&gt;</span><span class=p>,</span>
+ <span class=n>boost</span><span class=o>::</span><span class=n>statechart</span><span class=o>::</span><span class=n>custom_reaction</span><span class=o>&lt;</span> <span class=n>NullEvt</span> <span class=o>&gt;</span><span class=p>,</span>
+ <span class=n>boost</span><span class=o>::</span><span class=n>statechart</span><span class=o>::</span><span class=n>custom_reaction</span><span class=o>&lt;</span> <span class=n>FlushedEvt</span> <span class=o>&gt;</span><span class=p>,</span>
+ <span class=n>boost</span><span class=o>::</span><span class=n>statechart</span><span class=o>::</span><span class=n>custom_reaction</span><span class=o>&lt;</span> <span class=n>IntervalFlush</span> <span class=o>&gt;</span><span class=p>,</span>
+ <span class=n>boost</span><span class=o>::</span><span class=n>statechart</span><span class=o>::</span><span class=n>transition</span><span class=o>&lt;</span> <span class=n>boost</span><span class=o>::</span><span class=n>statechart</span><span class=o>::</span><span class=n>event_base</span><span class=p>,</span> <span class=n>Crashed</span> <span class=o>&gt;</span>
+ <span class=o>&gt;</span> <span class=n>reactions</span><span class=p>;</span>
+      <span class=n>boost</span><span class=o>::</span><span class=n>statechart</span><span class=o>::</span><span class=n>result</span> <span class=n>react</span><span class=p>(</span><span class=k>const</span> <span class=n>QueryState</span><span class=o>&amp;</span> <span class=n>q</span><span class=p>);</span>
+      <span class=n>boost</span><span class=o>::</span><span class=n>statechart</span><span class=o>::</span><span class=n>result</span> <span class=n>react</span><span class=p>(</span><span class=k>const</span> <span class=n>AdvMap</span><span class=o>&amp;</span><span class=p>);</span>
+      <span class=n>boost</span><span class=o>::</span><span class=n>statechart</span><span class=o>::</span><span class=n>result</span> <span class=n>react</span><span class=p>(</span><span class=k>const</span> <span class=n>FlushedEvt</span><span class=o>&amp;</span><span class=p>);</span>
+      <span class=n>boost</span><span class=o>::</span><span class=n>statechart</span><span class=o>::</span><span class=n>result</span> <span class=n>react</span><span class=p>(</span><span class=k>const</span> <span class=n>IntervalFlush</span><span class=o>&amp;</span><span class=p>);</span>
+      <span class=n>boost</span><span class=o>::</span><span class=n>statechart</span><span class=o>::</span><span class=n>result</span> <span class=n>react</span><span class=p>(</span><span class=k>const</span> <span class=n>boost</span><span class=o>::</span><span class=n>statechart</span><span class=o>::</span><span class=n>event_base</span><span class=o>&amp;</span><span class=p>)</span> <span class=p>{</span>
+ <span class=k>return</span> <span class=nf>discard_event</span><span class=p>();</span>
+      <span class=p>}</span>
+    <span class=p>};</span>
+</code></pre></div><p>查看Start状态的构造函数</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++><span class=cm>/*-------Start---------*/</span>
+<span class=n>PG</span><span class=o>::</span><span class=n>RecoveryState</span><span class=o>::</span><span class=n>Start</span><span class=o>::</span><span class=n>Start</span><span class=p>(</span><span class=n>my_context</span> <span class=n>ctx</span><span class=p>)</span>
+  <span class=o>:</span> <span class=n>my_base</span><span class=p>(</span><span class=n>ctx</span><span class=p>),</span>
+    <span class=n>NamedState</span><span class=p>(</span><span class=n>context</span><span class=o>&lt;</span> <span class=n>RecoveryMachine</span> <span class=o>&gt;</span><span class=p>().</span><span class=n>pg</span><span class=o>-&gt;</span><span class=n>cct</span><span class=p>,</span> <span class=s>&#34;Start&#34;</span><span class=p>)</span>
+<span class=p>{</span>
+  <span class=n>context</span><span class=o>&lt;</span> <span class=n>RecoveryMachine</span> <span class=o>&gt;</span><span class=p>().</span><span class=n>log_enter</span><span class=p>(</span><span class=n>state_name</span><span class=p>);</span>
+
+  <span class=n>PG</span> <span class=o>*</span><span class=n>pg</span> <span class=o>=</span> <span class=n>context</span><span class=o>&lt;</span> <span class=n>RecoveryMachine</span> <span class=o>&gt;</span><span class=p>().</span><span class=n>pg</span><span class=p>;</span>
+  <span class=k>if</span> <span class=p>(</span><span class=n>pg</span><span class=o>-&gt;</span><span class=n>is_primary</span><span class=p>())</span> <span class=p>{</span>
+    <span class=n>dout</span><span class=p>(</span><span class=mi>1</span><span class=p>)</span> <span class=o>&lt;&lt;</span> <span class=s>&#34;transitioning to Primary&#34;</span> <span class=o>&lt;&lt;</span> <span class=n>dendl</span><span class=p>;</span>
+    <span class=n>post_event</span><span class=p>(</span><span class=n>MakePrimary</span><span class=p>());</span>
+  <span class=p>}</span> <span class=k>else</span> <span class=p>{</span> <span class=c1>//is_stray
+</span><span class=c1></span>    <span class=n>dout</span><span class=p>(</span><span class=mi>1</span><span class=p>)</span> <span class=o>&lt;&lt;</span> <span class=s>&#34;transitioning to Stray&#34;</span> <span class=o>&lt;&lt;</span> <span class=n>dendl</span><span class=p>;</span>
+    <span class=n>post_event</span><span class=p>(</span><span class=n>MakeStray</span><span class=p>());</span>
+  <span class=p>}</span>
+<span class=p>}</span>
+</code></pre></div><p>首先获取当前处理的PG，判断当前osd是不是该pg的主osd，如果是的话则投递<code>MakePrimary</code>事件，否则投递<code>MakeStray</code>事件，如果进入<code>Stray</code>状态则对应PG实例需要由当前<code>Primary</code>按照Peering的进度和结果进一步确认其身份.<br>
+按照主OSD的路径继续走, 在<code>Start</code>状态下接受到<code>MakePrimary</code>事件后，状态机会依次进入到<code>Started/Primary/Peering/Getinfo</code>，进入peering阶段。<br>
+GetInfo过程获取该PG在其他OSD上的pg_info_t信息。<br>
+调用函数generate_past_intervals计算past intervals的值.
+调用函数build_prior构造获取pg_info_t信息的OSD列表<br>
+调用get_infos给参与的OSD发送获取请求</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++><span class=cm>/*--------GetInfo---------*/</span>
+<span class=n>PG</span><span class=o>::</span><span class=n>RecoveryState</span><span class=o>::</span><span class=n>GetInfo</span><span class=o>::</span><span class=n>GetInfo</span><span class=p>(</span><span class=n>my_context</span> <span class=n>ctx</span><span class=p>)</span>
+  <span class=o>:</span> <span class=n>my_base</span><span class=p>(</span><span class=n>ctx</span><span class=p>),</span>
+    <span class=n>NamedState</span><span class=p>(</span><span class=n>context</span><span class=o>&lt;</span> <span class=n>RecoveryMachine</span> <span class=o>&gt;</span><span class=p>().</span><span class=n>pg</span><span class=o>-&gt;</span><span class=n>cct</span><span class=p>,</span> <span class=s>&#34;Started/Primary/Peering/GetInfo&#34;</span><span class=p>)</span>
+<span class=p>{</span>
+  <span class=n>context</span><span class=o>&lt;</span> <span class=n>RecoveryMachine</span> <span class=o>&gt;</span><span class=p>().</span><span class=n>log_enter</span><span class=p>(</span><span class=n>state_name</span><span class=p>);</span>
+
+  <span class=n>PG</span> <span class=o>*</span><span class=n>pg</span> <span class=o>=</span> <span class=n>context</span><span class=o>&lt;</span> <span class=n>RecoveryMachine</span> <span class=o>&gt;</span><span class=p>().</span><span class=n>pg</span><span class=p>;</span>
+  <span class=n>pg</span><span class=o>-&gt;</span><span class=n>generate_past_intervals</span><span class=p>();</span>
+  <span class=n>unique_ptr</span><span class=o>&lt;</span><span class=n>PriorSet</span><span class=o>&gt;</span> <span class=o>&amp;</span><span class=n>prior_set</span> <span class=o>=</span> <span class=n>context</span><span class=o>&lt;</span> <span class=n>Peering</span> <span class=o>&gt;</span><span class=p>().</span><span class=n>prior_set</span><span class=p>;</span>
+
+  <span class=n>assert</span><span class=p>(</span><span class=n>pg</span><span class=o>-&gt;</span><span class=n>blocked_by</span><span class=p>.</span><span class=n>empty</span><span class=p>());</span>
+
+  <span class=k>if</span> <span class=p>(</span><span class=o>!</span><span class=n>prior_set</span><span class=p>.</span><span class=n>get</span><span class=p>())</span>
+    <span class=n>pg</span><span class=o>-&gt;</span><span class=n>build_prior</span><span class=p>(</span><span class=n>prior_set</span><span class=p>);</span>
+
+  <span class=n>pg</span><span class=o>-&gt;</span><span class=n>reset_min_peer_features</span><span class=p>();</span>
+  <span class=n>get_infos</span><span class=p>();</span>
+  <span class=k>if</span> <span class=p>(</span><span class=n>peer_info_requested</span><span class=p>.</span><span class=n>empty</span><span class=p>()</span> <span class=o>&amp;&amp;</span> <span class=o>!</span><span class=n>prior_set</span><span class=o>-&gt;</span><span class=n>pg_down</span><span class=p>)</span> <span class=p>{</span>
+    <span class=n>post_event</span><span class=p>(</span><span class=n>GotInfo</span><span class=p>());</span>
+  <span class=p>}</span>
+<span class=p>}</span>
+</code></pre></div><p>主OSD收到pg_info的ACK信息后封装成<code>MNotifyRec</code>事件发送给状态机.<br>
+在对应react函数中对拉取的pg_info进行处理，在<code>GetInfo</code>状态下如果所有的副本OSD都成功将信息返回，则会投递<code>GotInfo</code>事件.<br>
+状态机收到<code>GotInfo</code>事件后，跳转到<code>GetLog</code>状态，在<code>GetLog</code>的构造函数中</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-C++ data-lang=C++><span class=cm>/*------GetLog------------*/</span>
+<span class=n>PG</span><span class=o>::</span><span class=n>RecoveryState</span><span class=o>::</span><span class=n>GetLog</span><span class=o>::</span><span class=n>GetLog</span><span class=p>(</span><span class=n>my_context</span> <span class=n>ctx</span><span class=p>)</span>
+  <span class=o>:</span> <span class=n>my_base</span><span class=p>(</span><span class=n>ctx</span><span class=p>),</span>
+    <span class=n>NamedState</span><span class=p>(</span>
+      <span class=n>context</span><span class=o>&lt;</span> <span class=n>RecoveryMachine</span> <span class=o>&gt;</span><span class=p>().</span><span class=n>pg</span><span class=o>-&gt;</span><span class=n>cct</span><span class=p>,</span> <span class=s>&#34;Started/Primary/Peering/GetLog&#34;</span><span class=p>),</span>
+    <span class=n>msg</span><span class=p>(</span><span class=mi>0</span><span class=p>)</span>
+<span class=p>{</span>
+  <span class=n>context</span><span class=o>&lt;</span> <span class=n>RecoveryMachine</span> <span class=o>&gt;</span><span class=p>().</span><span class=n>log_enter</span><span class=p>(</span><span class=n>state_name</span><span class=p>);</span>
+
+  <span class=n>PG</span> <span class=o>*</span><span class=n>pg</span> <span class=o>=</span> <span class=n>context</span><span class=o>&lt;</span> <span class=n>RecoveryMachine</span> <span class=o>&gt;</span><span class=p>().</span><span class=n>pg</span><span class=p>;</span>
+
+  <span class=c1>// adjust acting?
+</span><span class=c1></span>  <span class=k>if</span> <span class=p>(</span><span class=o>!</span><span class=n>pg</span><span class=o>-&gt;</span><span class=n>choose_acting</span><span class=p>(</span><span class=n>auth_log_shard</span><span class=p>,</span> <span class=nb>false</span><span class=p>,</span>
+    <span class=o>&amp;</span><span class=n>context</span><span class=o>&lt;</span> <span class=n>Peering</span> <span class=o>&gt;</span><span class=p>().</span><span class=n>history_les_bound</span><span class=p>))</span> <span class=p>{</span>
+    <span class=k>if</span> <span class=p>(</span><span class=o>!</span><span class=n>pg</span><span class=o>-&gt;</span><span class=n>want_acting</span><span class=p>.</span><span class=n>empty</span><span class=p>())</span> <span class=p>{</span>
+      <span class=n>post_event</span><span class=p>(</span><span class=n>NeedActingChange</span><span class=p>());</span>
+    <span class=p>}</span> <span class=k>else</span> <span class=p>{</span>
+      <span class=n>post_event</span><span class=p>(</span><span class=n>IsIncomplete</span><span class=p>());</span>
+    <span class=p>}</span>
+    <span class=k>return</span><span class=p>;</span>
+  <span class=p>}</span>
+<span class=p>...</span>
+</code></pre></div><p>调用choose_acting函数选出具有权威日志的OSD并计算wan_acting列表<br>
+如果自己就是权威日志，则不需要拉取，直接投递<code>GotLog</code>事件进入下一状态<br>
+如果自己不是权威日志，则需要去具有权威日志的OSD上去拉取，并与本地日志合并.通过发送<code>pg_query_t::LOG</code>事件到具有权威日志的OSD进行拉取,当收到权威日志后，封装成<code>MLogRec</code>类型事件</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++><span class=n>boost</span><span class=o>::</span><span class=n>statechart</span><span class=o>::</span><span class=n>result</span> <span class=n>PG</span><span class=o>::</span><span class=n>RecoveryState</span><span class=o>::</span><span class=n>GetLog</span><span class=o>::</span><span class=n>react</span><span class=p>(</span><span class=k>const</span> <span class=n>MLogRec</span><span class=o>&amp;</span> <span class=n>logevt</span><span class=p>)</span>
+<span class=p>{</span>
+  <span class=n>assert</span><span class=p>(</span><span class=o>!</span><span class=n>msg</span><span class=p>);</span>
+  <span class=k>if</span> <span class=p>(</span><span class=n>logevt</span><span class=p>.</span><span class=n>from</span> <span class=o>!=</span> <span class=n>auth_log_shard</span><span class=p>)</span> <span class=p>{</span>
+    <span class=n>dout</span><span class=p>(</span><span class=mi>10</span><span class=p>)</span> <span class=o>&lt;&lt;</span> <span class=s>&#34;GetLog: discarding log from &#34;</span>
+      <span class=o>&lt;&lt;</span> <span class=s>&#34;non-auth_log_shard osd.&#34;</span> <span class=o>&lt;&lt;</span> <span class=n>logevt</span><span class=p>.</span><span class=n>from</span> <span class=o>&lt;&lt;</span> <span class=n>dendl</span><span class=p>;</span>
+    <span class=k>return</span> <span class=nf>discard_event</span><span class=p>();</span>
+  <span class=p>}</span>
+  <span class=n>dout</span><span class=p>(</span><span class=mi>10</span><span class=p>)</span> <span class=o>&lt;&lt;</span> <span class=s>&#34;GetLog: received master log from osd&#34;</span>
+    <span class=o>&lt;&lt;</span> <span class=n>logevt</span><span class=p>.</span><span class=n>from</span> <span class=o>&lt;&lt;</span> <span class=n>dendl</span><span class=p>;</span>
+  <span class=n>msg</span> <span class=o>=</span> <span class=n>logevt</span><span class=p>.</span><span class=n>msg</span><span class=p>;</span>
+  <span class=n>post_event</span><span class=p>(</span><span class=n>GotLog</span><span class=p>());</span>
+  <span class=k>return</span> <span class=nf>discard_event</span><span class=p>();</span>
+<span class=p>}</span>
+</code></pre></div><p>投递<code>GotLog</code>事件后，转移到<code>GetMissing</code>状态,进入<code>GetMissing</code>构造函数</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++><span class=cm>/*------GetMissing--------*/</span>
+<span class=n>PG</span><span class=o>::</span><span class=n>RecoveryState</span><span class=o>::</span><span class=n>GetMissing</span><span class=o>::</span><span class=n>GetMissing</span><span class=p>(</span><span class=n>my_context</span> <span class=n>ctx</span><span class=p>)</span>
+  <span class=o>:</span> <span class=n>my_base</span><span class=p>(</span><span class=n>ctx</span><span class=p>),</span>
+    <span class=n>NamedState</span><span class=p>(</span><span class=n>context</span><span class=o>&lt;</span> <span class=n>RecoveryMachine</span> <span class=o>&gt;</span><span class=p>().</span><span class=n>pg</span><span class=o>-&gt;</span><span class=n>cct</span><span class=p>,</span> <span class=s>&#34;Started/Primary/Peering/GetMissing&#34;</span><span class=p>)</span>
+<span class=p>{</span>
+  <span class=n>context</span><span class=o>&lt;</span> <span class=n>RecoveryMachine</span> <span class=o>&gt;</span><span class=p>().</span><span class=n>log_enter</span><span class=p>(</span><span class=n>state_name</span><span class=p>);</span>
+
+  <span class=n>PG</span> <span class=o>*</span><span class=n>pg</span> <span class=o>=</span> <span class=n>context</span><span class=o>&lt;</span> <span class=n>RecoveryMachine</span> <span class=o>&gt;</span><span class=p>().</span><span class=n>pg</span><span class=p>;</span>
+  <span class=n>assert</span><span class=p>(</span><span class=o>!</span><span class=n>pg</span><span class=o>-&gt;</span><span class=n>actingbackfill</span><span class=p>.</span><span class=n>empty</span><span class=p>());</span>
+  <span class=k>for</span> <span class=p>(</span><span class=n>set</span><span class=o>&lt;</span><span class=n>pg_shard_t</span><span class=o>&gt;::</span><span class=n>iterator</span> <span class=n>i</span> <span class=o>=</span> <span class=n>pg</span><span class=o>-&gt;</span><span class=n>actingbackfill</span><span class=p>.</span><span class=n>begin</span><span class=p>();</span>
+       <span class=n>i</span> <span class=o>!=</span> <span class=n>pg</span><span class=o>-&gt;</span><span class=n>actingbackfill</span><span class=p>.</span><span class=n>end</span><span class=p>();</span>
+       <span class=o>++</span><span class=n>i</span><span class=p>)</span> <span class=p>{</span>
+    <span class=k>if</span> <span class=p>(</span><span class=o>*</span><span class=n>i</span> <span class=o>==</span> <span class=n>pg</span><span class=o>-&gt;</span><span class=n>get_primary</span><span class=p>())</span> <span class=k>continue</span><span class=p>;</span>
+    <span class=k>const</span> <span class=n>pg_info_t</span><span class=o>&amp;</span> <span class=n>pi</span> <span class=o>=</span> <span class=n>pg</span><span class=o>-&gt;</span><span class=n>peer_info</span><span class=p>[</span><span class=o>*</span><span class=n>i</span><span class=p>];</span>
+
+    <span class=k>if</span> <span class=p>(</span><span class=n>pi</span><span class=p>.</span><span class=n>is_empty</span><span class=p>())</span>
+      <span class=k>continue</span><span class=p>;</span>                                <span class=c1>// no pg data, nothing divergent
+</span><span class=c1></span>
+    <span class=k>if</span> <span class=p>(</span><span class=n>pi</span><span class=p>.</span><span class=n>last_update</span> <span class=o>&lt;</span> <span class=n>pg</span><span class=o>-&gt;</span><span class=n>pg_log</span><span class=p>.</span><span class=n>get_tail</span><span class=p>())</span> <span class=p>{</span>
+      <span class=n>dout</span><span class=p>(</span><span class=mi>10</span><span class=p>)</span> <span class=o>&lt;&lt;</span> <span class=s>&#34; osd.&#34;</span> <span class=o>&lt;&lt;</span> <span class=o>*</span><span class=n>i</span> <span class=o>&lt;&lt;</span> <span class=s>&#34; is not contiguous, will restart backfill&#34;</span> <span class=o>&lt;&lt;</span> <span class=n>dendl</span><span class=p>;</span>
+      <span class=n>pg</span><span class=o>-&gt;</span><span class=n>peer_missing</span><span class=p>[</span><span class=o>*</span><span class=n>i</span><span class=p>];</span>
+      <span class=k>continue</span><span class=p>;</span>
+    <span class=p>}</span>
+    <span class=k>if</span> <span class=p>(</span><span class=n>pi</span><span class=p>.</span><span class=n>last_backfill</span> <span class=o>==</span> <span class=n>hobject_t</span><span class=p>())</span> <span class=p>{</span>
+      <span class=n>dout</span><span class=p>(</span><span class=mi>10</span><span class=p>)</span> <span class=o>&lt;&lt;</span> <span class=s>&#34; osd.&#34;</span> <span class=o>&lt;&lt;</span> <span class=o>*</span><span class=n>i</span> <span class=o>&lt;&lt;</span> <span class=s>&#34; will fully backfill; can infer empty missing set&#34;</span> <span class=o>&lt;&lt;</span> <span class=n>dendl</span><span class=p>;</span>
+      <span class=n>pg</span><span class=o>-&gt;</span><span class=n>peer_missing</span><span class=p>[</span><span class=o>*</span><span class=n>i</span><span class=p>];</span>
+      <span class=k>continue</span><span class=p>;</span>
+    <span class=p>}</span>
+<span class=p>...</span>
+</code></pre></div><p><code>GetMissing</code>处理过程中首先拉取各个从OSD的有效日志，然后用主OSD的权威日止与各个从OSD的日志进行对比，从而计算出各个从OSD上不一致的对象并保存在对应的pg_missing_t结构体中，作为后续数据修复依据.<br>
+如果所有获取日志的请求都返回并处理完成，则调用<code>Activate(pg->get_osdmap()->get_epoch())</code> 进入<code>Active</code>状态</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++>    <span class=c1>// all good!
+</span><span class=c1></span>    <span class=n>post_event</span><span class=p>(</span><span class=n>Activate</span><span class=p>(</span><span class=n>pg</span><span class=o>-&gt;</span><span class=n>get_osdmap</span><span class=p>()</span><span class=o>-&gt;</span><span class=n>get_epoch</span><span class=p>()));</span>
+</code></pre></div><p>到本阶段则可以说Peering主要工作已经完成,不过在接受客户端读写之前还需要执行active操作激活各个副本，该操作主要目的为固化本地peering成果，以保证其不致因为系统掉电而前功尽弃，同时还需要初始化后续在后台执行Recovery或者Backfill所依赖的关键元数据信息.</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++>  <span class=n>pg</span><span class=o>-&gt;</span><span class=n>activate</span><span class=p>(</span><span class=o>*</span><span class=n>context</span><span class=o>&lt;</span> <span class=n>RecoveryMachine</span> <span class=o>&gt;</span><span class=p>().</span><span class=n>get_cur_transaction</span><span class=p>(),</span>
+        <span class=n>pg</span><span class=o>-&gt;</span><span class=n>get_osdmap</span><span class=p>()</span><span class=o>-&gt;</span><span class=n>get_epoch</span><span class=p>(),</span>
+        <span class=o>*</span><span class=n>context</span><span class=o>&lt;</span> <span class=n>RecoveryMachine</span> <span class=o>&gt;</span><span class=p>().</span><span class=n>get_on_safe_context_list</span><span class=p>(),</span>
+        <span class=o>*</span><span class=n>context</span><span class=o>&lt;</span> <span class=n>RecoveryMachine</span> <span class=o>&gt;</span><span class=p>().</span><span class=n>get_query_map</span><span class=p>(),</span>
+        <span class=n>context</span><span class=o>&lt;</span> <span class=n>RecoveryMachine</span> <span class=o>&gt;</span><span class=p>().</span><span class=n>get_info_map</span><span class=p>(),</span>
+        <span class=n>context</span><span class=o>&lt;</span> <span class=n>RecoveryMachine</span> <span class=o>&gt;</span><span class=p>().</span><span class=n>get_recovery_ctx</span><span class=p>());</span>
+</code></pre></div><p>如果所有副本都被激活则投递<code>AllReplicasActivated</code>事件，在<code>Active</code>状态下处理该事件,处理过程中调用<code>pg->on_activate()</code>函数</p>
+<p>在该函数中查看是否需要Recovery需要则触发DoRecovery事件；查看是否需要Backfill操作，需要则触发RequestBackfill操作.</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++>
+<span class=kt>void</span> <span class=n>ReplicatedPG</span><span class=o>::</span><span class=n>on_activate</span><span class=p>()</span>
+<span class=p>{</span>
+  <span class=c1>// all clean?
+</span><span class=c1></span>  <span class=k>if</span> <span class=p>(</span><span class=n>needs_recovery</span><span class=p>())</span> <span class=p>{</span>
+    <span class=n>dout</span><span class=p>(</span><span class=mi>10</span><span class=p>)</span> <span class=o>&lt;&lt;</span> <span class=s>&#34;activate not all replicas are up-to-date, queueing recovery&#34;</span> <span class=o>&lt;&lt;</span> <span class=n>dendl</span><span class=p>;</span>
+    <span class=n>queue_peering_event</span><span class=p>(</span>
+      <span class=n>CephPeeringEvtRef</span><span class=p>(</span>
+ <span class=n>std</span><span class=o>::</span><span class=n>make_shared</span><span class=o>&lt;</span><span class=n>CephPeeringEvt</span><span class=o>&gt;</span><span class=p>(</span>
+   <span class=n>get_osdmap</span><span class=p>()</span><span class=o>-&gt;</span><span class=n>get_epoch</span><span class=p>(),</span>
+   <span class=n>get_osdmap</span><span class=p>()</span><span class=o>-&gt;</span><span class=n>get_epoch</span><span class=p>(),</span>
+   <span class=n>DoRecovery</span><span class=p>())));</span>
+  <span class=p>}</span> <span class=k>else</span> <span class=nf>if</span> <span class=p>(</span><span class=n>needs_backfill</span><span class=p>())</span> <span class=p>{</span>
+    <span class=n>dout</span><span class=p>(</span><span class=mi>10</span><span class=p>)</span> <span class=o>&lt;&lt;</span> <span class=s>&#34;activate queueing backfill&#34;</span> <span class=o>&lt;&lt;</span> <span class=n>dendl</span><span class=p>;</span>
+    <span class=n>queue_peering_event</span><span class=p>(</span>
+      <span class=n>CephPeeringEvtRef</span><span class=p>(</span>
+ <span class=n>std</span><span class=o>::</span><span class=n>make_shared</span><span class=o>&lt;</span><span class=n>CephPeeringEvt</span><span class=o>&gt;</span><span class=p>(</span>
+   <span class=n>get_osdmap</span><span class=p>()</span><span class=o>-&gt;</span><span class=n>get_epoch</span><span class=p>(),</span>
+   <span class=n>get_osdmap</span><span class=p>()</span><span class=o>-&gt;</span><span class=n>get_epoch</span><span class=p>(),</span>
+   <span class=n>RequestBackfill</span><span class=p>())));</span>
+  <span class=p>}</span> <span class=k>else</span> <span class=p>{</span>
+    <span class=n>dout</span><span class=p>(</span><span class=mi>10</span><span class=p>)</span> <span class=o>&lt;&lt;</span> <span class=s>&#34;activate all replicas clean, no recovery&#34;</span> <span class=o>&lt;&lt;</span> <span class=n>dendl</span><span class=p>;</span>
+    <span class=n>queue_peering_event</span><span class=p>(</span>
+      <span class=n>CephPeeringEvtRef</span><span class=p>(</span>
+ <span class=n>std</span><span class=o>::</span><span class=n>make_shared</span><span class=o>&lt;</span><span class=n>CephPeeringEvt</span><span class=o>&gt;</span><span class=p>(</span>
+   <span class=n>get_osdmap</span><span class=p>()</span><span class=o>-&gt;</span><span class=n>get_epoch</span><span class=p>(),</span>
+   <span class=n>get_osdmap</span><span class=p>()</span><span class=o>-&gt;</span><span class=n>get_epoch</span><span class=p>(),</span>
+   <span class=n>AllReplicasRecovered</span><span class=p>())));</span>
+  <span class=p>}</span>
+<span class=p>...</span>
+</code></pre></div><h3 id=recovery>Recovery</h3>
+<p>如果Primary检测自身或者任意一个Peer存在待修复的对象，将通过向状态机投递<code>DoRecovery</code>事件，切换到<code>Started/Primary/Active/WaitLocalRecoveryReserved</code>状态，开始准备执行Recovery.<br>
+Recovery 是仅依据PG日志中的缺失记录来修复不一致的对象.<br>
+在<code>Activating</code>状态接受到<code>DoRecovery</code>事件后，转换到<code>WaitLocalRecoveryReserved</code>状态.</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++>    <span class=k>struct</span> <span class=nc>Activating</span> <span class=o>:</span> <span class=n>boost</span><span class=o>::</span><span class=n>statechart</span><span class=o>::</span><span class=n>state</span><span class=o>&lt;</span> <span class=n>Activating</span><span class=p>,</span> <span class=n>Active</span> <span class=o>&gt;</span><span class=p>,</span> <span class=n>NamedState</span> <span class=p>{</span>
+      <span class=k>typedef</span> <span class=n>boost</span><span class=o>::</span><span class=n>mpl</span><span class=o>::</span><span class=n>list</span> <span class=o>&lt;</span>
+ <span class=n>boost</span><span class=o>::</span><span class=n>statechart</span><span class=o>::</span><span class=n>transition</span><span class=o>&lt;</span> <span class=n>AllReplicasRecovered</span><span class=p>,</span> <span class=n>Recovered</span> <span class=o>&gt;</span><span class=p>,</span>
+ <span class=n>boost</span><span class=o>::</span><span class=n>statechart</span><span class=o>::</span><span class=n>transition</span><span class=o>&lt;</span> <span class=n>DoRecovery</span><span class=p>,</span> <span class=n>WaitLocalRecoveryReserved</span> <span class=o>&gt;</span><span class=p>,</span>
+ <span class=n>boost</span><span class=o>::</span><span class=n>statechart</span><span class=o>::</span><span class=n>transition</span><span class=o>&lt;</span> <span class=n>RequestBackfill</span><span class=p>,</span> <span class=n>WaitLocalBackfillReserved</span> <span class=o>&gt;</span>
+ <span class=o>&gt;</span> <span class=n>reactions</span><span class=p>;</span>
+      <span class=k>explicit</span> <span class=nf>Activating</span><span class=p>(</span><span class=n>my_context</span> <span class=n>ctx</span><span class=p>);</span>
+      <span class=kt>void</span> <span class=nf>exit</span><span class=p>();</span>
+    <span class=p>};</span>
+<span class=p>...</span>
+</code></pre></div><p>在<code>WaitLocalRecoveryReserved</code>构造函数中，通过request_reservation函数进行资源预留请求，资源预留是为了控制一个OSD上正在修复的PG最大数目，在主OSD和从OSD上都需要预约。当收到<code>LocalRecoveryReserved</code>事件后，标志本地资源预约完成.</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++><span class=n>PG</span><span class=o>::</span><span class=n>RecoveryState</span><span class=o>::</span><span class=n>WaitLocalRecoveryReserved</span><span class=o>::</span><span class=n>WaitLocalRecoveryReserved</span><span class=p>(</span><span class=n>my_context</span> <span class=n>ctx</span><span class=p>)</span>
+  <span class=o>:</span> <span class=n>my_base</span><span class=p>(</span><span class=n>ctx</span><span class=p>),</span>
+    <span class=n>NamedState</span><span class=p>(</span><span class=n>context</span><span class=o>&lt;</span> <span class=n>RecoveryMachine</span> <span class=o>&gt;</span><span class=p>().</span><span class=n>pg</span><span class=o>-&gt;</span><span class=n>cct</span><span class=p>,</span> <span class=s>&#34;Started/Primary/Active/WaitLocalRecoveryReserved&#34;</span><span class=p>)</span>
+<span class=p>{</span>
+  <span class=n>context</span><span class=o>&lt;</span> <span class=n>RecoveryMachine</span> <span class=o>&gt;</span><span class=p>().</span><span class=n>log_enter</span><span class=p>(</span><span class=n>state_name</span><span class=p>);</span>
+  <span class=n>PG</span> <span class=o>*</span><span class=n>pg</span> <span class=o>=</span> <span class=n>context</span><span class=o>&lt;</span> <span class=n>RecoveryMachine</span> <span class=o>&gt;</span><span class=p>().</span><span class=n>pg</span><span class=p>;</span>
+  <span class=n>pg</span><span class=o>-&gt;</span><span class=n>state_set</span><span class=p>(</span><span class=n>PG_STATE_RECOVERY_WAIT</span><span class=p>);</span>
+  <span class=n>pg</span><span class=o>-&gt;</span><span class=n>osd</span><span class=o>-&gt;</span><span class=n>local_reserver</span><span class=p>.</span><span class=n>request_reservation</span><span class=p>(</span>
+    <span class=n>pg</span><span class=o>-&gt;</span><span class=n>info</span><span class=p>.</span><span class=n>pgid</span><span class=p>,</span>
+    <span class=k>new</span> <span class=n>QueuePeeringEvt</span><span class=o>&lt;</span><span class=n>LocalRecoveryReserved</span><span class=o>&gt;</span><span class=p>(</span>
+      <span class=n>pg</span><span class=p>,</span> <span class=n>pg</span><span class=o>-&gt;</span><span class=n>get_osdmap</span><span class=p>()</span><span class=o>-&gt;</span><span class=n>get_epoch</span><span class=p>(),</span>
+      <span class=n>LocalRecoveryReserved</span><span class=p>()),</span>
+    <span class=n>pg</span><span class=o>-&gt;</span><span class=n>get_recovery_priority</span><span class=p>());</span>
+  <span class=n>pg</span><span class=o>-&gt;</span><span class=n>publish_stats_to_osd</span><span class=p>();</span>
+<span class=p>}</span>
+</code></pre></div><p>当收到<code>LocalRecoveryReserved</code>事件后，标志本地资源预约完成，然后转移到<code>WaitRemoteRecoveryReserved</code>状态</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++>    <span class=k>struct</span> <span class=nc>WaitLocalRecoveryReserved</span> <span class=o>:</span> <span class=n>boost</span><span class=o>::</span><span class=n>statechart</span><span class=o>::</span><span class=n>state</span><span class=o>&lt;</span> <span class=n>WaitLocalRecoveryReserved</span><span class=p>,</span> <span class=n>Active</span> <span class=o>&gt;</span><span class=p>,</span> <span class=n>NamedState</span> <span class=p>{</span>
+      <span class=k>typedef</span> <span class=n>boost</span><span class=o>::</span><span class=n>mpl</span><span class=o>::</span><span class=n>list</span> <span class=o>&lt;</span>
+ <span class=n>boost</span><span class=o>::</span><span class=n>statechart</span><span class=o>::</span><span class=n>transition</span><span class=o>&lt;</span> <span class=n>LocalRecoveryReserved</span><span class=p>,</span> <span class=n>WaitRemoteRecoveryReserved</span> <span class=o>&gt;</span>
+ <span class=o>&gt;</span> <span class=n>reactions</span><span class=p>;</span>
+      <span class=k>explicit</span> <span class=nf>WaitLocalRecoveryReserved</span><span class=p>(</span><span class=n>my_context</span> <span class=n>ctx</span><span class=p>);</span>
+      <span class=kt>void</span> <span class=nf>exit</span><span class=p>();</span>
+    <span class=p>};</span>
+</code></pre></div><p>在<code>WaitRemoteRecoveryReserved</code>状态下，完成远程资源的预约，当接收到<code>RemoteRecoveryReserved</code>后表明资源都预约完成，然后投递<code>AllRemotesReserved</code>事件，标志着该PG在所有参与数据修复的从OSD上完成资源预约，进入<code>Recovery</code>状态.</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++><span class=n>PG</span><span class=o>::</span><span class=n>RecoveryState</span><span class=o>::</span><span class=n>Recovering</span><span class=o>::</span><span class=n>Recovering</span><span class=p>(</span><span class=n>my_context</span> <span class=n>ctx</span><span class=p>)</span>
+  <span class=o>:</span> <span class=n>my_base</span><span class=p>(</span><span class=n>ctx</span><span class=p>),</span>
+    <span class=n>NamedState</span><span class=p>(</span><span class=n>context</span><span class=o>&lt;</span> <span class=n>RecoveryMachine</span> <span class=o>&gt;</span><span class=p>().</span><span class=n>pg</span><span class=o>-&gt;</span><span class=n>cct</span><span class=p>,</span> <span class=s>&#34;Started/Primary/Active/Recovering&#34;</span><span class=p>)</span>
+<span class=p>{</span>
+  <span class=n>context</span><span class=o>&lt;</span> <span class=n>RecoveryMachine</span> <span class=o>&gt;</span><span class=p>().</span><span class=n>log_enter</span><span class=p>(</span><span class=n>state_name</span><span class=p>);</span>
+
+  <span class=n>PG</span> <span class=o>*</span><span class=n>pg</span> <span class=o>=</span> <span class=n>context</span><span class=o>&lt;</span> <span class=n>RecoveryMachine</span> <span class=o>&gt;</span><span class=p>().</span><span class=n>pg</span><span class=p>;</span>
+  <span class=n>pg</span><span class=o>-&gt;</span><span class=n>state_clear</span><span class=p>(</span><span class=n>PG_STATE_RECOVERY_WAIT</span><span class=p>);</span>
+  <span class=n>pg</span><span class=o>-&gt;</span><span class=n>state_set</span><span class=p>(</span><span class=n>PG_STATE_RECOVERING</span><span class=p>);</span>
+  <span class=n>pg</span><span class=o>-&gt;</span><span class=n>publish_stats_to_osd</span><span class=p>();</span>
+  <span class=n>pg</span><span class=o>-&gt;</span><span class=n>osd</span><span class=o>-&gt;</span><span class=n>queue_for_recovery</span><span class=p>(</span><span class=n>pg</span><span class=p>);</span>
+<span class=p>}</span>
+</code></pre></div><p>在<code>Recoverying</code>状态完成实际的数据修复工作<br>
+把PG状态设置为PG_STATE_RECOVERING，并把PG添加到recovery_wq工作队列中，开始启动数据修复.<br>
+Recovery过程由PG的主OSD来触发并控制，先修复主的，然后修复从的。<br>
+在recovery_wq中，工作队列的线程池的处理函数调用do_recovery函数执行实际的数据修复工作.</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++>    <span class=kt>void</span> <span class=nf>_process</span><span class=p>(</span><span class=n>PG</span> <span class=o>*</span><span class=n>pg</span><span class=p>,</span> <span class=n>ThreadPool</span><span class=o>::</span><span class=n>TPHandle</span> <span class=o>&amp;</span><span class=n>handle</span><span class=p>)</span> <span class=k>override</span> <span class=p>{</span>
+      <span class=n>osd</span><span class=o>-&gt;</span><span class=n>do_recovery</span><span class=p>(</span><span class=n>pg</span><span class=p>,</span> <span class=n>handle</span><span class=p>);</span>
+      <span class=n>pg</span><span class=o>-&gt;</span><span class=n>put</span><span class=p>(</span><span class=s>&#34;RecoveryWQ&#34;</span><span class=p>);</span>
+    <span class=p>}</span>
+</code></pre></div><p><code>ReplicatedPG::start_recovery_ops</code>函数完成副本类型PG的修复工作.</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-c++ data-lang=c++><span class=kt>bool</span> <span class=n>ReplicatedPG</span><span class=o>::</span><span class=n>start_recovery_ops</span><span class=p>(</span>
+  <span class=kt>int</span> <span class=n>max</span><span class=p>,</span> <span class=n>ThreadPool</span><span class=o>::</span><span class=n>TPHandle</span> <span class=o>&amp;</span><span class=n>handle</span><span class=p>,</span>
+  <span class=kt>int</span> <span class=o>*</span><span class=n>ops_started</span><span class=p>)</span>
+<span class=p>{</span>
+  <span class=kt>int</span><span class=o>&amp;</span> <span class=n>started</span> <span class=o>=</span> <span class=o>*</span><span class=n>ops_started</span><span class=p>;</span>
+  <span class=n>started</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span>
+  <span class=kt>bool</span> <span class=n>work_in_progress</span> <span class=o>=</span> <span class=nb>false</span><span class=p>;</span>
+  <span class=p>...</span>
+  <span class=n>started</span> <span class=o>=</span> <span class=n>recover_replicas</span><span class=p>(</span><span class=n>max</span><span class=p>,</span> <span class=n>handle</span><span class=p>);</span>
+  <span class=p>}</span>
+  <span class=k>if</span> <span class=p>(</span><span class=o>!</span><span class=n>started</span><span class=p>)</span> <span class=p>{</span>
+    <span class=c1>// We still have missing objects that we should grab from replicas.
+</span><span class=c1></span>    <span class=n>started</span> <span class=o>+=</span> <span class=n>recover_primary</span><span class=p>(</span><span class=n>max</span><span class=p>,</span> <span class=n>handle</span><span class=p>);</span>
+  <span class=p>}</span>
+  <span class=p>...</span>
+</code></pre></div><p>函数<code>ReplicatedPG::recover_primary</code>完成PG主OSD缺失对象的修复<br>
+如果在<code>Recoverying</code>状态完成Recovery操作后，如果需要Backfill工作则接受<code>RequestBackfill</code>事件，进入Backfill流程<br>
+如果没有Backfill工作，直接接受<code>AllReplicasRecovered</code>事件，转入<code>Recovered</code>状态
+转入<code>Recovered</code>状态之后，意味着完成数据修复工作，当收到<code>GoClean</code>事件后，PG进入clean状态.</p>
+<h3 id=backfill>Backfill</h3>
+<p>和Recovery类似，如果Primary发现还有副本需要通过Backfill才能修复，则进行Backfill。<br>
+Backfill是PG通过重新扫描所有的对象，对比发现确实的对象，通过整体拷贝来修复。和Recovery一样需要进行资源预约.<br>
+这部分过程就不写了&mldr;</p>
+</article>
+</div>
+</main>
+</body>
+</html>

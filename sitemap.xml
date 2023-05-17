@@ -2,55 +2,59 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>//zhxin.github.io/</loc>
+    <loc>https://zhxin.xyz/</loc>
     <lastmod>2022-08-25T21:30:04+08:00</lastmod>
   </url><url>
-    <loc>//zhxin.github.io/categories/</loc>
+    <loc>https://zhxin.xyz/categories/</loc>
     <lastmod>2021-06-28T22:49:38+08:00</lastmod>
   </url><url>
-    <loc>//zhxin.github.io/post/</loc>
+    <loc>https://zhxin.xyz/post/</loc>
     <lastmod>2021-06-28T22:49:38+08:00</lastmod>
   </url><url>
-    <loc>//zhxin.github.io/tags/shell/</loc>
+    <loc>https://zhxin.xyz/tags/shell/</loc>
     <lastmod>2021-06-28T22:49:38+08:00</lastmod>
   </url><url>
-    <loc>//zhxin.github.io/shell%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/</loc>
+    <loc>https://zhxin.xyz/post/shell_script/</loc>
     <lastmod>2021-06-28T22:49:38+08:00</lastmod>
   </url><url>
-    <loc>//zhxin.github.io/tags/</loc>
+    <loc>https://zhxin.xyz/tags/</loc>
     <lastmod>2021-06-28T22:49:38+08:00</lastmod>
   </url><url>
-    <loc>//zhxin.github.io/categories/%E7%BC%96%E7%A8%8B/</loc>
+    <loc>https://zhxin.xyz/categories/%E7%BC%96%E7%A8%8B/</loc>
     <lastmod>2021-06-28T22:49:38+08:00</lastmod>
   </url><url>
-    <loc>//zhxin.github.io/tags/ceph/</loc>
+    <loc>https://zhxin.xyz/tags/ceph/</loc>
     <lastmod>2021-05-28T22:49:38+08:00</lastmod>
   </url><url>
-    <loc>//zhxin.github.io/categories/ceph/</loc>
+    <loc>https://zhxin.xyz/categories/ceph/</loc>
     <lastmod>2021-05-28T22:49:38+08:00</lastmod>
   </url><url>
-    <loc>//zhxin.github.io/pg-peering%E8%BF%87%E7%A8%8B%E7%8A%B6%E6%80%81%E5%8F%98%E5%8C%96%E4%BB%A3%E7%A0%81%E8%B5%B0%E8%AF%BB/</loc>
+    <loc>https://zhxin.xyz/post/pg_state_change_code/</loc>
     <lastmod>2021-05-28T22:49:38+08:00</lastmod>
   </url><url>
-    <loc>//zhxin.github.io/tags/git/</loc>
+    <loc>https://zhxin.xyz/tags/git/</loc>
     <lastmod>2021-03-28T22:49:38+08:00</lastmod>
   </url><url>
-    <loc>//zhxin.github.io/git%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%88%9D%E5%A7%8B%E9%85%8D%E7%BD%AE/</loc>
+    <loc>https://zhxin.xyz/post/git-client-config/</loc>
     <lastmod>2021-03-28T22:49:38+08:00</lastmod>
   </url><url>
-    <loc>//zhxin.github.io/categories/%E5%A4%87%E5%BF%98/</loc>
+    <loc>https://zhxin.xyz/categories/%E5%A4%87%E5%BF%98/</loc>
     <lastmod>2021-03-28T22:49:38+08:00</lastmod>
   </url><url>
-    <loc>//zhxin.github.io/%E8%BD%AC%E8%BD%BDceph%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8Ebluestore%E8%A7%A3%E6%9E%90/</loc>
+    <loc>https://zhxin.xyz/post/ceph_bluestore_summary/</loc>
     <lastmod>2021-02-28T22:49:38+08:00</lastmod>
   </url><url>
-    <loc>//zhxin.github.io/%E5%B8%B8%E7%94%A8ceph%E5%91%BD%E4%BB%A4/</loc>
+    <loc>https://zhxin.xyz/post/ceph%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</loc>
     <lastmod>2021-02-28T22:49:38+08:00</lastmod>
   </url><url>
-    <loc>//zhxin.github.io/%E6%88%91%E7%9A%84%E5%A4%A9%E6%89%8D%E5%A5%B3%E5%8F%8B%E8%AF%BB%E5%90%8E%E6%84%9F/</loc>
+    <loc>https://zhxin.xyz/post/my_briliant_friend/</loc>
     <lastmod>2021-02-28T22:49:38+08:00</lastmod>
   </url><url>
-    <loc>//zhxin.github.io/categories/%E7%9E%8E%E5%86%99/</loc>
+    <loc>https://zhxin.xyz/categories/%E7%9E%8E%E5%86%99/</loc>
     <lastmod>2021-02-28T22:49:38+08:00</lastmod>
+  </url><url>
+    <loc>https://zhxin.xyz/archives/</loc>
+  </url><url>
+    <loc>https://zhxin.xyz/search/</loc>
   </url>
 </urlset>

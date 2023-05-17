@@ -1,0 +1,50 @@
+<!doctype html><html lang><head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge">
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=description content="
+安装完成GIT之后配置相关用户名邮箱.
+
+git config --global user.name &#34;zhxin&#34;
+git config --global user.email zhxin@outlook.com
+">
+<title>
+Git客户端初始配置
+</title>
+<link rel="shortcut icon" type=image/x-icon href=/>
+<link rel=stylesheet href=/css/main.bef01a829bb1c9fd7cdb729389ad566cfc9307995368e1afee57d68d263c2a12021ef00b3fdc7fc093997f030ae50016cf41c40e8226eca398bf8df7da238d9e.css integrity="sha512-vvAagpuxyf1823KTia1WbPyTB5lTaOGv7lfWjSY8KhICHvALP9x/wJOZfwMK5QAWz0HEDoIm7KOYv4332iONng==">
+</head>
+<body a=light>
+<main class=page-content aria-label=Content>
+<div class=w>
+<a href=/>&lt;-</a>
+<article>
+<p class=post-meta>
+<time datetime="2021-03-28 22:49:38 +0800 CST">
+2021-03-28
+</time>
+</p>
+<h1>Git客户端初始配置</h1>
+<ul>
+<li>安装完成GIT之后配置相关用户名邮箱.</li>
+</ul>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>git config --global user.name <span class=s2>&#34;zhxin&#34;</span>
+git config --global user.email zhxin@outlook.com
+</code></pre></div><ul>
+<li>配置连接github.</li>
+</ul>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>ls -al ~/.ssh <span class=c1>#查看是否生成SSH key</span>
+ssh-keygen -t rsa -b <span class=m>4096</span> -C <span class=s2>&#34;zhxin@outlook.com&#34;</span> <span class=c1>#生成key</span>
+<span class=nb>eval</span> <span class=s2>&#34;</span><span class=k>$(</span>ssh-agent -s<span class=k>)</span><span class=s2>&#34;</span> <span class=c1>#保证ssh可用</span>
+ssh-add ~/.ssh/id_rsa <span class=c1>#添加ssh key到客户端</span>
+</code></pre></div><ul>
+<li>将ssh key添加到github账户</li>
+</ul>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>clip &lt; ~/.ssh/id_rsa.pub
+ssh -T git@github.com <span class=c1>#测试是否连接到github</span>
+</code></pre></div>
+</article>
+</div>
+</main>
+</body>
+</html>

@@ -1,0 +1,460 @@
+<!doctype html><html lang><head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge">
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=description content="变量 脚本开头使用#!/bin/bash指定要使用的shell,shell会通过PATH环境变量来查找脚本中使用的命令，可以使用echo $PATH来看下脚本会在哪些目录下查找命令，如果脚本中执行的命令没有在PATH环境变量中，也可以通过绝对或相对路径来引用.
+在脚本中可以使用shell维护的环境变量也可以定义和使用自己的用户变量.
+赋值等号两边不能存在空格
+  环境变量：
+可以使用set命令查看当前环境变量列表,例如$HOME、$HOSTNAME、$USER等;
+  用户变量：
+由字母数字下划线组成，长度不超过二十，区分大小写，变量、等号、值之间不能有空格，在shell脚本结束时会被删除掉，使用美元符号引用，例如name=&#34;test&#34;。
+使用用户变量保存命令执行结果：testing=$(date)
+  特殊参数变量
+   参数 描述     $0 $1 $2 入参   $# 参数个数   $* 入参列表，将所有参数当作单个参数   $@ 入参列表，单独处理每个参      重定向输入输出 输出重定向: > 追加：>>
+输入重定向: < 在脚本中使用< > 需要进行转义\< \>
+内联输入重定向：
+command << marker content marker # 例如：  wc -l <<EOF echo &#34;aaa&#34; echo &#34;BBB&#34; EOF 内联重定向到文件">
+<title>
+Shell编程基础
+</title>
+<link rel="shortcut icon" type=image/x-icon href=/>
+<link rel=stylesheet href=/css/main.bef01a829bb1c9fd7cdb729389ad566cfc9307995368e1afee57d68d263c2a12021ef00b3fdc7fc093997f030ae50016cf41c40e8226eca398bf8df7da238d9e.css integrity="sha512-vvAagpuxyf1823KTia1WbPyTB5lTaOGv7lfWjSY8KhICHvALP9x/wJOZfwMK5QAWz0HEDoIm7KOYv4332iONng==">
+</head>
+<body a=light>
+<main class=page-content aria-label=Content>
+<div class=w>
+<a href=/>&lt;-</a>
+<article>
+<p class=post-meta>
+<time datetime="2021-06-28 22:49:38 +0800 CST">
+2021-06-28
+</time>
+</p>
+<h1>Shell编程基础</h1>
+<h2 id=变量>变量</h2>
+<p>脚本开头使用<code>#!/bin/bash</code>指定要使用的shell,shell会通过PATH环境变量来查找脚本中使用的命令，可以使用<code>echo $PATH</code>来看下脚本会在哪些目录下查找命令，如果脚本中执行的命令没有在PATH环境变量中，也可以通过绝对或相对路径来引用.<br>
+在脚本中可以使用shell维护的环境变量也可以定义和使用自己的用户变量.<br>
+赋值等号两边不能存在空格</p>
+<ul>
+<li>
+<p>环境变量：<br>
+可以使用set命令查看当前环境变量列表,例如<code>$HOME</code>、<code>$HOSTNAME</code>、<code>$USER</code>等;</p>
+</li>
+<li>
+<p>用户变量：<br>
+由字母数字下划线组成，长度不超过二十，区分大小写，变量、等号、值之间不能有空格，在shell脚本结束时会被删除掉，使用美元符号引用，例如<code>name="test"</code>。<br>
+使用用户变量保存命令执行结果：<code>testing=$(date)</code></p>
+</li>
+<li>
+<p>特殊参数变量</p>
+<table>
+<thead>
+<tr>
+<th style=text-align:left>参数</th>
+<th style=text-align:left>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style=text-align:left>$0 $1 $2</td>
+<td style=text-align:left>入参</td>
+</tr>
+<tr>
+<td style=text-align:left>$#</td>
+<td style=text-align:left>参数个数</td>
+</tr>
+<tr>
+<td style=text-align:left>$*</td>
+<td style=text-align:left>入参列表，将所有参数当作单个参数</td>
+</tr>
+<tr>
+<td style=text-align:left>$@</td>
+<td style=text-align:left>入参列表，单独处理每个参</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<h2 id=重定向输入输出>重定向输入输出</h2>
+<p>输出重定向: <code>></code> 追加：<code>>></code><br>
+输入重定向: <code>&lt;</code>
+在脚本中使用<code>&lt; ></code> 需要进行转义<code>\&lt; \></code><br>
+内联输入重定向：</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=nb>command</span> <span class=s>&lt;&lt; marker  
+</span><span class=s> content  
+</span><span class=s>marker</span>  
+<span class=c1># 例如：  </span>
+wc -l <span class=s>&lt;&lt;EOF  
+</span><span class=s>echo &#34;aaa&#34;  
+</span><span class=s>echo &#34;BBB&#34;  
+</span><span class=s>EOF</span>  
+</code></pre></div><p>内联重定向到文件</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>cat &gt;&gt; demo.txt <span class=s>&lt;&lt;EOF  
+</span><span class=s> some content  
+</span><span class=s>EOF</span>  
+</code></pre></div><table>
+<thead>
+<tr>
+<th style=text-align:left>文件描述符</th>
+<th style=text-align:left>缩写</th>
+<th style=text-align:left>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style=text-align:left>0</td>
+<td style=text-align:left>STDIN</td>
+<td style=text-align:left>标准输入</td>
+</tr>
+<tr>
+<td style=text-align:left>1</td>
+<td style=text-align:left>STDOUT</td>
+<td style=text-align:left>标准输出</td>
+</tr>
+<tr>
+<td style=text-align:left>2</td>
+<td style=text-align:left>STDERR</td>
+<td style=text-align:left>标准错误</td>
+</tr>
+</tbody>
+</table>
+<p><code>&></code> 符号会将所有输出重定向到一个文件内<br>
+<code>exec 1>testout</code> 在脚本中将STDOUT永久重定向到testout<br>
+<code>exec 3>./testfile</code> 创建写描述符3<br>
+<code>exec 3>&-</code> 关闭文件描述符3<br>
+<code>cat /dev/null > file.log</code> 可快速清空日志</p>
+<h2 id=脚本中执行数学运算>脚本中执行数学运算</h2>
+<ol>
+<li>
+<p>使用美元符和方括号，只支持整型计算<br>
+<code>var1=$[1 + 5]</code><br>
+<code>var2=$[$var1 * 2]</code><br>
+<code>var3=$[2 / 3]</code></p>
+</li>
+<li>
+<p>通过bc进行浮点型计算:</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=nv>var1</span><span class=o>=</span><span class=k>$(</span><span class=nb>echo</span> <span class=s2>&#34;scale=4; 3.44 / 5&#34;</span> <span class=p>|</span> bc<span class=k>)</span>  
+<span class=nv>var1</span><span class=o>=</span>10.46  
+<span class=nv>var2</span><span class=o>=</span>43.67  
+<span class=nv>var3</span><span class=o>=</span>33.2  
+<span class=nv>var4</span><span class=o>=</span><span class=m>71</span>  
+<span class=nv>var5</span><span class=o>=</span><span class=k>$(</span>bc<span class=s>&lt;&lt;EOF  
+</span><span class=s>scale = 4  
+</span><span class=s>a1=($var1 * $var2)  
+</span><span class=s>b1=($var3 * $var4)  
+</span><span class=s>a1+b1  
+</span><span class=s>EOF</span>  
+<span class=k>)</span>  
+<span class=nb>echo</span> <span class=s2>&#34;</span><span class=nv>$var5</span><span class=s2>&#34;</span>  
+</code></pre></div></li>
+</ol>
+<h2 id=退出脚本>退出脚本</h2>
+<p>默认情况shell会以脚本最后一个命令的退出状态码退出(0-255)<br>
+可以使用exit命令指定脚本的退出码，并通过<code>echo $?</code>查看程序是否执行成功</p>
+<h2 id=结构化命令>结构化命令</h2>
+<h3 id=if语句>if语句</h3>
+<p>根据命令执行是否成功走不同分支</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=k>if</span> command1<span class=p>;</span> <span class=k>then</span>  
+ comands  
+<span class=k>elif</span> comand2<span class=p>;</span> <span class=k>then</span>  
+ comands  
+<span class=k>else</span>  
+ comands  
+<span class=k>fi</span>  
+</code></pre></div><p>或者使用条件测试的方式</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=k>if</span> <span class=o>[</span> condition <span class=o>]</span><span class=p>;</span><span class=k>then</span>  
+ comands  
+<span class=k>fi</span>  
+</code></pre></div><h3 id=条件测试>条件测试</h3>
+<ol>
+<li>
+<p>数值比较</p>
+<table>
+<thead>
+<tr>
+<th style=text-align:left>比较</th>
+<th style=text-align:left>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style=text-align:left>n1 -eq n2</td>
+<td style=text-align:left>检查相等</td>
+</tr>
+<tr>
+<td style=text-align:left>n1 -ge n2</td>
+<td style=text-align:left>检查n1是否大于或等于n2</td>
+</tr>
+<tr>
+<td style=text-align:left>n1 -gt n2</td>
+<td style=text-align:left>检查n1是否大于n2</td>
+</tr>
+<tr>
+<td style=text-align:left>n1 -le n2</td>
+<td style=text-align:left>检查n1是否小于或等于n2</td>
+</tr>
+<tr>
+<td style=text-align:left>n1 -lt n2</td>
+<td style=text-align:left>检查n1是否小于n2</td>
+</tr>
+<tr>
+<td style=text-align:left>n1 -ne n2</td>
+<td style=text-align:left>检查n1是否不等于n2</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>字符串比较</p>
+<table>
+<thead>
+<tr>
+<th style=text-align:left>比较</th>
+<th style=text-align:left>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style=text-align:left>str1 = str2</td>
+<td style=text-align:left>是否相同</td>
+</tr>
+<tr>
+<td style=text-align:left>str1 != str2</td>
+<td style=text-align:left>是否不同</td>
+</tr>
+<tr>
+<td style=text-align:left>str1 &lt; str2</td>
+<td style=text-align:left>str1是否比str2大</td>
+</tr>
+<tr>
+<td style=text-align:left>str1 > str2</td>
+<td style=text-align:left>str1是否比str2小</td>
+</tr>
+<tr>
+<td style=text-align:left>-n str1</td>
+<td style=text-align:left>检查str1的长度是否非0</td>
+</tr>
+<tr>
+<td style=text-align:left>-z str1</td>
+<td style=text-align:left>检查str1的长度是否为0</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>文件比较</p>
+<table>
+<thead>
+<tr>
+<th style=text-align:left>比较</th>
+<th style=text-align:left>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style=text-align:left>-d file</td>
+<td style=text-align:left>file是否存在并是目录</td>
+</tr>
+<tr>
+<td style=text-align:left>-e file</td>
+<td style=text-align:left>file是否存在</td>
+</tr>
+<tr>
+<td style=text-align:left>-f file</td>
+<td style=text-align:left>file是否存在并是文件</td>
+</tr>
+<tr>
+<td style=text-align:left>-r file</td>
+<td style=text-align:left>是否存在并可读</td>
+</tr>
+<tr>
+<td style=text-align:left>-s file</td>
+<td style=text-align:left>是否存在并非空</td>
+</tr>
+<tr>
+<td style=text-align:left>-w file</td>
+<td style=text-align:left>是否存在并可写</td>
+</tr>
+<tr>
+<td style=text-align:left>-x file</td>
+<td style=text-align:left>是否存在并可执行</td>
+</tr>
+<tr>
+<td style=text-align:left>-O file</td>
+<td style=text-align:left>是否存在并属于当前用户所有</td>
+</tr>
+<tr>
+<td style=text-align:left>-G file</td>
+<td style=text-align:left>是否存在并默认组与当前用户相同</td>
+</tr>
+<tr>
+<td style=text-align:left>file1 -nt file2</td>
+<td style=text-align:left>file1是否比file2新</td>
+</tr>
+<tr>
+<td style=text-align:left>file1 -ot file2</td>
+<td style=text-align:left>file1是否比file2旧</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>复合条件测试<br>
+<code>[ conditon1 ] && [ condition2 ]</code><br>
+<code>[ conditon1 ] || [ condition2 ]</code></p>
+</li>
+<li>
+<p>使用双括号进行数学运算判断<br>
+<code>(( expression ))</code>，支持的运算符号除普通运算符外还包括如下，大于小于符号不用转义 .
+<code>val++</code> 、<code>val--</code>、 <code>++val</code>、 <code>--val</code> ：自增自减<br>
+<code>!</code> :求反 <code>~</code>:位求反 <code>**</code>:幂运算 <code>&lt;&lt;</code>：左位移 <code>>></code>:右位移 <code>&</code>:位布尔和<code>|</code>：位布尔或 <code>&&</code>：逻辑和 <code>||</code>:逻辑或</p>
+</li>
+</ol>
+<p>可以在if语句中使用双括号命令，也可以在脚本中的普通命令里使用来赋值</p>
+<ol start=6>
+<li>使用双方括号进行字符串比较<br>
+<code>[[ express ]]</code><br>
+bash shell支持模式匹配: <code>if [[ $USER == r* ]]</code></li>
+</ol>
+<h3 id=case语句>case语句</h3>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=k>case</span> variable in  
+pattern1 <span class=p>|</span> pattern2<span class=o>)</span> commands1<span class=p>;;</span>  
+pattern3<span class=o>)</span> comands2<span class=p>;;</span>  
+*<span class=o>)</span> default commands<span class=p>;;</span>  
+<span class=k>esac</span>  
+</code></pre></div><h3 id=for语句>for语句</h3>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=k>for</span> var in list  
+<span class=k>do</span>  
+ commands:<span class=nv>$var</span>  
+<span class=k>done</span>  
+</code></pre></div><p>有时候使用<code>for line in $(cat $file)</code>读取文本文件，默认会以空格分隔而不是换行符,需要修改IFS.<br>
+IFS值：内部字段分隔符</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>IFS.OLD<span class=o>=</span><span class=nv>$IFS</span>  
+<span class=nv>IFS</span><span class=o>=</span>$’<span class=se>\n</span>’  
+<span class=c1>#&lt;在代码中使用新的IFS值&gt;  </span>
+<span class=nv>IFS</span><span class=o>=</span><span class=nv>$IFS</span>.OLD  
+</code></pre></div><p>C语言风格for语句</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=k>for</span>  <span class=o>((</span> <span class=nv>i</span><span class=o>=</span>1<span class=p>;</span> i &lt;<span class=o>=</span>10<span class=p>;</span> i++ <span class=o>))</span>  
+<span class=k>do</span>  
+...  
+<span class=k>done</span>  
+</code></pre></div><h3 id=while语句>while语句</h3>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=k>while</span> <span class=o>[</span> condition <span class=o>]</span>  
+<span class=k>do</span>  
+ other commands  
+<span class=k>done</span>  
+</code></pre></div><p><code>break</code>: 跳出内部循环<br>
+<code>continue</code>: 跳过本次循环<br>
+<code>break n</code>: 可跳出外部循环<br>
+<code>continue n</code> : 继续循环层级n的循环</p>
+<h2 id=处理用户输入>处理用户输入</h2>
+<p>利用getopts处理用户输入参数</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=k>while</span> <span class=nb>getopts</span> :ab:c opt  
+<span class=k>do</span>  
+ <span class=k>case</span> <span class=s2>&#34;</span><span class=nv>$opt</span><span class=s2>&#34;</span> in  
+      a<span class=o>)</span> <span class=nb>echo</span> <span class=s2>&#34;found -a option&#34;</span> <span class=p>;;</span>  
+      b<span class=o>)</span> <span class=nb>echo</span> <span class=s2>&#34;found -b option ,with value </span><span class=nv>$OPTARG</span><span class=s2>&#34;</span> <span class=p>;;</span>  
+      c<span class=o>)</span> <span class=nb>echo</span> <span class=s2>&#34;found -c option&#34;</span> <span class=p>;;</span>  
+      *<span class=o>)</span> <span class=nb>echo</span> <span class=s2>&#34;Unknown option: </span><span class=nv>$opt</span><span class=s2>&#34;</span> <span class=p>;;</span>  
+      <span class=k>esac</span>  
+<span class=k>done</span>  
+<span class=nb>shift</span> $<span class=o>[</span> <span class=nv>$OPTIND</span> - <span class=m>1</span> <span class=o>]</span>  
+<span class=nv>count</span><span class=o>=</span><span class=m>1</span>  
+<span class=k>for</span> param in <span class=s2>&#34;</span><span class=nv>$@</span><span class=s2>&#34;</span>  
+<span class=k>do</span>  
+    <span class=nb>echo</span> <span class=s2>&#34;Parameter </span><span class=nv>$count</span><span class=s2>: </span><span class=nv>$param</span><span class=s2>&#34;</span>  
+    <span class=nv>count</span><span class=o>=</span>$<span class=o>[</span> <span class=nv>$count</span> + 1<span class=o>]</span>  
+<span class=k>done</span>  
+</code></pre></div><p>获取用户输入</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=k>if</span> <span class=nb>read</span> -t <span class=m>10</span> -p <span class=s2>&#34;Please enter your name: &#34;</span> name  
+<span class=k>then</span>  
+ <span class=nb>echo</span> <span class=s2>&#34;ok: </span><span class=nv>$name</span><span class=s2>&#34;</span>  
+<span class=k>else</span>  
+ <span class=nb>echo</span> <span class=s2>&#34;too slow&#34;</span>  
+ <span class=nb>exit</span> <span class=m>1</span>  
+<span class=k>fi</span>  
+</code></pre></div><h2 id=使用临时文件>使用临时文件</h2>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=nv>tempfile</span><span class=o>=</span><span class=k>$(</span>mktemp tmp.XXXXXX<span class=k>)</span>  
+<span class=nb>exec</span> 3&gt;<span class=nv>$tempfile</span>  
+<span class=nb>echo</span> “test” &gt;<span class=p>&amp;</span><span class=m>3</span>  
+<span class=nb>exec</span> 3&gt;<span class=p>&amp;</span>-  
+rm -f <span class=nv>$tempfile</span> 2&gt;/dev/null  
+mktemp -t 生成在/tmp/目录下，返回全路径  
+</code></pre></div><h2 id=控制脚本>控制脚本</h2>
+<ol>
+<li>
+<p>记录消息<br>
+<code>date | tee -a testfile</code></p>
+</li>
+<li>
+<p>trap捕获处理信号</p>
+</li>
+</ol>
+<p><code>trap commands signals</code><br>
+<code>trap “echo ‘ sorry i have trapped Ctrl-C’” SIGINT</code><br>
+<code>trap -- SIGINT</code> 删除捕获</p>
+<ol start=3>
+<li>后台作业相关<br>
+<code>command &</code>：后台运行<br>
+<code>nohup comand</code>: 后台运行<br>
+<code>jobs</code>: 列举作业<br>
+<code>bg</code>: 后台重启作业<br>
+<code>fg</code>: 将后台作业调到前台继续执行,可指定job号<br>
+<code>nice renice</code>: 调整作业优先级<br>
+<code>at</code>: 定时执行作业<br>
+<code>atq</code>: 定时作业队列<br>
+<code>atrm</code>: 删除作业<br>
+<code>crontab</code>定时任务时间表：<br>
+min hour dayofmonth month dayofweek command<br>
+<code>anacron</code>:开机执行错过作业</li>
+</ol>
+<h3 id=shell函数>shell函数</h3>
+<ul>
+<li>函数名必须唯一，否则会有问题</li>
+</ul>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=k>function</span> name<span class=o>{</span>  
+ commands  
+<span class=o>}</span>  
+<span class=c1>#或者  </span>
+name<span class=o>()</span> <span class=o>{</span>  
+ commands  
+<span class=o>}</span>  
+</code></pre></div><ul>
+<li>
+<p>return 可以返回函数值：必须函数一结束就取<code>$?</code>;退出的状态码必须是0-255</p>
+</li>
+<li>
+<p>超出255值可以使用 <code>result=$(func1)</code> 方式</p>
+</li>
+<li>
+<p>每个函数可以单独使用自己的<code>$# $1 $2</code> 环境参数</p>
+</li>
+<li>
+<p>变量作用域：</p>
+</li>
+<li>
+<p>全局变量：不管在函数内外定义，脚本所有位置都可访问</p>
+</li>
+<li>
+<p>局部变量：必须用<code>local</code>关键字显式声明<br>
+<code>local temp=$[ $value + 5]</code></p>
+</li>
+</ul>
+<p>数组相关：<br>
+函数参数是数组情况处理：</p>
+<div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=k>function</span> testit <span class=o>{</span>  
+ <span class=nb>local</span> newarray  
+ <span class=nv>newarray</span><span class=o>=(</span><span class=s1>&#39;echo &#34;$@&#34;&#39;</span><span class=o>)</span>  
+ <span class=nb>echo</span> “The new array value is: <span class=si>${</span><span class=nv>newarray</span><span class=p>[*]</span><span class=si>}</span>”  
+<span class=o>}</span>  
+<span class=nv>myarray</span><span class=o>=(</span><span class=m>1</span> <span class=m>2</span> <span class=m>3</span> <span class=m>4</span> 5<span class=o>)</span>  
+testit <span class=si>${</span><span class=nv>myarray</span><span class=p>[*]</span><span class=si>}</span>  
+</code></pre></div><h2 id=工具推荐>工具推荐</h2>
+<p><a href=ftp://ftp.gnu.org/gnu/shtool/>shtool</a><br>
+<a href=https://github.com/koalaman/shellcheck>ShellCheck</a></p>
+</article>
+</div>
+</main>
+</body>
+</html>

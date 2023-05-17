@@ -2,76 +2,137 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>zhxin</title>
-    <link>//zhxin.github.io/</link>
+    <link>https://zhxin.xyz/</link>
     <description>Recent content on zhxin</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Thu, 25 Aug 2022 21:30:04 +0800</lastBuildDate><atom:link href="//zhxin.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 25 Aug 2022 21:30:04 +0800</lastBuildDate><atom:link href="https://zhxin.xyz/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Shell编程基础</title>
-      <link>//zhxin.github.io/shell%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/</link>
+      <link>https://zhxin.xyz/post/shell_script/</link>
       <pubDate>Mon, 28 Jun 2021 22:49:38 +0800</pubDate>
       
-      <guid>//zhxin.github.io/shell%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/</guid>
-      <description>变量 脚本开头使用#!/bin/bash指定要使用的shell,shell会通过PATH环境变量来查找脚本中使用的命令，可以使用echo $PATH来看下脚本会在哪些目录下查找命令，如果脚本中执行的命令没有在PATH环境变量中，也可以通过绝对或相对路径来引用. 在脚本中可以使用shell维护的环境变量也可以定义和使用自己的用户变量. 赋值等号两边不能存在空格 环境变量： 可以使用set命令查看当前环境变量列表,例如$HOME、$HOSTNAME、$USER等; 用户变量： 由字母数字下划线组成，长度不超过二十，</description>
+      <guid>https://zhxin.xyz/post/shell_script/</guid>
+      <description>变量 脚本开头使用#!/bin/bash指定要使用的shell,shell会通过PATH环境变量来查找脚本中使用的命令，可以使用echo $PATH来看下脚本会在哪些目录下查找命令，如果脚本中执行的命令没有在PATH环境变量中，也可以通过绝对或相对路径来引用.
+在脚本中可以使用shell维护的环境变量也可以定义和使用自己的用户变量.
+赋值等号两边不能存在空格
+  环境变量：
+可以使用set命令查看当前环境变量列表,例如$HOME、$HOSTNAME、$USER等;
+  用户变量：
+由字母数字下划线组成，长度不超过二十，区分大小写，变量、等号、值之间不能有空格，在shell脚本结束时会被删除掉，使用美元符号引用，例如name=&amp;quot;test&amp;quot;。
+使用用户变量保存命令执行结果：testing=$(date)
+  特殊参数变量
+   参数 描述     $0 $1 $2 入参   $# 参数个数   $* 入参列表，将所有参数当作单个参数   $@ 入参列表，单独处理每个参      重定向输入输出 输出重定向: &amp;gt; 追加：&amp;gt;&amp;gt;
+输入重定向: &amp;lt; 在脚本中使用&amp;lt; &amp;gt; 需要进行转义\&amp;lt; \&amp;gt;
+内联输入重定向：
+command &amp;lt;&amp;lt; marker content marker # 例如：  wc -l &amp;lt;&amp;lt;EOF echo &amp;#34;aaa&amp;#34; echo &amp;#34;BBB&amp;#34; EOF 内联重定向到文件</description>
     </item>
     
     <item>
       <title>PG Peering过程状态变化代码走读</title>
-      <link>//zhxin.github.io/pg-peering%E8%BF%87%E7%A8%8B%E7%8A%B6%E6%80%81%E5%8F%98%E5%8C%96%E4%BB%A3%E7%A0%81%E8%B5%B0%E8%AF%BB/</link>
+      <link>https://zhxin.xyz/post/pg_state_change_code/</link>
       <pubDate>Fri, 28 May 2021 22:49:38 +0800</pubDate>
       
-      <guid>//zhxin.github.io/pg-peering%E8%BF%87%E7%A8%8B%E7%8A%B6%E6%80%81%E5%8F%98%E5%8C%96%E4%BB%A3%E7%A0%81%E8%B5%B0%E8%AF%BB/</guid>
-      <description>最近看了PG状态转换的过程,代码细节没有仔细研究，先粗略过了一遍代码，特此记录. PG PG是存储池的基本单元，是一些对象的集合，多副本和纠删的数据备份策略依托PG实现. PG有多种状态，状态之间的变化通过状态机实现. 有两个场景会触发peering流程： 在pg创建时 在OSD启动、停止导致OSDMap变化进而导致pg的acting set发生变化时 状态机 状态机在创建PG进行初始化. class RecoveryMachine : public boost::statechart::state_machine&amp;lt; RecoveryMachine, Initial &amp;gt; { RecoveryState *state; public: PG *pg; utime_t event_time; uint64_t event_count; ... boost::statechat包含对象： state_machine: 状态机 state: 状态 event：事件 可通过proces</description>
+      <guid>https://zhxin.xyz/post/pg_state_change_code/</guid>
+      <description>最近看了PG状态转换的过程,代码细节没有仔细研究，先粗略过了一遍代码，特此记录.
+PG PG是存储池的基本单元，是一些对象的集合，多副本和纠删的数据备份策略依托PG实现. PG有多种状态，状态之间的变化通过状态机实现.
+有两个场景会触发peering流程：
+ 在pg创建时 在OSD启动、停止导致OSDMap变化进而导致pg的acting set发生变化时  状态机 状态机在创建PG进行初始化.
+class RecoveryMachine : public boost::statechart::state_machine&amp;lt; RecoveryMachine, Initial &amp;gt; { RecoveryState *state; public: PG *pg; utime_t event_time; uint64_t event_count; ... boost::statechat包含对象：
+ state_machine: 状态机 state: 状态 event：事件 可通过process_event函数进行事件投递 transition / custom_reaction: 转移/反应 custom_reaction通过对于react函数进行处理 PG状态机的对象、状态及时间处理主要在PG.h、PG.cc文件中.  struct Initial : boost::statechart::state&amp;lt; Initial, RecoveryMachine &amp;gt;, NamedState { explicit Initial(my_context ctx); void exit(); typedef boost::mpl::list &amp;lt; boost::statechart::transition&amp;lt; Initialize, Reset &amp;gt;, boost::statechart::custom_reaction&amp;lt; Load &amp;gt;, boost::statechart::custom_reaction&amp;lt; NullEvt &amp;gt;, boost::statechart::transition&amp;lt; boost::statechart::event_base, Crashed &amp;gt; &amp;gt; reactions; boost::statechart::result react(const Load&amp;amp;); boost::statechart::result react(const MNotifyRec&amp;amp;); boost::statechart::result react(const MInfoRec&amp;amp;); boost::statechart::result react(const MLogRec&amp;amp;); boost::statechart::result react(const boost::statechart::event_base&amp;amp;) { return discard_event(); } }; PG状态机主要包含的状态如下图:</description>
     </item>
     
     <item>
       <title>Git客户端初始配置</title>
-      <link>//zhxin.github.io/git%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%88%9D%E5%A7%8B%E9%85%8D%E7%BD%AE/</link>
+      <link>https://zhxin.xyz/post/git-client-config/</link>
       <pubDate>Sun, 28 Mar 2021 22:49:38 +0800</pubDate>
       
-      <guid>//zhxin.github.io/git%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%88%9D%E5%A7%8B%E9%85%8D%E7%BD%AE/</guid>
+      <guid>https://zhxin.xyz/post/git-client-config/</guid>
       <description>&lt;ul&gt;
 &lt;li&gt;安装完成GIT之后配置相关用户名邮箱.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;git config --global user.name &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;zhxin&amp;#34;&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;git config --global user.name &lt;span class=&#34;s2&#34;&gt;&amp;#34;zhxin&amp;#34;&lt;/span&gt;
 git config --global user.email zhxin@outlook.com
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
     <item>
       <title>[转载]ceph存储引擎bluestore解析</title>
-      <link>//zhxin.github.io/%E8%BD%AC%E8%BD%BDceph%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8Ebluestore%E8%A7%A3%E6%9E%90/</link>
+      <link>https://zhxin.xyz/post/ceph_bluestore_summary/</link>
       <pubDate>Sun, 28 Feb 2021 22:49:38 +0800</pubDate>
       
-      <guid>//zhxin.github.io/%E8%BD%AC%E8%BD%BDceph%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8Ebluestore%E8%A7%A3%E6%9E%90/</guid>
-      <description>转载自sysnote,如有侵权请联系删除 ceph后端支持多种存储引擎，以插件式的方式来进行管理使用，目前支持filestore，kvstore，memstore以及最新的bluestore，目前默认使用的filestore，但是因为filestore在写数据前需要先写journal，会有一倍的写放大，并且filestore一开始只是对于机械盘进行设计的，没有专门针对ssd做优化考虑，因此诞生的bluestore初衷就是为了减少写放大，并针对ssd做优化，而且直接管理裸盘，从理论上进一步减少文件系</description>
+      <guid>https://zhxin.xyz/post/ceph_bluestore_summary/</guid>
+      <description>转载自sysnote,如有侵权请联系删除
+ceph后端支持多种存储引擎，以插件式的方式来进行管理使用，目前支持filestore，kvstore，memstore以及最新的bluestore，目前默认使用的filestore，但是因为filestore在写数据前需要先写journal，会有一倍的写放大，并且filestore一开始只是对于机械盘进行设计的，没有专门针对ssd做优化考虑，因此诞生的bluestore初衷就是为了减少写放大，并针对ssd做优化，而且直接管理裸盘，从理论上进一步减少文件系统如ext4/xfs等部分的开销，目前bluestore还处于开发优化阶段，在jewel版本还是试用版本，并且最新的master相比jewel已经做了大的重构，预期会在后续的大版本中稳定下来成为默认的存储引擎。本文基于master分支对bluestore存储引擎进行分析。
+bluestore整体架构 bluestore直接管理裸设备，抛弃了ext4/xfs等本地文件系统，BlockDevice实现在用户态下使用linux aio直接对裸设备进行I/O操作。既然是直接管理裸设备就必然需要进行裸设备的空间管理，对应的就是Allocator，目前支持StupidAllocator和BitmapAllocator两种分配器。相关的元数据以kv的形式保存到kv数据库里，默认使用的是rocksdb，由于rocksdb本身是基于文件系统的，不是直接操作裸设备，但是rocksdb也比较灵活，将系统相关的处理抽象成Env，用户可用实现相应的接口，rocksdb默认的Env是PosixEnv，直接对接本地文件系统，为此，bluestore实现了一个BlueRocksEnv，继承自EnvWrapper，来为rocksdb提供底层系统的封装，为了对接BlueRocksEnv，实现了一个小的文件系统BlueFS，只实现rocksdb Env需要的接口，在系统启动mount这个文件系统的时候将所有的元数据都加载到内存中，BluesFS的数据和日志文件都通过BlockDevice保存到裸设备上，BlueFS和BlueStore可以共享裸设备，也可以分别指定不同的设备。
+bluestore元数据 在之前的存储引擎filestore里，对象的表现形式是对应到文件系统里的文件，默认4MB大小的文件，但是在bluestore里，已经没有传统的文件系统，而是自己管理裸盘，因此需要有元数据来管理对象，对应的就是Onode，Onode是常驻内存的数据结构，持久化的时候会以kv的形式存到rocksdb里。
+在onode里又分为lextent，表示逻辑的数据块，用一个map来记录，一个onode里会存在多个lextent，lextent通过blob的id对应到blob（bluestore_blob_t ），blob里通过pextent对应到实际物理盘上的区域（pextent里就是offset和length来定位物理盘的位置区域）。一个onode里的多个lextent可能在同一个blob里，而一个blob也可能对应到多个pextent。 另外还有Bnode这个元数据，它是用来表示多个object可能共享extent，目前在做了快照后写I/O触发的cow进行clone的时候会用到。
+I/O读写映射逻辑 写I/O处理 到达bluestore的I/O的offset和length都是对象内（onode）的，offset是相对于这个对象起始位置的偏移，在_do_write里首先就会根据最小分配单位min_alloc_size进行判断，从而将I/O分为对齐和非对齐的。如下图所示：
+当一个写请求按照min_alloc_size进行拆分后，就会分为对齐写，对应到do_write_big，非对齐写（即落到某一个min_alloc_size区间的写I/O（对应到do_write_small）。
+do_write_big 对齐到min_alloc_size的写请求处理起来比较简单，有可能是多个min_alloc_size的大小，在处理时会根据实际大小新生成lextent和blob，这个lextent跨越的区域是min_alloc_size的整数倍，如果这段区间是之前写过的，会将之前的lextent记录下来便于后续的空间回收。
+do_write_small 在处理落到某个min_alloc_size区间的写请求时，会首先根据offset去查找有没有可以复用的blob，因为最小分配单元是min_alloc_size，默认64KB，如果一个4KB的写I/O就只会用到blob的一部分，blob里剩余的还能放其他的。
+ 没有找到可以复用的blob，新生成blob  在处理还还需要根据offset和len是否对齐到block_size（默认是4KB）进行补零对齐的操作，之所以需要补齐是与后续的写盘操作有关，真正写盘时有两种方式，一种是Direct I/O的方式，这种要求偏移和缓冲区都对齐的，另外一种非Direct I/O，即Buffered I/O，这种可以不对齐，但是是写到cache里，然后再sync刷到磁盘上，比如只写了100字节，在内核里是需要先从设备上读出来补齐成一个完整的扇区，然后再刷的，这样反而降低了效率。因此在bluestore里直接处理好对齐，对于后面的写盘来说比较有利，这里对齐到block_size，是个可配置的参数。
+进行对齐补零时就是按照如上图那样把前后对齐到block_size，然后再把对齐后的offset和len作为lextent，进而放到blob里。 2. 找到可以复用的blob
+对于可以复用的blob，也是先按照block_size进行对齐补零的动作，然后再判断是否可以直接使用blob里空闲的空间进行区分做不同的处理。
+a. 直接写在blob未使用的空间上
+这种情况下直接新生成lextent放到blob里。
+b. 覆盖写的情况
+比如下面的这种情况，写I/O会覆盖部分已经写过的数据。
+对于这种情况的处理如下图：也是需要先处理对齐补零的情况，如果覆盖的区域刚好是已经对齐到block_size，那么就不需要从磁盘读数据，但是如果覆盖的区域没有对齐到block_size，那么就需要把不对齐的那部分读出来，拼成一个对齐的buffer，然后新生成lextent，并且会对原来那个lextent进行调整，会记录需要回收的那部分区域。对于覆盖写的情况，都不是直接写盘，而是通过wal写到rocksdb。
+整体写I/O的逻辑 之前组内同事画过一个流程图，这里借用一下算是一个简单的总结。
+读I/O的处理 读I/O请求的处理时也是通过寻找相关联的lextent，可能会存在空洞的情况，即读到未写过的数据，这部分就直接补零。
+clone及extent共享 前面说到Bnode就是用来记录共享的lextent，目前是在做完快照后对原卷进行写I/O会触发cow，从而产生clone操作。clone时就是将原对象的blob从onode-&amp;gt;blob_map移到onode-&amp;gt;bnode-&amp;gt;blob_map，并且将blob id置为负的，并设置共享标记，然后将新的快照对象的onode-&amp;gt;bnode指向原对象的onode-&amp;gt;bnode，并且用原onode里的lextents里的值赋给新的onode的lextents，从而达到共享extent的目的，图示仅供参考。
+在clone完之后，继续对原对象进行写I/O操作时，当碰到共享的blob时就需要跳过，新生成blob，并且取消对原来那部分lextent的引用，在后续的空间释放时的判断依据就是否还有引用。
+小结 本文总体上介绍了bluestore的架构、相关元数据及内部I/O映射的逻辑，这还只是bluestore的冰山一角，后续会陆续对bluestore的处理流程、空间分配器、缓存管理、压缩等实现进行分析。</description>
     </item>
     
     <item>
       <title>常用ceph命令</title>
-      <link>//zhxin.github.io/%E5%B8%B8%E7%94%A8ceph%E5%91%BD%E4%BB%A4/</link>
+      <link>https://zhxin.xyz/post/ceph%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</link>
       <pubDate>Sun, 28 Feb 2021 22:49:38 +0800</pubDate>
       
-      <guid>//zhxin.github.io/%E5%B8%B8%E7%94%A8ceph%E5%91%BD%E4%BB%A4/</guid>
+      <guid>https://zhxin.xyz/post/ceph%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</guid>
       <description>&lt;p&gt;工作中遇到的比较常用的命令,特此整理以备忘.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;查看集群状态&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;ceph -s &lt;span style=&#34;color:#75715e&#34;&gt;#查看状态&lt;/span&gt;
-ceph -v &lt;span style=&#34;color:#75715e&#34;&gt;#查看版本&lt;/span&gt;
-ceph df &lt;span style=&#34;color:#75715e&#34;&gt;#查询集群存储容量&lt;/span&gt;
-ceph health detail &lt;span style=&#34;color:#75715e&#34;&gt;#集群详细健康信息&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;ceph -s &lt;span class=&#34;c1&#34;&gt;#查看状态&lt;/span&gt;
+ceph -v &lt;span class=&#34;c1&#34;&gt;#查看版本&lt;/span&gt;
+ceph df &lt;span class=&#34;c1&#34;&gt;#查询集群存储容量&lt;/span&gt;
+ceph health detail &lt;span class=&#34;c1&#34;&gt;#集群详细健康信息&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     
     <item>
       <title>我的天才女友读后感</title>
-      <link>//zhxin.github.io/%E6%88%91%E7%9A%84%E5%A4%A9%E6%89%8D%E5%A5%B3%E5%8F%8B%E8%AF%BB%E5%90%8E%E6%84%9F/</link>
+      <link>https://zhxin.xyz/post/my_briliant_friend/</link>
       <pubDate>Sun, 28 Feb 2021 22:49:38 +0800</pubDate>
       
-      <guid>//zhxin.github.io/%E6%88%91%E7%9A%84%E5%A4%A9%E6%89%8D%E5%A5%B3%E5%8F%8B%E8%AF%BB%E5%90%8E%E6%84%9F/</guid>
-      <description>你很自由,而她却是囚徒 在看了四集HBO拍的 我的天才女友 的剧之后,就迫不及待的抱起书来看了.之前并没有听过这本书,也没有了解过埃莱娜费兰特这个作家,纯粹只是最近在微博上看到很多人在推荐这部剧,就好奇来看.追完更新之后,要一周的时间才能看到下一集(在这方面不得不夸奖Netflix),没耐心就去kindle上下载了书,花了大概三周的时间把那不勒斯四部曲给看完. 故事讲述的是莉娜和莱农两个女孩从童年到老年持续一生的故事,她们是朋友也是对手,有温情也不乏冷漠,她们互为影子却又迥然不同.书中以莱农的视角讲述两</description>
+      <guid>https://zhxin.xyz/post/my_briliant_friend/</guid>
+      <description>你很自由,而她却是囚徒
+ 在看了四集HBO拍的 我的天才女友 的剧之后,就迫不及待的抱起书来看了.之前并没有听过这本书,也没有了解过埃莱娜费兰特这个作家,纯粹只是最近在微博上看到很多人在推荐这部剧,就好奇来看.追完更新之后,要一周的时间才能看到下一集(在这方面不得不夸奖Netflix),没耐心就去kindle上下载了书,花了大概三周的时间把那不勒斯四部曲给看完.
+故事讲述的是莉娜和莱农两个女孩从童年到老年持续一生的故事,她们是朋友也是对手,有温情也不乏冷漠,她们互为影子却又迥然不同.书中以莱农的视角讲述两人的故事,莉娜是她们城区公认的最聪明的孩子,在小学大家还都在学字母的时候她就已经在没人教的情况下会识字了,这让包括莱农在内的其他学生都相形见绌.莉娜身上有东西在吸引着莱农,两人相互试探慢慢接近最终成为了朋友.莱农在老师心目中的地位被莉娜取代,虽然心怀失落与嫉妒但是因为输给的是莉娜,莱农渐渐也就没那么难过,甚至会承认自己确实没有莉娜聪明而甘心追逐第二名的位置.两人一起做了很多事,找堂阿奇勒讨娃娃;买 小妇人 一起看想着靠文字挣很多钱;一起走过城区隧道去看大海等等.两人重要的一个分水岭是在小学毕业是否继续上学的问题,莱农经过曲折最终被家里允许继续上学,而莉娜却被要求帮家里干活,莉娜在反抗过程中甚至被爸爸扔出窗外.最终莱农进行上学,上完初中上高中最后甚至读完了大学,但是莉娜却不得不在家里的鞋店帮忙,但是莉娜自身的魔力并没有因为没上学而消失,反而在城区里面不断彰显自己的魅力.一开始莉娜并没有放弃学习还在和莱农竞争,你学意大利语我也学意大利语,你学希腊语我就学希腊语甚至要比你学的早学的更好,两人还在不断的竞争,而一段时间之后莉娜致力于帮助哥哥里诺发财,莉娜设计出款式新颖的皮鞋和哥哥一起做,最终皮鞋帮助肉食店老板斯特凡诺和索拉拉兄弟发了不小的财,同时莉娜同时被斯特凡诺和索拉拉家的马尔切诺追求,莉娜讨厌索拉拉,想靠斯特凡诺拜托马尔切诺,她以为斯特凡诺是不一样的,确不料斯特凡诺为了皮鞋的生意和索拉拉家的人达成了合作,但是莉娜最终还是嫁给了斯特凡诺开始了一段失败的婚姻&amp;hellip;.
+这基本是四部曲第一部 我的天才女友 的剧情,第二部 新名字的故事 讲述的是莉娜成为了卡拉奇太太之后发生的故事,包括莉娜被斯特凡诺家暴,流产,新开一家肉食店等等,而最重要的是和尼诺萨拉托雷的婚外情,尼诺是莱农的暗恋对象,最后和尼诺一起出逃甚至怀孕生下了一个儿子,但是尼诺却最后放弃了放弃了莉娜出逃了,莱农大学毕业后出版了一本书成为了作家. 第三部 离开的 留下的 讲述的是莉娜最终离开了斯特凡诺和恩佐在了一起,带着和尼诺生的却长得越来越像斯特凡诺的孩子,两人一起学习计算机技术,最后还开了一家BASIC SIGHT公司,莱农和很有声望的艾罗塔家族的儿子彼得罗结婚了生了两个女儿,但是狗血的是莱农和尼诺又见面了两人还在一起生了个女儿.第四部 失踪的孩子 讲述的是莱农和尼诺在一起之后和彼得罗离婚了,但是尼诺却欺骗了莱农自己没有结婚还靠着身边的女人争取这社会的地位,在莉娜的帮助下莱农最终看破了尼诺,和他分开了,并搬到了莉娜和恩佐的楼上和他们一家人住在了一起,这短时间貌似是两人关系比较和谐的一段时间,但是某一天莉娜和恩佐生的女儿,蒂娜,突然消失了,莉娜因此几乎崩溃了,孩子最终都找不到,而十几年后莱农搬到了都灵,突然有一天莉娜突然把自己从时间上回车删除了,抹除了自己在世上的痕迹,而莱农则写下了这部书.
+上面的简介剧透了不少东西但忽略的东西更多, 那不勒斯四部曲 是比较庞大的著作,以那不勒斯为背景,不仅展现了两个女人持续一生的友谊,更展示了意大利半个世纪的社会动荡,政治思潮的变化,随着莱农的成长讨论了很多共产主义,宗教,民主,女权主义等等内容.这四本书我依照自己喜欢的程度进行排名是二三一四.读第四部的时候一度想摔书,被尼诺的渣、莱农的忍给气的暴跳.尼诺曾鄙视自己的父亲但是尼诺比他父亲有过之而无不及,在尼诺欺骗的众多女人中只有莉娜是识破尼诺之后比较坚决的拒绝的,并帮助莱农不让她再自欺欺人.在众多的配角中,个人感觉刻画最生动的是莱农的母亲,一个强势,暴躁,自尊心强的母亲形象.莱农母亲在最后生病的时候说自己把全部的关心与期待都放到了莱农的身上以致忽略了莱农的妹妹弟弟,莱农获得的一切成就她都觉得是自己的功劳: 你得到的一切都是我的. 莱农母亲对莱农的爱很深也很隐晦,同时对莱农的怨与切也不遑多让.她坚持让莱农读书但也抱怨莱农不能工作挣钱,她会在莱农发烧回不了家独自迈着一瘸一拐的腿去到莱农大学的城市去看她,她会当面抱怨莱农不如莉娜但是又时时刻刻维护自己的女儿是最有出息的,莱农是她在城区昂首挺胸行走的自信源泉,她喝多酒也会暴露自己低级庸俗的乐趣但是在莱农丈夫彼得罗面前她始终坚持维持端庄自尊的形象.莱农母亲是个很矛盾的角色,也正因为其矛盾所以显得真实显得可爱.莱农一度以母亲肥大的屁股丰满的胸脯瘸拐的双腿为耻,但是莱农在母亲去世之后,愿意这些特征在自己身上能够显现,作为母亲在自己身上的投影.
+这四部曲中也有类似红楼梦中草灰蛇线,伏延千里的写法. 小时候的很多事情成了以后发生的事的隐喻. 比如莉娜和莱农小时候交换娃娃并将对方的娃娃丢掉, 她们以后在分别怀了恩佐和尼诺孩子的时候开玩笑说要交换孩子抚养,莉娜的女儿甚至和莱农当初的娃娃一样都叫蒂娜,莱农在多年以后重新收到了两个娃娃,但是蒂娜却始终没有回来; 在小时候课堂竞赛时莉娜和恩佐表现出数学上的天分,而他们以后在一起学习计算机还开了家公司;小时候莉娜怂恿莱农出城去看海,走到一半莉娜想回去了而莱农却想继续前进,在她们以后的人生中,莉娜从来没有出去过那不勒斯之外的地方而莱农却在全世界游走,最后还定居都灵,不知道在莉娜将自己在世间抹除之后有没有出走那不勒斯,去走向更广阔的世界.莉娜和莱农相互羁绊,互为影子,莉娜将莱农看成继续求学的自己,让莱农替自己学习替自己去看世界,她要求莱农必须是最好的,说过 你如果不是最好的,那我是谁,我怎么办 类似这样的话 ,莉娜从来没有想要和莱农断绝关系,甚至在莱农和尼诺在一起时不断的主动去找莱农,帮莱农识别尼诺虚伪的面目. 而对莱农来说,莉娜更像是自己学习的动力,是自己的不自信,是仅仅通过谈话就能获得写作灵感与写作技巧的对象.莱农对莉娜是又爱又怕,爱莉娜的聪明有魅力,害怕对莉娜的嫉妒与不如让自己丧失自信,变成莉娜的影子进而丧失自我.每当莱农感觉自己已经远远把落后的城区把只有小学学历的莉娜远远甩在后面的时候,莉娜总有办法让莱农感觉到自己卑微与无知,在两人的竞争中莱农并没有赢.由于小说是以莱农的视角写的,所以读者能够了解莱农的心理却只能和莱农一起去揣测莉娜的心理,让莉娜更多了一层神秘与传奇.
+小说还是比较精彩的,读到根本停不下来,四星推荐.</description>
+    </item>
+    
+    <item>
+      <title>Archive</title>
+      <link>https://zhxin.xyz/archives/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhxin.xyz/archives/</guid>
+      <description>archives</description>
+    </item>
+    
+    <item>
+      <title>Search</title>
+      <link>https://zhxin.xyz/search/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://zhxin.xyz/search/</guid>
+      <description>search</description>
     </item>
     
   </channel>
