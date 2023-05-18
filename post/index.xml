@@ -5,7 +5,6 @@
     <link>https://zhxin.xyz/post/</link>
     <description>Recent content in 所有文章 on zhxin.xyz</description>
     <generator>Hugo -- gohugo.io</generator>
-    <copyright>**[zhxin.xyz](https://zhxin.xyz)**</copyright>
     <lastBuildDate>Mon, 28 Jun 2021 22:49:38 +0800</lastBuildDate><atom:link href="https://zhxin.xyz/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Shell编程基础</title>
@@ -13,20 +12,7 @@
       <pubDate>Mon, 28 Jun 2021 22:49:38 +0800</pubDate>
       
       <guid>https://zhxin.xyz/post/shell_script/</guid>
-      <description>变量 脚本开头使用#!/bin/bash指定要使用的shell,shell会通过PATH环境变量来查找脚本中使用的命令，可以使用echo $PATH来看下脚本会在哪些目录下查找命令，如果脚本中执行的命令没有在PATH环境变量中，也可以通过绝对或相对路径来引用.
-在脚本中可以使用shell维护的环境变量也可以定义和使用自己的用户变量.
-赋值等号两边不能存在空格
-环境变量：
-可以使用set命令查看当前环境变量列表,例如$HOME、$HOSTNAME、$USER等;
-用户变量：
-由字母数字下划线组成，长度不超过二十，区分大小写，变量、等号、值之间不能有空格，在shell脚本结束时会被删除掉，使用美元符号引用，例如name=&amp;quot;test&amp;quot;。
-使用用户变量保存命令执行结果：testing=$(date)
-特殊参数变量
-参数 描述 $ 0 $1 $2 入参 $# 参数个数 $* 入参列表，将所有参数当作单个参数 $@ 入参列表，单独处理每个参 重定向输入输出 输出重定向: &amp;gt; 追加：&amp;gt;&amp;gt;
-输入重定向: &amp;lt; 在脚本中使用&amp;lt; &amp;gt; 需要进行转义\&amp;lt; \&amp;gt;
-内联输入重定向：
-command &amp;lt;&amp;lt; marker content marker # 例如： wc -l &amp;lt;&amp;lt;EOF echo &amp;#34;aaa&amp;#34; echo &amp;#34;BBB&amp;#34; EOF 内联重定向到文件
-cat &amp;gt;&amp;gt; demo.txt &amp;lt;&amp;lt;EOF some content EOF 文件描述符 缩写 描述 0 STDIN 标准输入 1 STDOUT 标准输出 2 STDERR 标准错误 &amp;amp;&amp;gt; 符号会将所有输出重定向到一个文件内</description>
+      <description>变量 脚本开头使用#!/bin/bash指定要使用的shell,shell会通过PATH环境变量来查找脚本中使用的命令，可以使用echo $PA</description>
     </item>
     
     <item>
@@ -35,12 +21,7 @@ cat &amp;gt;&amp;gt; demo.txt &amp;lt;&amp;lt;EOF some content EOF 文件描述�
       <pubDate>Fri, 28 May 2021 22:49:38 +0800</pubDate>
       
       <guid>https://zhxin.xyz/post/pg_state_change_code/</guid>
-      <description>最近看了PG状态转换的过程,代码细节没有仔细研究，先粗略过了一遍代码，特此记录.
-PG PG是存储池的基本单元，是一些对象的集合，多副本和纠删的数据备份策略依托PG实现. PG有多种状态，状态之间的变化通过状态机实现.
-有两个场景会触发peering流程：
-在pg创建时 在OSD启动、停止导致OSDMap变化进而导致pg的acting set发生变化时 状态机 状态机在创建PG进行初始化.
-class RecoveryMachine : public boost::statechart::state_machine&amp;lt; RecoveryMachine, Initial &amp;gt; { RecoveryState *state; public: PG *pg; utime_t event_time; uint64_t event_count; ... boost::statechat包含对象：
-state_machine: 状态机 state: 状态 event：事件 可通过process_event函数进行事件投递 transition / custom_reaction: 转移/反应 custom_reaction通过对于react函数进行处理 PG状态机的对象、状态及时间处理主要在PG.h、PG.cc文件中. struct Initial : boost::statechart::state&amp;lt; Initial, RecoveryMachine &amp;gt;, NamedState { explicit Initial(my_context ctx); void exit(); typedef boost::mpl::list &amp;lt; boost::statechart::transition&amp;lt; Initialize, Reset &amp;gt;, boost::statechart::custom_reaction&amp;lt; Load &amp;gt;, boost::statechart::custom_reaction&amp;lt; NullEvt &amp;gt;, boost::statechart::transition&amp;lt; boost::statechart::event_base, Crashed &amp;gt; &amp;gt; reactions; boost::statechart::result react(const Load&amp;amp;); boost::statechart::result react(const MNotifyRec&amp;amp;); boost::statechart::result react(const MInfoRec&amp;amp;); boost::statechart::result react(const MLogRec&amp;amp;); boost::statechart::result react(const boost::statechart::event_base&amp;amp;) { return discard_event(); } }; PG状态机主要包含的状态如下图:</description>
+      <description>最近看了PG状态转换的过程,代码细节没有仔细研究，先粗略过了一遍代码，特此记录. PG PG是存储池的基本单元，是一些对象的集合，多副本和纠删的数</description>
     </item>
     
     <item>
@@ -52,9 +33,17 @@ state_machine: 状态机 state: 状态 event：事件 可通过process_event函�
       <description>&lt;ul&gt;
 &lt;li&gt;安装完成GIT之后配置相关用户名邮箱.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git config --global user.name &lt;span class=&#34;s2&#34;&gt;&amp;#34;xxx&amp;#34;&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git config --global user.name &lt;span class=&#34;s2&#34;&gt;&amp;#34;xxx&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git config --global user.email xxx@xxx.com
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description>
     </item>
     
     <item>
@@ -63,28 +52,7 @@ state_machine: 状态机 state: 状态 event：事件 可通过process_event函�
       <pubDate>Sun, 28 Feb 2021 22:49:38 +0800</pubDate>
       
       <guid>https://zhxin.xyz/post/ceph_bluestore_summary/</guid>
-      <description>转载自sysnote,如有侵权请联系删除
-ceph后端支持多种存储引擎，以插件式的方式来进行管理使用，目前支持filestore，kvstore，memstore以及最新的bluestore，目前默认使用的filestore，但是因为filestore在写数据前需要先写journal，会有一倍的写放大，并且filestore一开始只是对于机械盘进行设计的，没有专门针对ssd做优化考虑，因此诞生的bluestore初衷就是为了减少写放大，并针对ssd做优化，而且直接管理裸盘，从理论上进一步减少文件系统如ext4/xfs等部分的开销，目前bluestore还处于开发优化阶段，在jewel版本还是试用版本，并且最新的master相比jewel已经做了大的重构，预期会在后续的大版本中稳定下来成为默认的存储引擎。本文基于master分支对bluestore存储引擎进行分析。
-bluestore整体架构 bluestore直接管理裸设备，抛弃了ext4/xfs等本地文件系统，BlockDevice实现在用户态下使用linux aio直接对裸设备进行I/O操作。既然是直接管理裸设备就必然需要进行裸设备的空间管理，对应的就是Allocator，目前支持StupidAllocator和BitmapAllocator两种分配器。相关的元数据以kv的形式保存到kv数据库里，默认使用的是rocksdb，由于rocksdb本身是基于文件系统的，不是直接操作裸设备，但是rocksdb也比较灵活，将系统相关的处理抽象成Env，用户可用实现相应的接口，rocksdb默认的Env是PosixEnv，直接对接本地文件系统，为此，bluestore实现了一个BlueRocksEnv，继承自EnvWrapper，来为rocksdb提供底层系统的封装，为了对接BlueRocksEnv，实现了一个小的文件系统BlueFS，只实现rocksdb Env需要的接口，在系统启动mount这个文件系统的时候将所有的元数据都加载到内存中，BluesFS的数据和日志文件都通过BlockDevice保存到裸设备上，BlueFS和BlueStore可以共享裸设备，也可以分别指定不同的设备。
-bluestore元数据 在之前的存储引擎filestore里，对象的表现形式是对应到文件系统里的文件，默认4MB大小的文件，但是在bluestore里，已经没有传统的文件系统，而是自己管理裸盘，因此需要有元数据来管理对象，对应的就是Onode，Onode是常驻内存的数据结构，持久化的时候会以kv的形式存到rocksdb里。
-在onode里又分为lextent，表示逻辑的数据块，用一个map来记录，一个onode里会存在多个lextent，lextent通过blob的id对应到blob（bluestore_blob_t ），blob里通过pextent对应到实际物理盘上的区域（pextent里就是offset和length来定位物理盘的位置区域）。一个onode里的多个lextent可能在同一个blob里，而一个blob也可能对应到多个pextent。 另外还有Bnode这个元数据，它是用来表示多个object可能共享extent，目前在做了快照后写I/O触发的cow进行clone的时候会用到。
-I/O读写映射逻辑 写I/O处理 到达bluestore的I/O的offset和length都是对象内（onode）的，offset是相对于这个对象起始位置的偏移，在_do_write里首先就会根据最小分配单位min_alloc_size进行判断，从而将I/O分为对齐和非对齐的。如下图所示：
-当一个写请求按照min_alloc_size进行拆分后，就会分为对齐写，对应到do_write_big，非对齐写（即落到某一个min_alloc_size区间的写I/O（对应到do_write_small）。
-do_write_big 对齐到min_alloc_size的写请求处理起来比较简单，有可能是多个min_alloc_size的大小，在处理时会根据实际大小新生成lextent和blob，这个lextent跨越的区域是min_alloc_size的整数倍，如果这段区间是之前写过的，会将之前的lextent记录下来便于后续的空间回收。
-do_write_small 在处理落到某个min_alloc_size区间的写请求时，会首先根据offset去查找有没有可以复用的blob，因为最小分配单元是min_alloc_size，默认64KB，如果一个4KB的写I/O就只会用到blob的一部分，blob里剩余的还能放其他的。
-没有找到可以复用的blob，新生成blob 在处理还还需要根据offset和len是否对齐到block_size（默认是4KB）进行补零对齐的操作，之所以需要补齐是与后续的写盘操作有关，真正写盘时有两种方式，一种是Direct I/O的方式，这种要求偏移和缓冲区都对齐的，另外一种非Direct I/O，即Buffered I/O，这种可以不对齐，但是是写到cache里，然后再sync刷到磁盘上，比如只写了100字节，在内核里是需要先从设备上读出来补齐成一个完整的扇区，然后再刷的，这样反而降低了效率。因此在bluestore里直接处理好对齐，对于后面的写盘来说比较有利，这里对齐到block_size，是个可配置的参数。
-进行对齐补零时就是按照如上图那样把前后对齐到block_size，然后再把对齐后的offset和len作为lextent，进而放到blob里。 2. 找到可以复用的blob
-对于可以复用的blob，也是先按照block_size进行对齐补零的动作，然后再判断是否可以直接使用blob里空闲的空间进行区分做不同的处理。
-a. 直接写在blob未使用的空间上
-这种情况下直接新生成lextent放到blob里。
-b. 覆盖写的情况
-比如下面的这种情况，写I/O会覆盖部分已经写过的数据。
-对于这种情况的处理如下图：也是需要先处理对齐补零的情况，如果覆盖的区域刚好是已经对齐到block_size，那么就不需要从磁盘读数据，但是如果覆盖的区域没有对齐到block_size，那么就需要把不对齐的那部分读出来，拼成一个对齐的buffer，然后新生成lextent，并且会对原来那个lextent进行调整，会记录需要回收的那部分区域。对于覆盖写的情况，都不是直接写盘，而是通过wal写到rocksdb。
-整体写I/O的逻辑 之前组内同事画过一个流程图，这里借用一下算是一个简单的总结。
-读I/O的处理 读I/O请求的处理时也是通过寻找相关联的lextent，可能会存在空洞的情况，即读到未写过的数据，这部分就直接补零。
-clone及extent共享 前面说到Bnode就是用来记录共享的lextent，目前是在做完快照后对原卷进行写I/O会触发cow，从而产生clone操作。clone时就是将原对象的blob从onode-&amp;gt;blob_map移到onode-&amp;gt;bnode-&amp;gt;blob_map，并且将blob id置为负的，并设置共享标记，然后将新的快照对象的onode-&amp;gt;bnode指向原对象的onode-&amp;gt;bnode，并且用原onode里的lextents里的值赋给新的onode的lextents，从而达到共享extent的目的，图示仅供参考。
-在clone完之后，继续对原对象进行写I/O操作时，当碰到共享的blob时就需要跳过，新生成blob，并且取消对原来那部分lextent的引用，在后续的空间释放时的判断依据就是否还有引用。
-小结 本文总体上介绍了bluestore的架构、相关元数据及内部I/O映射的逻辑，这还只是bluestore的冰山一角，后续会陆续对bluestore的处理流程、空间分配器、缓存管理、压缩等实现进行分析。</description>
+      <description>转载自sysnote,如有侵权请联系删除 ceph后端支持多种存储引擎，以插件式的方式来进行管理使用，目前支持filestore，kvstor</description>
     </item>
     
     <item>
@@ -97,11 +65,21 @@ clone及extent共享 前面说到Bnode就是用来记录共享的lextent，目�
 &lt;ul&gt;
 &lt;li&gt;查看集群状态&lt;/li&gt;
 &lt;/ul&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ceph -s &lt;span class=&#34;c1&#34;&gt;#查看状态&lt;/span&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ceph -s &lt;span class=&#34;c1&#34;&gt;#查看状态&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ceph -v &lt;span class=&#34;c1&#34;&gt;#查看版本&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ceph df &lt;span class=&#34;c1&#34;&gt;#查询集群存储容量&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ceph health detail &lt;span class=&#34;c1&#34;&gt;#集群详细健康信息&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description>
     </item>
     
     <item>
@@ -110,13 +88,7 @@ clone及extent共享 前面说到Bnode就是用来记录共享的lextent，目�
       <pubDate>Sun, 28 Feb 2021 22:49:38 +0800</pubDate>
       
       <guid>https://zhxin.xyz/post/my_briliant_friend/</guid>
-      <description>你很自由,而她却是囚徒
-在看了四集HBO拍的 我的天才女友 的剧之后,就迫不及待的抱起书来看了.之前并没有听过这本书,也没有了解过埃莱娜费兰特这个作家,纯粹只是最近在微博上看到很多人在推荐这部剧,就好奇来看.追完更新之后,要一周的时间才能看到下一集(在这方面不得不夸奖Netflix),没耐心就去kindle上下载了书,花了大概三周的时间把那不勒斯四部曲给看完.
-故事讲述的是莉娜和莱农两个女孩从童年到老年持续一生的故事,她们是朋友也是对手,有温情也不乏冷漠,她们互为影子却又迥然不同.书中以莱农的视角讲述两人的故事,莉娜是她们城区公认的最聪明的孩子,在小学大家还都在学字母的时候她就已经在没人教的情况下会识字了,这让包括莱农在内的其他学生都相形见绌.莉娜身上有东西在吸引着莱农,两人相互试探慢慢接近最终成为了朋友.莱农在老师心目中的地位被莉娜取代,虽然心怀失落与嫉妒但是因为输给的是莉娜,莱农渐渐也就没那么难过,甚至会承认自己确实没有莉娜聪明而甘心追逐第二名的位置.两人一起做了很多事,找堂阿奇勒讨娃娃;买 小妇人 一起看想着靠文字挣很多钱;一起走过城区隧道去看大海等等.两人重要的一个分水岭是在小学毕业是否继续上学的问题,莱农经过曲折最终被家里允许继续上学,而莉娜却被要求帮家里干活,莉娜在反抗过程中甚至被爸爸扔出窗外.最终莱农进行上学,上完初中上高中最后甚至读完了大学,但是莉娜却不得不在家里的鞋店帮忙,但是莉娜自身的魔力并没有因为没上学而消失,反而在城区里面不断彰显自己的魅力.一开始莉娜并没有放弃学习还在和莱农竞争,你学意大利语我也学意大利语,你学希腊语我就学希腊语甚至要比你学的早学的更好,两人还在不断的竞争,而一段时间之后莉娜致力于帮助哥哥里诺发财,莉娜设计出款式新颖的皮鞋和哥哥一起做,最终皮鞋帮助肉食店老板斯特凡诺和索拉拉兄弟发了不小的财,同时莉娜同时被斯特凡诺和索拉拉家的马尔切诺追求,莉娜讨厌索拉拉,想靠斯特凡诺拜托马尔切诺,她以为斯特凡诺是不一样的,确不料斯特凡诺为了皮鞋的生意和索拉拉家的人达成了合作,但是莉娜最终还是嫁给了斯特凡诺开始了一段失败的婚姻&amp;hellip;.
-这基本是四部曲第一部 我的天才女友 的剧情,第二部 新名字的故事 讲述的是莉娜成为了卡拉奇太太之后发生的故事,包括莉娜被斯特凡诺家暴,流产,新开一家肉食店等等,而最重要的是和尼诺萨拉托雷的婚外情,尼诺是莱农的暗恋对象,最后和尼诺一起出逃甚至怀孕生下了一个儿子,但是尼诺却最后放弃了放弃了莉娜出逃了,莱农大学毕业后出版了一本书成为了作家. 第三部 离开的 留下的 讲述的是莉娜最终离开了斯特凡诺和恩佐在了一起,带着和尼诺生的却长得越来越像斯特凡诺的孩子,两人一起学习计算机技术,最后还开了一家BASIC SIGHT公司,莱农和很有声望的艾罗塔家族的儿子彼得罗结婚了生了两个女儿,但是狗血的是莱农和尼诺又见面了两人还在一起生了个女儿.第四部 失踪的孩子 讲述的是莱农和尼诺在一起之后和彼得罗离婚了,但是尼诺却欺骗了莱农自己没有结婚还靠着身边的女人争取这社会的地位,在莉娜的帮助下莱农最终看破了尼诺,和他分开了,并搬到了莉娜和恩佐的楼上和他们一家人住在了一起,这短时间貌似是两人关系比较和谐的一段时间,但是某一天莉娜和恩佐生的女儿,蒂娜,突然消失了,莉娜因此几乎崩溃了,孩子最终都找不到,而十几年后莱农搬到了都灵,突然有一天莉娜突然把自己从时间上回车删除了,抹除了自己在世上的痕迹,而莱农则写下了这部书.
-上面的简介剧透了不少东西但忽略的东西更多, 那不勒斯四部曲 是比较庞大的著作,以那不勒斯为背景,不仅展现了两个女人持续一生的友谊,更展示了意大利半个世纪的社会动荡,政治思潮的变化,随着莱农的成长讨论了很多共产主义,宗教,民主,女权主义等等内容.这四本书我依照自己喜欢的程度进行排名是二三一四.读第四部的时候一度想摔书,被尼诺的渣、莱农的忍给气的暴跳.尼诺曾鄙视自己的父亲但是尼诺比他父亲有过之而无不及,在尼诺欺骗的众多女人中只有莉娜是识破尼诺之后比较坚决的拒绝的,并帮助莱农不让她再自欺欺人.在众多的配角中,个人感觉刻画最生动的是莱农的母亲,一个强势,暴躁,自尊心强的母亲形象.莱农母亲在最后生病的时候说自己把全部的关心与期待都放到了莱农的身上以致忽略了莱农的妹妹弟弟,莱农获得的一切成就她都觉得是自己的功劳: 你得到的一切都是我的. 莱农母亲对莱农的爱很深也很隐晦,同时对莱农的怨与切也不遑多让.她坚持让莱农读书但也抱怨莱农不能工作挣钱,她会在莱农发烧回不了家独自迈着一瘸一拐的腿去到莱农大学的城市去看她,她会当面抱怨莱农不如莉娜但是又时时刻刻维护自己的女儿是最有出息的,莱农是她在城区昂首挺胸行走的自信源泉,她喝多酒也会暴露自己低级庸俗的乐趣但是在莱农丈夫彼得罗面前她始终坚持维持端庄自尊的形象.莱农母亲是个很矛盾的角色,也正因为其矛盾所以显得真实显得可爱.莱农一度以母亲肥大的屁股丰满的胸脯瘸拐的双腿为耻,但是莱农在母亲去世之后,愿意这些特征在自己身上能够显现,作为母亲在自己身上的投影.
-这四部曲中也有类似红楼梦中草灰蛇线,伏延千里的写法. 小时候的很多事情成了以后发生的事的隐喻. 比如莉娜和莱农小时候交换娃娃并将对方的娃娃丢掉, 她们以后在分别怀了恩佐和尼诺孩子的时候开玩笑说要交换孩子抚养,莉娜的女儿甚至和莱农当初的娃娃一样都叫蒂娜,莱农在多年以后重新收到了两个娃娃,但是蒂娜却始终没有回来; 在小时候课堂竞赛时莉娜和恩佐表现出数学上的天分,而他们以后在一起学习计算机还开了家公司;小时候莉娜怂恿莱农出城去看海,走到一半莉娜想回去了而莱农却想继续前进,在她们以后的人生中,莉娜从来没有出去过那不勒斯之外的地方而莱农却在全世界游走,最后还定居都灵,不知道在莉娜将自己在世间抹除之后有没有出走那不勒斯,去走向更广阔的世界.莉娜和莱农相互羁绊,互为影子,莉娜将莱农看成继续求学的自己,让莱农替自己学习替自己去看世界,她要求莱农必须是最好的,说过 你如果不是最好的,那我是谁,我怎么办 类似这样的话 ,莉娜从来没有想要和莱农断绝关系,甚至在莱农和尼诺在一起时不断的主动去找莱农,帮莱农识别尼诺虚伪的面目. 而对莱农来说,莉娜更像是自己学习的动力,是自己的不自信,是仅仅通过谈话就能获得写作灵感与写作技巧的对象.莱农对莉娜是又爱又怕,爱莉娜的聪明有魅力,害怕对莉娜的嫉妒与不如让自己丧失自信,变成莉娜的影子进而丧失自我.每当莱农感觉自己已经远远把落后的城区把只有小学学历的莉娜远远甩在后面的时候,莉娜总有办法让莱农感觉到自己卑微与无知,在两人的竞争中莱农并没有赢.由于小说是以莱农的视角写的,所以读者能够了解莱农的心理却只能和莱农一起去揣测莉娜的心理,让莉娜更多了一层神秘与传奇.
-小说还是比较精彩的,读到根本停不下来,四星推荐.</description>
+      <description>你很自由,而她却是囚徒 在看了四集HBO拍的 我的天才女友 的剧之后,就迫不及待的抱起书来看了.之前并没有听过这本书,也没有了解过埃莱娜费兰特这个</description>
     </item>
     
     <item>
@@ -125,11 +97,7 @@ clone及extent共享 前面说到Bnode就是用来记录共享的lextent，目�
       <pubDate>Tue, 28 Apr 2020 22:48:31 +0800</pubDate>
       
       <guid>https://zhxin.xyz/post/%E5%85%B3%E4%BA%8E%E6%98%AF%E6%9E%9D%E8%A3%95%E5%92%8C/</guid>
-      <description>应该是大二或者大三的时候第一次看是枝裕和导演的电影《无人知晓》。当时好像是看了一篇文章，介绍说柳乐优弥凭借该片击败《花样年华》梁朝伟成为了戛纳历史上最年轻的影帝。文章自然有以此为噱头吸引眼球的嫌疑，不过还是获得了我的好奇。当时和大多数人一样，新近听说了一部电影总要到豆瓣电影看看评分影评什么的，惊奇的是在豆瓣上是枝裕和导演所有作品竟然大多都是八分多的样子。就这样，我有意的多找了几部是枝裕和的作品来看。 是枝裕和的电影一般是偏文艺的，关注家庭伦理，节奏缓慢、注重情感的积累。是不是感觉似曾相识？像山田洋次，像小津安二郎。是枝裕和自己倒说过自己受成濑巳喜男影响比较多，其实在家庭伦理片方面，日本一直有着优秀的传承，向世界展示东方的家庭伦理观，那种不说出来而对方都懂的细腻情感。 无人知晓》讲述的是一个残忍的故事，母亲离家出走不归，大儿子负责照顾三个弟弟妹妹等待母亲回来，为了不让邻居发现，他们几乎整日地待在出租屋中，最后弟弟被饿死，大儿子乘列车将弟弟埋在山上。故事很残酷，是枝裕和的镜头却很冷静客观，孩子们的一颦一笑、迷惘忧伤，都捕捉的很到位。之后还看了导演的《步履不停》、《奇迹》，也是以家庭为主题，节奏不急不缓，电影的高潮在于情感累积到某个程度的迸发。总的来说，是枝导演的电影大多看完并不会让人有轻松的感觉，反而是心里面沉甸甸的，像被堵塞了什么东西似的让人陷入比较长的情绪低落期。
-生活是这么残酷又美好，没有希望，也没有绝望，只能愿你能够安抚心中的苦楚，一步一步的走下去…
-是枝裕和最近的几部影片故事性有所增强，更容易吸引人看下去，不比之前的影片比较“沉闷”。《如父如子》讲述的是两个家庭抱错孩子的故事，探讨亲情到底是血缘还是陪伴；《海街日记》讲述的是三姐妹接纳同父异母的妹妹的故事，影片拍摄的很美，四姐妹都很出彩，是一个相当温暖的故事；《比海更深》其实故事性相对没有那么强，比较偏向之前的作品，讲述一个自称小说家体验生活的私家侦探由于赌博离婚之后依然对妻子和孩子割舍不下想要挽回的故事，影片的高潮落根于台风的夜晚良多（导演很多不同影片男主人公都叫这个名字）和母亲、良多妻子和母亲的谈心，虽然悔不当初，但是终归是回不去的。最后母亲(树木希林扮演)说的这句话不禁让人唏嘘感慨。
-活了这么多年，我还从来没有这么一个人，可以说我爱他比海更深…
-前段时间又看了是枝裕和导演的《小偷家族》，该片获得了戛纳金棕榈大奖，有很多之前影片的影子。最近树木希林女士去世了,她和是枝也是“如母如子”了，是枝也说自己重新经历了丧母之痛。</description>
+      <description>应该是大二或者大三的时候第一次看是枝裕和导演的电影《无人知晓》。当时好像是看了一篇文章，介绍说柳乐优弥凭借该片击败《花样年华》梁朝伟成为了戛</description>
     </item>
     
     <item>
@@ -138,9 +106,7 @@ clone及extent共享 前面说到Bnode就是用来记录共享的lextent，目�
       <pubDate>Fri, 02 Aug 2019 23:06:16 +0800</pubDate>
       
       <guid>https://zhxin.xyz/post/%E4%B8%8D%E4%BC%9A%E5%88%B0%E6%9D%A5%E7%9A%84%E6%96%B0%E7%94%9F%E6%B4%BB/</guid>
-      <description>28岁、单身、无业、泡图书馆， 追剧看到这几个关键词的时候自己难免会心一笑，因为这几个标签可以完美套在当下的自己身上。 毕业后的第一份工作在坚持了几年之后还是最近提出了离职。自然没有剧中那样极具戏剧冲突的意外会让你突然决定离职来开始新的生活，现实中的职场只会让你在一眼看得到头的日子中精神被一点点摧残直到濒临崩溃。28岁是很尴尬的年龄，明明感觉正年轻，是孩提时向往的能够自由独立、天高任鸟飞的时候，但是现实却是从未有过的迷茫，比大学刚毕业的时候有过之而无不及。凪在图书馆中呆到最后也写不出愿望清单中的一项，反正不知道别人怎样，自己却是真的不知道干什么的，只是被动的选了专业，毕业后从事专业相关的工作。也不是没有喜欢的事情，不过不确定喜欢的事情是否能够养活自己，甚至父母将自己的工资和他们听说的别人家的孩子比较之后会说：工资也不高呀… 辞职的事情是没有告诉家人的，所以很怕接到家里的电话。不太有追求喜欢事情的念头，因为不自信，因为不确定是否足够喜欢，那种可以义无反顾破釜沉舟的人可能永远对这样的人感到无法理解，我是那种永远在被生活推着向前走的人。 离职后的日子还是比较焦躁的，和凪一样，有害怕积蓄花光的焦虑。大多数同龄人早已家庭事业双丰收，即使生活的辛苦并没有饶过谁，但是他们至少有奋斗的动力与身心俱疲后的避风港，而自己却一直在泥沼中挣扎，即使不断的手动足摇，但停下后依然还是在原地。凪说自己：特别喜欢SNS 对人对事也特别有执念 唯一的兴趣就是节俭，在社会关系中，敏感的人总是那么容易格格不入，总是在为别人考虑中扭曲了自己，别人将自己的和气当做没脾气、把好心当做随便使唤的义工，所以慢慢的打交道的事情总是能免就免了，也不想为了别人的看法而改变自己，可是同样的事情再次出现的时候难免还是会破功。凪将自己翻身的机会寄托到将来把和慎二结婚的消息发布SNS的那刻，也许她把能够和八面玲珑随时随地是氛围中心的慎二在一起当做自己唯一破除壁垒改变生活的机会，但是剧情的设置是残酷的最终导致凪抛弃一切去开始新生活。 说到这个慎二感觉他有点对凪精神虐待的意思，一开始看到慎二的标准反派表现感觉高桥一生这次在剧中应该是打酱油的吧，谁知道后来编剧给慎二强行‘洗白’：对凪所做的一切只是由于不会表达爱。编剧也写出了类似男女之间悲剧的导火索总是因为话说的不到位这种日剧金句。慎二在剧中处处打击凪的自尊心，不管有心还是无意。《冷暴力》中有这样一段描述精神虐待:
-施虐者却是以一贯的邪恶方式虐待别人，并固执地维持这种特定形式的关系…这种人为满足自身对获得倾慕和肯定的无尽需求，一定要以贬抑他人的方式来维护自尊，继而握有权力。由于他们不在乎与他人的关系，也就不会有同理心，也不会懂得尊重别人。
-总之感觉慎二这个角色写的有点问题，不是高桥一生演的不好，之前看他演的四重奏就挺好的。 大龄未婚男女青年感觉是个容易在微博知乎这样的地方引起热议的话题，甚至拿女博士这样厉害的人拿来调侃，貌似没有结婚的人生就是失败的。有人觉得结婚需要的是爱，有的觉得是门当户对，有的觉得房子车子不能少，有的觉得有情饮水饱，对此我也没有能力跳脱出来说些免于世俗亦或理想超脱的话。很长一段时间包括现在都怀疑自己是否有爱的能力，就是不清楚到什么程度才能够说是爱，目前只知道什么是喜欢，歇斯底里是永远做不到的，对激烈而又极端的恋侣们始终无法理解。到了奔三的年纪即使自己觉得结婚不着急，父母催婚也能搞得你崩溃，相亲这种活动对敏感而社恐的人来说简直致命，所以只能骗父母说已经有对象在谈来换得片刻的安静，继而在生活的泥沼中继续挣扎。对于婚姻要么是过于理想要么是过于消极。也许最终还是得和能够温暖慰藉到自己的人在一起才舒服吧，也许这又是理想化了。在现实浮躁的社会中期望通过这样的断舍离来获得新生活的努力终归是徒劳，起码我觉得自己这段离职休假并不会改变什么，不过剧中应该是圆满结局。写了这篇杂乱无章的东西只是因为这部剧(只看了前两集)和自己目前的状态有所呼应而已，可能这部剧这么受关注也是因为触动了当前奔三路上的人们的一些敏感神经吧，就这样吧，感谢听我啰嗦，希望大家幸福。</description>
+      <description>28岁、单身、无业、泡图书馆， 追剧看到这几个关键词的时候自己难免会心一笑，因为这几个标签可以完美套在当下的自己身上。 毕业后的第一份工作在坚持</description>
     </item>
     
   </channel>
