@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>ceph on zhxin</title>
+    <title>ceph on zhxin.xyz</title>
     <link>https://zhxin.xyz/categories/ceph/</link>
-    <description>Recent content in ceph on zhxin</description>
-    <image>
-      <title>zhxin</title>
-      <url>https://zhxin.xyz/bg.jpg</url>
-      <link>https://zhxin.xyz/bg.jpg</link>
-    </image>
+    <description>Recent content in ceph on zhxin.xyz</description>
     <generator>Hugo -- gohugo.io</generator>
+    <copyright>**[zhxin.xyz](https://zhxin.xyz)**</copyright>
     <lastBuildDate>Fri, 28 May 2021 22:49:38 +0800</lastBuildDate><atom:link href="https://zhxin.xyz/categories/ceph/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>PG Peering过程状态变化代码走读</title>
@@ -20,9 +16,9 @@
       <description>最近看了PG状态转换的过程,代码细节没有仔细研究，先粗略过了一遍代码，特此记录.
 PG PG是存储池的基本单元，是一些对象的集合，多副本和纠删的数据备份策略依托PG实现. PG有多种状态，状态之间的变化通过状态机实现.
 有两个场景会触发peering流程：
- 在pg创建时 在OSD启动、停止导致OSDMap变化进而导致pg的acting set发生变化时  状态机 状态机在创建PG进行初始化.
+在pg创建时 在OSD启动、停止导致OSDMap变化进而导致pg的acting set发生变化时 状态机 状态机在创建PG进行初始化.
 class RecoveryMachine : public boost::statechart::state_machine&amp;lt; RecoveryMachine, Initial &amp;gt; { RecoveryState *state; public: PG *pg; utime_t event_time; uint64_t event_count; ... boost::statechat包含对象：
- state_machine: 状态机 state: 状态 event：事件 可通过process_event函数进行事件投递 transition / custom_reaction: 转移/反应 custom_reaction通过对于react函数进行处理 PG状态机的对象、状态及时间处理主要在PG.h、PG.cc文件中.  struct Initial : boost::statechart::state&amp;lt; Initial, RecoveryMachine &amp;gt;, NamedState { explicit Initial(my_context ctx); void exit(); typedef boost::mpl::list &amp;lt; boost::statechart::transition&amp;lt; Initialize, Reset &amp;gt;, boost::statechart::custom_reaction&amp;lt; Load &amp;gt;, boost::statechart::custom_reaction&amp;lt; NullEvt &amp;gt;, boost::statechart::transition&amp;lt; boost::statechart::event_base, Crashed &amp;gt; &amp;gt; reactions; boost::statechart::result react(const Load&amp;amp;); boost::statechart::result react(const MNotifyRec&amp;amp;); boost::statechart::result react(const MInfoRec&amp;amp;); boost::statechart::result react(const MLogRec&amp;amp;); boost::statechart::result react(const boost::statechart::event_base&amp;amp;) { return discard_event(); } }; PG状态机主要包含的状态如下图:</description>
+state_machine: 状态机 state: 状态 event：事件 可通过process_event函数进行事件投递 transition / custom_reaction: 转移/反应 custom_reaction通过对于react函数进行处理 PG状态机的对象、状态及时间处理主要在PG.h、PG.cc文件中. struct Initial : boost::statechart::state&amp;lt; Initial, RecoveryMachine &amp;gt;, NamedState { explicit Initial(my_context ctx); void exit(); typedef boost::mpl::list &amp;lt; boost::statechart::transition&amp;lt; Initialize, Reset &amp;gt;, boost::statechart::custom_reaction&amp;lt; Load &amp;gt;, boost::statechart::custom_reaction&amp;lt; NullEvt &amp;gt;, boost::statechart::transition&amp;lt; boost::statechart::event_base, Crashed &amp;gt; &amp;gt; reactions; boost::statechart::result react(const Load&amp;amp;); boost::statechart::result react(const MNotifyRec&amp;amp;); boost::statechart::result react(const MInfoRec&amp;amp;); boost::statechart::result react(const MLogRec&amp;amp;); boost::statechart::result react(const boost::statechart::event_base&amp;amp;) { return discard_event(); } }; PG状态机主要包含的状态如下图:</description>
     </item>
     
     <item>
@@ -40,7 +36,7 @@ I/O读写映射逻辑 写I/O处理 到达bluestore的I/O的offset和length都是
 当一个写请求按照min_alloc_size进行拆分后，就会分为对齐写，对应到do_write_big，非对齐写（即落到某一个min_alloc_size区间的写I/O（对应到do_write_small）。
 do_write_big 对齐到min_alloc_size的写请求处理起来比较简单，有可能是多个min_alloc_size的大小，在处理时会根据实际大小新生成lextent和blob，这个lextent跨越的区域是min_alloc_size的整数倍，如果这段区间是之前写过的，会将之前的lextent记录下来便于后续的空间回收。
 do_write_small 在处理落到某个min_alloc_size区间的写请求时，会首先根据offset去查找有没有可以复用的blob，因为最小分配单元是min_alloc_size，默认64KB，如果一个4KB的写I/O就只会用到blob的一部分，blob里剩余的还能放其他的。
- 没有找到可以复用的blob，新生成blob  在处理还还需要根据offset和len是否对齐到block_size（默认是4KB）进行补零对齐的操作，之所以需要补齐是与后续的写盘操作有关，真正写盘时有两种方式，一种是Direct I/O的方式，这种要求偏移和缓冲区都对齐的，另外一种非Direct I/O，即Buffered I/O，这种可以不对齐，但是是写到cache里，然后再sync刷到磁盘上，比如只写了100字节，在内核里是需要先从设备上读出来补齐成一个完整的扇区，然后再刷的，这样反而降低了效率。因此在bluestore里直接处理好对齐，对于后面的写盘来说比较有利，这里对齐到block_size，是个可配置的参数。
+没有找到可以复用的blob，新生成blob 在处理还还需要根据offset和len是否对齐到block_size（默认是4KB）进行补零对齐的操作，之所以需要补齐是与后续的写盘操作有关，真正写盘时有两种方式，一种是Direct I/O的方式，这种要求偏移和缓冲区都对齐的，另外一种非Direct I/O，即Buffered I/O，这种可以不对齐，但是是写到cache里，然后再sync刷到磁盘上，比如只写了100字节，在内核里是需要先从设备上读出来补齐成一个完整的扇区，然后再刷的，这样反而降低了效率。因此在bluestore里直接处理好对齐，对于后面的写盘来说比较有利，这里对齐到block_size，是个可配置的参数。
 进行对齐补零时就是按照如上图那样把前后对齐到block_size，然后再把对齐后的offset和len作为lextent，进而放到blob里。 2. 找到可以复用的blob
 对于可以复用的blob，也是先按照block_size进行对齐补零的动作，然后再判断是否可以直接使用blob里空闲的空间进行区分做不同的处理。
 a. 直接写在blob未使用的空间上
