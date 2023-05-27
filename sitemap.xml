@@ -2,24 +2,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://zhxin.xyz/about/</loc>
-    <lastmod>2023-05-27T10:28:36+08:00</lastmod>
-  </url><url>
-    <loc>https://zhxin.xyz/tags/no/</loc>
-    <lastmod>2023-05-27T10:28:36+08:00</lastmod>
-  </url><url>
-    <loc>https://zhxin.xyz/</loc>
-    <lastmod>2023-05-27T10:28:36+08:00</lastmod>
-  </url><url>
-    <loc>https://zhxin.xyz/tags/</loc>
-    <lastmod>2023-05-27T10:28:36+08:00</lastmod>
-  </url><url>
-    <loc>https://zhxin.xyz/categories/</loc>
-    <lastmod>2023-05-27T10:28:36+08:00</lastmod>
-  </url><url>
-    <loc>https://zhxin.xyz/categories/%E9%BB%98%E8%AE%A4/</loc>
-    <lastmod>2023-05-27T10:28:36+08:00</lastmod>
-  </url><url>
     <loc>https://zhxin.xyz/categories/linux/</loc>
     <lastmod>2021-06-28T22:49:38+08:00</lastmod>
   </url><url>
@@ -27,6 +9,15 @@
     <lastmod>2021-06-28T22:49:38+08:00</lastmod>
   </url><url>
     <loc>https://zhxin.xyz/post/2021/06/shell%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/</loc>
+    <lastmod>2021-06-28T22:49:38+08:00</lastmod>
+  </url><url>
+    <loc>https://zhxin.xyz/</loc>
+    <lastmod>2021-06-28T22:49:38+08:00</lastmod>
+  </url><url>
+    <loc>https://zhxin.xyz/tags/</loc>
+    <lastmod>2021-06-28T22:49:38+08:00</lastmod>
+  </url><url>
+    <loc>https://zhxin.xyz/categories/</loc>
     <lastmod>2021-06-28T22:49:38+08:00</lastmod>
   </url><url>
     <loc>https://zhxin.xyz/post/</loc>

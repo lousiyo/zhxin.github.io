@@ -13,7 +13,7 @@
       <pubDate>Mon, 28 Jun 2021 22:49:38 +0800</pubDate>
       
       <guid>https://zhxin.xyz/post/2021/06/shell%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/</guid>
-      <description>变量 脚本开头使用#!/bin/bash指定要使用的shell,shell会通过PATH环境变量来查找脚本中使用的命令，可以使用echo $PA</description>
+      <description>变量 脚本开头使用#!/bin/bash指定要使用的shell,shell会通过PATH环境变量来查找脚本中使用的命令，可以使用echo $PATH来看下脚本会在哪些目录下查找命令，如果脚本中执行的命令没有在PATH环境变量中，也可以通过绝对或相对路径来引用. 在脚本中可以使用shell维护的环境变量也可以定义和使用自己的用户变量. 赋值等号两边不能存在空格 环境变量： 可以使用set命令查看当前环境变量列表</description>
     </item>
     
   </channel>
