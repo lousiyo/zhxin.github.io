@@ -69,7 +69,7 @@ PG状态机的对象、状态及时间处理主要在<code>PG.h</code>、<code>P
 </span></span><span class=line><span class=cl><span class=k>return</span> <span class=nf>discard_event</span><span class=p>();</span>
 </span></span><span class=line><span class=cl>     <span class=p>}</span>
 </span></span><span class=line><span class=cl>   <span class=p>};</span>
-</span></span></code></pre></td></tr></table></div></div><p>PG状态机主要包含的状态如下图:<br><img loading=lazy src=https://pic.zhxin.xyz//pics/2023/06/08c3c56aa594aab14130362516296b9f.png#center alt=PG状态机></p><h3 id=primary-peering>Primary Peering<a hidden class=anchor aria-hidden=true href=#primary-peering>#</a></h3><p>Primary Peering过程中状态机流程图如下图所示，并没有展示<code>从OSD</code>和<code>Recovery</code>、<code>Backfill</code>过程.<br><img loading=lazy src=https://pic.zhxin.xyz//pics/2023/06/d6d4e062eb5a7cbcc50a5a22363f9061.png#center alt=PG部分状态变化>
+</span></span></code></pre></td></tr></table></div></div><p>PG状态机主要包含的状态如下图:<br><img loading=lazy src=https://pic.zhxin.xyz/pics/2023/06/08c3c56aa594aab14130362516296b9f.png#center alt=PG状态机></p><h3 id=primary-peering>Primary Peering<a hidden class=anchor aria-hidden=true href=#primary-peering>#</a></h3><p>Primary Peering过程中状态机流程图如下图所示，并没有展示<code>从OSD</code>和<code>Recovery</code>、<code>Backfill</code>过程.<br><img loading=lazy src=https://pic.zhxin.xyz/pics/2023/06/d6d4e062eb5a7cbcc50a5a22363f9061.png#center alt=PG部分状态变化>
 主OSD接受到pg_create消息开始创建PG</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span><span class=lnt>3
