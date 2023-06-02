@@ -16,7 +16,7 @@ ceph df #查询集群存储容量
 ceph health detail #集群详细健康信息
 
 
-"><meta name=author content><link rel=canonical href=https://zhxin.xyz/post/2021/02/%E5%B8%B8%E7%94%A8ceph%E5%91%BD%E4%BB%A4/><link crossorigin=anonymous href=/assets/css/stylesheet.02ea2e7282a9aa758fc343caf67c72663e6098185248e82139c0abccbe5b98ca.css integrity="sha256-AuoucoKpqnWPw0PK9nxyZj5gmBhSSOghOcCrzL5bmMo=" rel="preload stylesheet" as=style><script defer crossorigin=anonymous src=/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG+9vmJ0cTS+ovo0FeA=" onload=hljs.initHighlightingOnLoad()></script>
+"><meta name=author content><link rel=canonical href=https://zhxin.xyz/post/2021/02/%E5%B8%B8%E7%94%A8ceph%E5%91%BD%E4%BB%A4/><link crossorigin=anonymous href=/assets/css/stylesheet.7a8f7a3dcdfef24fc8286a05a0aa369e15bd1b9748b52a9bc6ed1cd967c708fe.css integrity="sha256-eo96Pc3+8k/IKGoFoKo2nhW9G5dItSqbxu0c2WfHCP4=" rel="preload stylesheet" as=style><script defer crossorigin=anonymous src=/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG+9vmJ0cTS+ovo0FeA=" onload=hljs.initHighlightingOnLoad()></script>
 <link rel=icon href=https://zhxin.xyz/favicon.ico><link rel=icon type=image/png sizes=16x16 href=https://zhxin.xyz/favicon-16x16.png><link rel=icon type=image/png sizes=32x32 href=https://zhxin.xyz/favicon-32x32.png><link rel=apple-touch-icon href=https://zhxin.xyz/apple-touch-icon.png><link rel=mask-icon href=https://zhxin.xyz/safari-pinned-tab.svg><meta name=theme-color content="#2e2e33"><meta name=msapplication-TileColor content="#2e2e33"><noscript><style>#theme-toggle,.top-link{display:none}</style></noscript><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100;300&display=swap" rel=stylesheet><link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel=stylesheet><script async src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js></script>
 <script src=https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js></script><meta property="og:title" content="常用ceph命令"><meta property="og:description" content="工作中遇到的比较常用的命令,特此整理以备忘.
 
@@ -68,37 +68,37 @@ ceph health detail #集群详细健康信息
 <span>2 分钟</span></span>
 <script>feather.replace()</script><span class=meta-item><i data-feather=book-open></i>
 <span id=busuanzi_value_page_pv></span>
-<script>feather.replace()</script></span></div></header><div class=post-content><p>工作中遇到的比较常用的命令,特此整理以备忘.</p><ul><li>查看集群状态</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-0-1><a class=lnlinks href=#hl-0-1>1</a>
-</span><span class=lnt id=hl-0-2><a class=lnlinks href=#hl-0-2>2</a>
-</span><span class=lnt id=hl-0-3><a class=lnlinks href=#hl-0-3>3</a>
-</span><span class=lnt id=hl-0-4><a class=lnlinks href=#hl-0-4>4</a>
+<script>feather.replace()</script></span></div></header><div class=post-content><p>工作中遇到的比较常用的命令,特此整理以备忘.</p><ul><li>查看集群状态</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
 </span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>ceph -s <span class=c1>#查看状态</span>
 </span></span><span class=line><span class=cl>ceph -v <span class=c1>#查看版本</span>
 </span></span><span class=line><span class=cl>ceph df <span class=c1>#查询集群存储容量</span>
 </span></span><span class=line><span class=cl>ceph health detail <span class=c1>#集群详细健康信息</span>
-</span></span></code></pre></td></tr></table></div></div><ul><li>查询集群组件信息相关命令</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-1-1><a class=lnlinks href=#hl-1-1> 1</a>
-</span><span class=lnt id=hl-1-2><a class=lnlinks href=#hl-1-2> 2</a>
-</span><span class=lnt id=hl-1-3><a class=lnlinks href=#hl-1-3> 3</a>
-</span><span class=lnt id=hl-1-4><a class=lnlinks href=#hl-1-4> 4</a>
-</span><span class=lnt id=hl-1-5><a class=lnlinks href=#hl-1-5> 5</a>
-</span><span class=lnt id=hl-1-6><a class=lnlinks href=#hl-1-6> 6</a>
-</span><span class=lnt id=hl-1-7><a class=lnlinks href=#hl-1-7> 7</a>
-</span><span class=lnt id=hl-1-8><a class=lnlinks href=#hl-1-8> 8</a>
-</span><span class=lnt id=hl-1-9><a class=lnlinks href=#hl-1-9> 9</a>
-</span><span class=lnt id=hl-1-10><a class=lnlinks href=#hl-1-10>10</a>
-</span><span class=lnt id=hl-1-11><a class=lnlinks href=#hl-1-11>11</a>
-</span><span class=lnt id=hl-1-12><a class=lnlinks href=#hl-1-12>12</a>
-</span><span class=lnt id=hl-1-13><a class=lnlinks href=#hl-1-13>13</a>
-</span><span class=lnt id=hl-1-14><a class=lnlinks href=#hl-1-14>14</a>
-</span><span class=lnt id=hl-1-15><a class=lnlinks href=#hl-1-15>15</a>
-</span><span class=lnt id=hl-1-16><a class=lnlinks href=#hl-1-16>16</a>
-</span><span class=lnt id=hl-1-17><a class=lnlinks href=#hl-1-17>17</a>
-</span><span class=lnt id=hl-1-18><a class=lnlinks href=#hl-1-18>18</a>
-</span><span class=lnt id=hl-1-19><a class=lnlinks href=#hl-1-19>19</a>
-</span><span class=lnt id=hl-1-20><a class=lnlinks href=#hl-1-20>20</a>
-</span><span class=lnt id=hl-1-21><a class=lnlinks href=#hl-1-21>21</a>
-</span><span class=lnt id=hl-1-22><a class=lnlinks href=#hl-1-22>22</a>
-</span><span class=lnt id=hl-1-23><a class=lnlinks href=#hl-1-23>23</a>
+</span></span></code></pre></td></tr></table></div></div><ul><li>查询集群组件信息相关命令</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
 </span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>rados lspools <span class=c1>#查询池子列表</span>
 </span></span><span class=line><span class=cl>ceph osd dump <span class=p>|</span> grep pool <span class=c1>#查询所有池子信息</span>
 </span></span><span class=line><span class=cl>rados -p &lt;pool&gt; ls <span class=c1>#池子下对象</span>
@@ -122,31 +122,31 @@ ceph health detail #集群详细健康信息
 </span></span><span class=line><span class=cl>ceph pg stat
 </span></span><span class=line><span class=cl>ceph pg dump
 </span></span><span class=line><span class=cl>ceph pg dump_stuck unclean
-</span></span></code></pre></td></tr></table></div></div><ul><li>systemctl管理服务</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-2-1><a class=lnlinks href=#hl-2-1>1</a>
-</span><span class=lnt id=hl-2-2><a class=lnlinks href=#hl-2-2>2</a>
-</span><span class=lnt id=hl-2-3><a class=lnlinks href=#hl-2-3>3</a>
-</span><span class=lnt id=hl-2-4><a class=lnlinks href=#hl-2-4>4</a>
-</span><span class=lnt id=hl-2-5><a class=lnlinks href=#hl-2-5>5</a>
+</span></span></code></pre></td></tr></table></div></div><ul><li>systemctl管理服务</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
 </span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>systemctl reset-failed ceph-osd@*   <span class=c1>#重置失败服务</span>
 </span></span><span class=line><span class=cl>systemctl start ceph-osd.target     <span class=c1>#重启osd服务</span>
 </span></span><span class=line><span class=cl>systemctl restart ceph.target   <span class=c1>#重启ceph服务</span>
 </span></span><span class=line><span class=cl>systemctl stop ceph-osd@0   <span class=c1>#停止单个osd服务</span>
 </span></span><span class=line><span class=cl>systemctl status ceph-osd@1 <span class=c1>#查看服务状态</span>
-</span></span></code></pre></td></tr></table></div></div><ul><li>集群操作命令</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-3-1><a class=lnlinks href=#hl-3-1>1</a>
-</span><span class=lnt id=hl-3-2><a class=lnlinks href=#hl-3-2>2</a>
-</span><span class=lnt id=hl-3-3><a class=lnlinks href=#hl-3-3>3</a>
+</span></span></code></pre></td></tr></table></div></div><ul><li>集群操作命令</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
 </span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>ceph osd pool delete &lt;pool&gt; &lt;pool&gt; --yes-i-really-really-mean-it    <span class=c1>#删除池</span>
 </span></span><span class=line><span class=cl>rados put &lt;oid&gt; &lt;filename&gt; --pool<span class=o>=</span>&lt;pool&gt; <span class=c1>#在池中添加对象</span>
 </span></span><span class=line><span class=cl>eph osd pool create &lt;pool&gt; &lt;pgnum&gt; &lt;pgnum&gt; -r &lt;host、osd&gt;  <span class=c1>#创建池</span>
-</span></span></code></pre></td></tr></table></div></div><ul><li>crush相关操作</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-4-1><a class=lnlinks href=#hl-4-1>1</a>
-</span><span class=lnt id=hl-4-2><a class=lnlinks href=#hl-4-2>2</a>
-</span><span class=lnt id=hl-4-3><a class=lnlinks href=#hl-4-3>3</a>
-</span><span class=lnt id=hl-4-4><a class=lnlinks href=#hl-4-4>4</a>
-</span><span class=lnt id=hl-4-5><a class=lnlinks href=#hl-4-5>5</a>
-</span><span class=lnt id=hl-4-6><a class=lnlinks href=#hl-4-6>6</a>
-</span><span class=lnt id=hl-4-7><a class=lnlinks href=#hl-4-7>7</a>
-</span><span class=lnt id=hl-4-8><a class=lnlinks href=#hl-4-8>8</a>
-</span><span class=lnt id=hl-4-9><a class=lnlinks href=#hl-4-9>9</a>
+</span></span></code></pre></td></tr></table></div></div><ul><li>crush相关操作</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
 </span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>ceph osd crush dump
 </span></span><span class=line><span class=cl>ceph osd crush rule list
 </span></span><span class=line><span class=cl>ceph osd crush rule dump &lt;crush rule name&gt;
@@ -156,13 +156,13 @@ ceph health detail #集群详细健康信息
 </span></span><span class=line><span class=cl>vi map_old.txt <span class=c1>#修改rule replicated_ruleset step chooseleaf firstn 0 type *osd*</span>
 </span></span><span class=line><span class=cl>crushtool -c &lt;map_old.txt&gt; -o &lt;map_new&gt;  <span class=c1>#还原为map</span>
 </span></span><span class=line><span class=cl>ceph osd setcrushmap -i &lt;map_new&gt;     <span class=c1>#将map导入ceph</span>
-</span></span></code></pre></td></tr></table></div></div><ul><li>块设备管理命令</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-5-1><a class=lnlinks href=#hl-5-1>1</a>
-</span><span class=lnt id=hl-5-2><a class=lnlinks href=#hl-5-2>2</a>
-</span><span class=lnt id=hl-5-3><a class=lnlinks href=#hl-5-3>3</a>
-</span><span class=lnt id=hl-5-4><a class=lnlinks href=#hl-5-4>4</a>
-</span><span class=lnt id=hl-5-5><a class=lnlinks href=#hl-5-5>5</a>
-</span><span class=lnt id=hl-5-6><a class=lnlinks href=#hl-5-6>6</a>
-</span><span class=lnt id=hl-5-7><a class=lnlinks href=#hl-5-7>7</a>
+</span></span></code></pre></td></tr></table></div></div><ul><li>块设备管理命令</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
 </span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>ceph osd pool create &lt;rbd&gt; &lt;pgnum&gt; &lt;pgnum&gt;
 </span></span><span class=line><span class=cl>ceph osd pool <span class=nb>set</span> &lt;rbd&gt; size &lt;repnum&gt;
 </span></span><span class=line><span class=cl>rbd create --image &lt;my_image&gt; --size &lt;1T&gt; --pool &lt;rbd&gt;
@@ -170,12 +170,12 @@ ceph health detail #集群详细健康信息
 </span></span><span class=line><span class=cl>rbd trash move/mv &lt;images_name&gt; -p &lt;pool_name&gt; <span class=c1>#将卷丢到回收站</span>
 </span></span><span class=line><span class=cl>rbd trash restore &lt;ID&gt; -p &lt;pool_name&gt; <span class=c1>#将回收站中的卷还原</span>
 </span></span><span class=line><span class=cl>rbd trash remove/rm &lt;ID&gt; -p &lt;pool_name&gt; <span class=c1>#清除回收站中的卷</span>
-</span></span></code></pre></td></tr></table></div></div><ul><li>配置命令</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt id=hl-6-1><a class=lnlinks href=#hl-6-1>1</a>
-</span><span class=lnt id=hl-6-2><a class=lnlinks href=#hl-6-2>2</a>
-</span><span class=lnt id=hl-6-3><a class=lnlinks href=#hl-6-3>3</a>
-</span><span class=lnt id=hl-6-4><a class=lnlinks href=#hl-6-4>4</a>
-</span><span class=lnt id=hl-6-5><a class=lnlinks href=#hl-6-5>5</a>
-</span><span class=lnt id=hl-6-6><a class=lnlinks href=#hl-6-6>6</a>
+</span></span></code></pre></td></tr></table></div></div><ul><li>配置命令</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
 </span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>ceph --show-config <span class=c1>#查询集群默认配置</span>
 </span></span><span class=line><span class=cl>
 </span></span><span class=line><span class=cl>ceph daemon &lt;mon.5&gt; config show <span class=p>|</span> grep &lt;mon_osd_down_out_interval&gt; <span class=c1>#查询进程配置信息</span>
