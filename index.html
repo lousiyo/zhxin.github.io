@@ -19,15 +19,15 @@
 <span>4282 字</span></span><span class=meta-item>
 <i data-feather=clock></i>
 <span>9 分钟</span></span>
-<script>feather.replace()</script></footer><a class=entry-link aria-label="post link to PG Peering过程状态变化代码走读" href=https://zhxin.xyz/post/2021/05/pg-peering%E8%BF%87%E7%A8%8B%E7%8A%B6%E6%80%81%E5%8F%98%E5%8C%96%E4%BB%A3%E7%A0%81%E8%B5%B0%E8%AF%BB/></a></article><article class=post-entry><header class=entry-header><h2>Git客户端初始配置</h2></header><div class=entry-content><p>安装完成GIT之后配置相关用户名邮箱. 1 2 git config --global user.name "xxx" git config --global user.email xxx@xxx.com ...</p></div><footer class=entry-footer><span class=meta-item><i data-feather=calendar></i>
+<script>feather.replace()</script></footer><a class=entry-link aria-label="post link to PG Peering过程状态变化代码走读" href=https://zhxin.xyz/post/2021/05/pg-peering%E8%BF%87%E7%A8%8B%E7%8A%B6%E6%80%81%E5%8F%98%E5%8C%96%E4%BB%A3%E7%A0%81%E8%B5%B0%E8%AF%BB/></a></article><article class=post-entry><header class=entry-header><h2>Git 基本操作</h2></header><div class=entry-content><p>配置 git config --list --show-origin 查看所有配置信息 git config 命令带入–system参数会将配置写入/etc/gitconfig文件，对整个系统生效；–global选项会写入~/.gitconfig文件对当前用户所有仓库生效 1 2 3 4 5 6 7 #安装完成GIT之后配置相关用户名邮箱 git config --global user.name "me" git config --global user.email me@outlook.com git config --global core.editor vim git config --global log.date iso git config --global merge.conflictstyle diff3 git config --global merge.tool nvimdiff3 配置github ssh 访问 1 2 3 4 5 6 ls -al ~/.ssh [[查看是否生成SSH]] key ssh-keygen...</p></div><footer class=entry-footer><span class=meta-item><i data-feather=calendar></i>
 <span>2021-03-28</span></span><span class=meta-item>
 <i data-feather=hash></i>
 <a href=https://zhxin.xyz/tags/git/>git</a></span><span class=meta-item>
 <i data-feather=file-text></i>
-<span>139 字</span></span><span class=meta-item>
+<span>3348 字</span></span><span class=meta-item>
 <i data-feather=clock></i>
-<span>1 分钟</span></span>
-<script>feather.replace()</script></footer><a class=entry-link aria-label="post link to Git客户端初始配置" href=https://zhxin.xyz/post/2021/03/git%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%88%9D%E5%A7%8B%E9%85%8D%E7%BD%AE/></a></article><article class=post-entry><header class=entry-header><h2>【转载】ceph存储引擎bluestore解析</h2></header><div class=entry-content><p>转载自sysnote,如有侵权请联系删除 ceph后端支持多种存储引擎，以插件式的方式来进行管理使用，目前支持filestore，kvstore，memstore以及最新的bluestore，目前默认使用的filestore，但是因为filestore在写数据前需要先写journal，会有一倍的写放大，并且filestore一开始只是对于机械盘进行设计的，没有专门针对ssd做优化考虑，因此诞生的bl...</p></div><footer class=entry-footer><span class=meta-item><i data-feather=calendar></i>
+<span>7 分钟</span></span>
+<script>feather.replace()</script></footer><a class=entry-link aria-label="post link to Git 基本操作" href=https://zhxin.xyz/post/2021/03/git-%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/></a></article><article class=post-entry><header class=entry-header><h2>【转载】ceph存储引擎bluestore解析</h2></header><div class=entry-content><p>转载自sysnote,如有侵权请联系删除 ceph后端支持多种存储引擎，以插件式的方式来进行管理使用，目前支持filestore，kvstore，memstore以及最新的bluestore，目前默认使用的filestore，但是因为filestore在写数据前需要先写journal，会有一倍的写放大，并且filestore一开始只是对于机械盘进行设计的，没有专门针对ssd做优化考虑，因此诞生的bl...</p></div><footer class=entry-footer><span class=meta-item><i data-feather=calendar></i>
 <span>2021-02-28</span></span><span class=meta-item>
 <i data-feather=hash></i>
 <a href=https://zhxin.xyz/tags/ceph/>ceph</a></span><span class=meta-item>
