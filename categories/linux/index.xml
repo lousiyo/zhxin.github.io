@@ -22,7 +22,7 @@
       <pubDate>Sun, 28 Mar 2021 22:49:38 +0800</pubDate>
       
       <guid>https://zhxin.xyz/post/2021/03/git-%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/</guid>
-      <description>配置 git config --list --show-origin 查看所有配置信息 git config 命令带入&amp;ndash;system参数会将配置写入/etc/gitconfig文件，对整个系统生效；&amp;ndash;global选项会写入~/.gitconfig文件对当前用户所有仓库生效 #安装完成GIT之后配置相关用户名邮箱 git config --global user.name &amp;#34;me&amp;#34; git config --global user.email me@outlook.com git config --global core.editor vim git config --global log.date iso git config --global merge.conflictstyle diff3 git config --global merge.tool nvimdiff3 配置github ssh 访问 ls -al ~/.ssh [[查看是否生成SSH]] key ssh-keygen -t rsa -b 4096 -C &amp;#34;me@outlook.com&amp;#34; [[生成key</description>
+      <description>配置 git config --list --show-origin 查看所有配置信息 git config 命令带入&amp;ndash;system参数会将配置写入/etc/gitconfig文件，对整个系统生效；&amp;ndash;global选项会写入~/.gitconfig文件对当前用户所有仓库生效 1 2 3 4 5 6 7 #安装完成GIT之后配置相关用户名邮箱 git config --global user.name &amp;#34;me&amp;#34; git config --global user.email me@outlook.com git config --global core.editor vim git config --global log.date iso git config --global merge.conflictstyle diff3 git config --global merge.tool nvimdiff3 配置github ssh 访问 1 2 3 4 5 6 ls -al ~/.ssh [[查看是否生成SSH]] key ssh-keygen</description>
     </item>
     
   </channel>

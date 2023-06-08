@@ -1,6 +1,6 @@
-<!doctype html><html lang=zh dir=auto><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><title>Shell编程基础 | zhxin.xyz</title><meta name=keywords content="shell"><meta name=description content="变量 脚本开头使用#!/bin/bash指定要使用的shell,shell会通过PATH环境变量来查找脚本中使用的命令，可以使用echo $PATH来看下脚本会在哪些目录下查找命令，如果脚本中执行的命令没有在PATH环境变量中，也可以通过绝对或相对路径来引用. 在脚本中可以使用shell维护的环境变量也可以定义和使用自己的用户变量. 赋值等号两边不能存在空格 环境变量： 可以使用set命令查看当前环境变量列表"><meta name=author content><link rel=canonical href=https://zhxin.xyz/post/2021/06/shell%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/><link crossorigin=anonymous href=/assets/css/stylesheet.02ea2e7282a9aa758fc343caf67c72663e6098185248e82139c0abccbe5b98ca.css integrity="sha256-AuoucoKpqnWPw0PK9nxyZj5gmBhSSOghOcCrzL5bmMo=" rel="preload stylesheet" as=style><script defer crossorigin=anonymous src=/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG+9vmJ0cTS+ovo0FeA=" onload=hljs.initHighlightingOnLoad()></script>
+<!doctype html><html lang=zh dir=auto><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><title>Shell编程基础 | zhxin.xyz</title><meta name=keywords content="shell"><meta name=description content="变量 脚本开头使用#!/bin/bash指定要使用的shell,shell会通过PATH环境变量来查找脚本中使用的命令，可以使用echo $PATH来看下脚本会在哪些目录下查找命令，如果脚本中执行的命令没有在PATH环境变量中，也可以通过绝对或相对路径来引用. 在脚本中可以使用shell维护的环境变量也可以定义和使用自己的用户变量. 赋值等号两边不能存在空格 环境变量： 可以使用set命令查看当前环境变量列表"><meta name=author content><link rel=canonical href=https://zhxin.xyz/post/2021/06/shell%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/><link crossorigin=anonymous href=/assets/css/stylesheet.025a29662c2e389cf6ace7324d6e1c821f49ebd4fc26062c2c001d1d290d4803.css integrity="sha256-AlopZiwuOJz2rOcyTW4cgh9J69T8JgYsLAAdHSkNSAM=" rel="preload stylesheet" as=style><script defer crossorigin=anonymous src=/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG+9vmJ0cTS+ovo0FeA=" onload=hljs.initHighlightingOnLoad()></script>
 <link rel=icon href=https://zhxin.xyz/favicon.ico><link rel=icon type=image/png sizes=16x16 href=https://zhxin.xyz/favicon-16x16.png><link rel=icon type=image/png sizes=32x32 href=https://zhxin.xyz/favicon-32x32.png><link rel=apple-touch-icon href=https://zhxin.xyz/apple-touch-icon.png><link rel=mask-icon href=https://zhxin.xyz/safari-pinned-tab.svg><meta name=theme-color content="#2e2e33"><meta name=msapplication-TileColor content="#2e2e33"><noscript><style>#theme-toggle,.top-link{display:none}</style></noscript><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100;300&display=swap" rel=stylesheet><link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel=stylesheet><script async src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js></script>
-<script src=https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js></script><meta property="og:title" content="Shell编程基础"><meta property="og:description" content="变量 脚本开头使用#!/bin/bash指定要使用的shell,shell会通过PATH环境变量来查找脚本中使用的命令，可以使用echo $PATH来看下脚本会在哪些目录下查找命令，如果脚本中执行的命令没有在PATH环境变量中，也可以通过绝对或相对路径来引用. 在脚本中可以使用shell维护的环境变量也可以定义和使用自己的用户变量. 赋值等号两边不能存在空格 环境变量： 可以使用set命令查看当前环境变量列表"><meta property="og:type" content="article"><meta property="og:url" content="https://zhxin.xyz/post/2021/06/shell%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/"><meta property="article:section" content="post"><meta property="article:published_time" content="2021-06-28T22:49:38+08:00"><meta property="article:modified_time" content="2021-06-28T22:49:38+08:00"><meta property="og:site_name" content="zhxin"><meta name=twitter:card content="summary"><meta name=twitter:title content="Shell编程基础"><meta name=twitter:description content="变量 脚本开头使用#!/bin/bash指定要使用的shell,shell会通过PATH环境变量来查找脚本中使用的命令，可以使用echo $PATH来看下脚本会在哪些目录下查找命令，如果脚本中执行的命令没有在PATH环境变量中，也可以通过绝对或相对路径来引用. 在脚本中可以使用shell维护的环境变量也可以定义和使用自己的用户变量. 赋值等号两边不能存在空格 环境变量： 可以使用set命令查看当前环境变量列表"><script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"所有文章","item":"https://zhxin.xyz/post/"},{"@type":"ListItem","position":2,"name":"Shell编程基础","item":"https://zhxin.xyz/post/2021/06/shell%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/"}]}</script><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"Shell编程基础","name":"Shell编程基础","description":"变量 脚本开头使用#!/bin/bash指定要使用的shell,shell会通过PATH环境变量来查找脚本中使用的命令，可以使用echo $PATH来看下脚本会在哪些目录下查找命令，如果脚本中执行的命令没有在PATH环境变量中，也可以通过绝对或相对路径来引用. 在脚本中可以使用shell维护的环境变量也可以定义和使用自己的用户变量. 赋值等号两边不能存在空格 环境变量： 可以使用set命令查看当前环境变量列表","keywords":["shell"],"articleBody":"变量 脚本开头使用#!/bin/bash指定要使用的shell,shell会通过PATH环境变量来查找脚本中使用的命令，可以使用echo $PATH来看下脚本会在哪些目录下查找命令，如果脚本中执行的命令没有在PATH环境变量中，也可以通过绝对或相对路径来引用.\n在脚本中可以使用shell维护的环境变量也可以定义和使用自己的用户变量.\n赋值等号两边不能存在空格\n环境变量：\n可以使用set命令查看当前环境变量列表,例如$HOME、$HOSTNAME、$USER等;\n用户变量：\n由字母数字下划线组成，长度不超过二十，区分大小写，变量、等号、值之间不能有空格，在shell脚本结束时会被删除掉，使用美元符号引用，例如name=\"test\"。\n使用用户变量保存命令执行结果：testing=$(date)\n特殊参数变量\n参数 描述 $ 0 $1 $2 入参 $# 参数个数 $* 入参列表，将所有参数当作单个参数 $@ 入参列表，单独处理每个参 重定向输入输出 输出重定向: \u003e 追加：\u003e\u003e\n输入重定向: \u003c 在脚本中使用\u003c \u003e 需要进行转义\\\u003c \\\u003e\n内联输入重定向：\ncommand \u003c\u003c marker content marker # 例如： wc -l \u003c","wordCount":"2320","inLanguage":"zh","datePublished":"2021-06-28T22:49:38+08:00","dateModified":"2021-06-28T22:49:38+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://zhxin.xyz/post/2021/06/shell%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/"},"publisher":{"@type":"Organization","name":"zhxin.xyz","logo":{"@type":"ImageObject","url":"https://zhxin.xyz/favicon.ico"}}}</script></head><body class=dark id=top><script>localStorage.getItem("pref-theme")==="light"&&document.body.classList.remove("dark")</script><header class=header><nav class=nav><div class=logo><a href=https://zhxin.xyz/ accesskey=h title="主页 (Alt + H)">主页</a><div class=logo-switches><button id=theme-toggle accesskey=t title="(Alt + T)"><svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg><svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button></div></div><ul id=menu><li><a href=https://zhxin.xyz/categories/ title=类别><span><span class=meta-item><i data-feather=grid></i></span>
+<script src=https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js></script><meta property="og:title" content="Shell编程基础"><meta property="og:description" content="变量 脚本开头使用#!/bin/bash指定要使用的shell,shell会通过PATH环境变量来查找脚本中使用的命令，可以使用echo $PATH来看下脚本会在哪些目录下查找命令，如果脚本中执行的命令没有在PATH环境变量中，也可以通过绝对或相对路径来引用. 在脚本中可以使用shell维护的环境变量也可以定义和使用自己的用户变量. 赋值等号两边不能存在空格 环境变量： 可以使用set命令查看当前环境变量列表"><meta property="og:type" content="article"><meta property="og:url" content="https://zhxin.xyz/post/2021/06/shell%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/"><meta property="article:section" content="post"><meta property="article:published_time" content="2021-06-28T22:49:38+08:00"><meta property="article:modified_time" content="2021-06-28T22:49:38+08:00"><meta property="og:site_name" content="zhxin"><meta name=twitter:card content="summary"><meta name=twitter:title content="Shell编程基础"><meta name=twitter:description content="变量 脚本开头使用#!/bin/bash指定要使用的shell,shell会通过PATH环境变量来查找脚本中使用的命令，可以使用echo $PATH来看下脚本会在哪些目录下查找命令，如果脚本中执行的命令没有在PATH环境变量中，也可以通过绝对或相对路径来引用. 在脚本中可以使用shell维护的环境变量也可以定义和使用自己的用户变量. 赋值等号两边不能存在空格 环境变量： 可以使用set命令查看当前环境变量列表"><script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"所有文章","item":"https://zhxin.xyz/post/"},{"@type":"ListItem","position":2,"name":"Shell编程基础","item":"https://zhxin.xyz/post/2021/06/shell%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/"}]}</script><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"Shell编程基础","name":"Shell编程基础","description":"变量 脚本开头使用#!/bin/bash指定要使用的shell,shell会通过PATH环境变量来查找脚本中使用的命令，可以使用echo $PATH来看下脚本会在哪些目录下查找命令，如果脚本中执行的命令没有在PATH环境变量中，也可以通过绝对或相对路径来引用. 在脚本中可以使用shell维护的环境变量也可以定义和使用自己的用户变量. 赋值等号两边不能存在空格 环境变量： 可以使用set命令查看当前环境变量列表","keywords":["shell"],"articleBody":"变量 脚本开头使用#!/bin/bash指定要使用的shell,shell会通过PATH环境变量来查找脚本中使用的命令，可以使用echo $PATH来看下脚本会在哪些目录下查找命令，如果脚本中执行的命令没有在PATH环境变量中，也可以通过绝对或相对路径来引用.\n在脚本中可以使用shell维护的环境变量也可以定义和使用自己的用户变量.\n赋值等号两边不能存在空格\n环境变量：\n可以使用set命令查看当前环境变量列表,例如$HOME、$HOSTNAME、$USER等;\n用户变量：\n由字母数字下划线组成，长度不超过二十，区分大小写，变量、等号、值之间不能有空格，在shell脚本结束时会被删除掉，使用美元符号引用，例如name=\"test\"。\n使用用户变量保存命令执行结果：testing=$(date)\n特殊参数变量\n参数 描述 $ 0 $1 $2 入参 $# 参数个数 $* 入参列表，将所有参数当作单个参数 $@ 入参列表，单独处理每个参 重定向输入输出 输出重定向: \u003e 追加：\u003e\u003e\n输入重定向: \u003c 在脚本中使用\u003c \u003e 需要进行转义\\\u003c \\\u003e\n内联输入重定向：\n1 2 3 4 5 6 7 8 command \u003c\u003c marker content marker # 例如： wc -l \u003c","wordCount":"2449","inLanguage":"zh","datePublished":"2021-06-28T22:49:38+08:00","dateModified":"2021-06-28T22:49:38+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://zhxin.xyz/post/2021/06/shell%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/"},"publisher":{"@type":"Organization","name":"zhxin.xyz","logo":{"@type":"ImageObject","url":"https://zhxin.xyz/favicon.ico"}}}</script></head><body class=dark id=top><header class=header><nav class=nav><div class=logo><a href=https://zhxin.xyz/ accesskey=h title="主页 (Alt + H)">主页</a><div class=logo-switches></div></div><ul id=menu><li><a href=https://zhxin.xyz/categories/ title=类别><span><span class=meta-item><i data-feather=grid></i></span>
 类别</span></a></li><li><a href=https://zhxin.xyz/tags/ title=标签><span><span class=meta-item><i data-feather=pocket></i></span>
 标签</span></a></li><li><a href=https://zhxin.xyz/archives/ title=归档><span><span class=meta-item><i data-feather=archive></i></span>
 归档</span></a></li><li><a href=https://zhxin.xyz/search/ title=搜索><span><span class=meta-item><i data-feather=search></i></span>
@@ -9,13 +9,21 @@
 <i data-feather=hash></i>
 <a href=https://zhxin.xyz/tags/shell/>shell</a></span><span class=meta-item>
 <i data-feather=file-text></i>
-<span>2320 字</span></span><span class=meta-item>
+<span>2449 字</span></span><span class=meta-item>
 <i data-feather=clock></i>
 <span>5 分钟</span></span>
 <script>feather.replace()</script><span class=meta-item><i data-feather=book-open></i>
 <span id=busuanzi_value_page_pv></span>
 <script>feather.replace()</script></span></div></header><div class=toc><details open><summary accesskey=c title="(Alt + C)"><span class=details>目录</span></summary><div class=inner><ul><li><a href=#%e5%8f%98%e9%87%8f aria-label=变量>变量</a></li><li><a href=#%e9%87%8d%e5%ae%9a%e5%90%91%e8%be%93%e5%85%a5%e8%be%93%e5%87%ba aria-label=重定向输入输出>重定向输入输出</a></li><li><a href=#%e8%84%9a%e6%9c%ac%e4%b8%ad%e6%89%a7%e8%a1%8c%e6%95%b0%e5%ad%a6%e8%bf%90%e7%ae%97 aria-label=脚本中执行数学运算>脚本中执行数学运算</a><ul><li><a href=#%e6%9d%a1%e4%bb%b6%e6%b5%8b%e8%af%95 aria-label=条件测试>条件测试</a></li><li><a href=#case%e8%af%ad%e5%8f%a5 aria-label=case语句>case语句</a></li><li><a href=#for%e8%af%ad%e5%8f%a5 aria-label=for语句>for语句</a></li><li><a href=#while%e8%af%ad%e5%8f%a5 aria-label=while语句>while语句</a></li></ul></li><li><a href=#%e5%a4%84%e7%90%86%e7%94%a8%e6%88%b7%e8%be%93%e5%85%a5 aria-label=处理用户输入>处理用户输入</a></li><li><a href=#%e4%bd%bf%e7%94%a8%e4%b8%b4%e6%97%b6%e6%96%87%e4%bb%b6 aria-label=使用临时文件>使用临时文件</a></li><li><a href=#%e6%8e%a7%e5%88%b6%e8%84%9a%e6%9c%ac aria-label=控制脚本>控制脚本</a><ul><li><a href=#shell%e5%87%bd%e6%95%b0 aria-label=shell函数>shell函数</a></li><li><a href=#%e5%a4%9a%e8%bf%9b%e7%a8%8b%e6%89%a7%e8%a1%8c%e5%87%bd%e6%95%b0 aria-label=多进程执行函数>多进程执行函数</a></li><li><a href=#trap%e6%8d%95%e8%8e%b7%e4%bf%a1%e5%8f%b7 aria-label=trap捕获信号>trap捕获信号</a></li><li><a href=#debug aria-label=debug>debug</a></li><li><a href=#%e8%bf%9c%e7%a8%8b%e6%89%a7%e8%a1%8c%e5%91%bd%e4%bb%a4 aria-label=远程执行命令>远程执行命令</a></li></ul></li><li><a href=#%e5%b7%a5%e5%85%b7%e6%8e%a8%e8%8d%90 aria-label=工具推荐>工具推荐</a></li></ul></div></details></div><div class=post-content><h2 id=变量>变量<a hidden class=anchor aria-hidden=true href=#变量>#</a></h2><p>脚本开头使用<code>#!/bin/bash</code>指定要使用的shell,shell会通过PATH环境变量来查找脚本中使用的命令，可以使用<code>echo $PATH</code>来看下脚本会在哪些目录下查找命令，如果脚本中执行的命令没有在PATH环境变量中，也可以通过绝对或相对路径来引用.<br>在脚本中可以使用shell维护的环境变量也可以定义和使用自己的用户变量.<br>赋值等号两边不能存在空格</p><ul><li><p>环境变量：<br>可以使用set命令查看当前环境变量列表,例如<code>$HOME</code>、<code>$HOSTNAME</code>、<code>$USER</code>等;</p></li><li><p>用户变量：<br>由字母数字下划线组成，长度不超过二十，区分大小写，变量、等号、值之间不能有空格，在shell脚本结束时会被删除掉，使用美元符号引用，例如<code>name="test"</code>。<br>使用用户变量保存命令执行结果：<code>testing=$(date)</code></p></li><li><p>特殊参数变量</p><table><thead><tr><th style=text-align:left>参数</th><th style=text-align:left>描述</th></tr></thead><tbody><tr><td style=text-align:left>$ 0 $1 $2</td><td style=text-align:left>入参</td></tr><tr><td style=text-align:left>$#</td><td style=text-align:left>参数个数</td></tr><tr><td style=text-align:left>$*</td><td style=text-align:left>入参列表，将所有参数当作单个参数</td></tr><tr><td style=text-align:left>$@</td><td style=text-align:left>入参列表，单独处理每个参</td></tr></tbody></table></li></ul><h2 id=重定向输入输出>重定向输入输出<a hidden class=anchor aria-hidden=true href=#重定向输入输出>#</a></h2><p>输出重定向: <code>></code> 追加：<code>>></code><br>输入重定向: <code>&lt;</code>
-在脚本中使用<code>&lt; ></code> 需要进行转义<code>\&lt; \></code><br>内联输入重定向：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nb>command</span> <span class=s>&lt;&lt; marker
+在脚本中使用<code>&lt; ></code> 需要进行转义<code>\&lt; \></code><br>内联输入重定向：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nb>command</span> <span class=s>&lt;&lt; marker
 </span></span></span><span class=line><span class=cl><span class=s> content
 </span></span></span><span class=line><span class=cl><span class=s>marker</span>
 </span></span><span class=line><span class=cl><span class=c1># 例如：</span>
@@ -23,10 +31,46 @@
 </span></span></span><span class=line><span class=cl><span class=s>echo &#34;aaa&#34;
 </span></span></span><span class=line><span class=cl><span class=s>echo &#34;BBB&#34;
 </span></span></span><span class=line><span class=cl><span class=s>EOF</span>
-</span></span></code></pre></div><p>内联重定向到文件</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>cat &gt;&gt; demo.txt <span class=s>&lt;&lt;EOF
+</span></span></code></pre></td></tr></table></div></div><p>内联重定向到文件</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>cat &gt;&gt; demo.txt <span class=s>&lt;&lt;EOF
 </span></span></span><span class=line><span class=cl><span class=s> some content
 </span></span></span><span class=line><span class=cl><span class=s>EOF</span>
-</span></span></code></pre></div><table><thead><tr><th style=text-align:left>文件描述符</th><th style=text-align:left>缩写</th><th style=text-align:left>描述</th></tr></thead><tbody><tr><td style=text-align:left>0</td><td style=text-align:left>STDIN</td><td style=text-align:left>标准输入</td></tr><tr><td style=text-align:left>1</td><td style=text-align:left>STDOUT</td><td style=text-align:left>标准输出</td></tr><tr><td style=text-align:left>2</td><td style=text-align:left>STDERR</td><td style=text-align:left>标准错误</td></tr></tbody></table><p><code>&></code> 符号会将所有输出重定向到一个文件内<br><code>exec 1>testout</code> 在脚本中将STDOUT永久重定向到testout<br><code>exec 3>./testfile</code> 创建写描述符3<br><code>exec 3>&-</code> 关闭文件描述符3<br><code>cat /dev/null > file.log</code> 可快速清空日志</p><h2 id=脚本中执行数学运算>脚本中执行数学运算<a hidden class=anchor aria-hidden=true href=#脚本中执行数学运算>#</a></h2><ol><li>使用美元符和方括号，只支持整型计算</li></ol><p><code>var1=$[1 + 5]</code><br><code>var2=$[$var1 * 2]</code><br><code>var3=$[2 / 3]</code><br>2. 通过bc进行浮点型计算:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl> <span class=nv>var1</span><span class=o>=</span><span class=k>$(</span><span class=nb>echo</span> <span class=s2>&#34;scale=4; 3.44 / 5&#34;</span> <span class=p>|</span> bc<span class=k>)</span>
+</span></span></code></pre></td></tr></table></div></div><table><thead><tr><th style=text-align:left>文件描述符</th><th style=text-align:left>缩写</th><th style=text-align:left>描述</th></tr></thead><tbody><tr><td style=text-align:left>0</td><td style=text-align:left>STDIN</td><td style=text-align:left>标准输入</td></tr><tr><td style=text-align:left>1</td><td style=text-align:left>STDOUT</td><td style=text-align:left>标准输出</td></tr><tr><td style=text-align:left>2</td><td style=text-align:left>STDERR</td><td style=text-align:left>标准错误</td></tr></tbody></table><p><code>&></code> 符号会将所有输出重定向到一个文件内<br><code>exec 1>testout</code> 在脚本中将STDOUT永久重定向到testout<br><code>exec 3>./testfile</code> 创建写描述符3<br><code>exec 3>&-</code> 关闭文件描述符3<br><code>cat /dev/null > file.log</code> 可快速清空日志</p><h2 id=脚本中执行数学运算>脚本中执行数学运算<a hidden class=anchor aria-hidden=true href=#脚本中执行数学运算>#</a></h2><ol><li>使用美元符和方括号，只支持整型计算</li></ol><p><code>var1=$[1 + 5]</code><br><code>var2=$[$var1 * 2]</code><br><code>var3=$[2 / 3]</code><br>2. 通过bc进行浮点型计算:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl> <span class=nv>var1</span><span class=o>=</span><span class=k>$(</span><span class=nb>echo</span> <span class=s2>&#34;scale=4; 3.44 / 5&#34;</span> <span class=p>|</span> bc<span class=k>)</span>
 </span></span><span class=line><span class=cl> <span class=nv>var1</span><span class=o>=</span>10.46
 </span></span><span class=line><span class=cl> <span class=nv>var2</span><span class=o>=</span>43.67
 </span></span><span class=line><span class=cl> <span class=nv>var3</span><span class=o>=</span>33.2
@@ -59,32 +103,72 @@
 </span></span><span class=line><span class=cl><span class=k>else</span>
 </span></span><span class=line><span class=cl> comands
 </span></span><span class=line><span class=cl><span class=k>fi</span>
-</span></span></code></pre></div><p>或者使用条件测试的方式</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=k>if</span> <span class=o>[</span> condition <span class=o>]</span><span class=p>;</span><span class=k>then</span>
+</span></span></code></pre></td></tr></table></div></div><p>或者使用条件测试的方式</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=k>if</span> <span class=o>[</span> condition <span class=o>]</span><span class=p>;</span><span class=k>then</span>
 </span></span><span class=line><span class=cl> comands
 </span></span><span class=line><span class=cl><span class=k>fi</span>
-</span></span></code></pre></div><h3 id=条件测试>条件测试<a hidden class=anchor aria-hidden=true href=#条件测试>#</a></h3><ol><li><p>数值比较</p><table><thead><tr><th style=text-align:left>比较</th><th style=text-align:left>描述</th></tr></thead><tbody><tr><td style=text-align:left>n1 -eq n2</td><td style=text-align:left>检查相等</td></tr><tr><td style=text-align:left>n1 -ge n2</td><td style=text-align:left>检查n1是否大于或等于n2</td></tr><tr><td style=text-align:left>n1 -gt n2</td><td style=text-align:left>检查n1是否大于n2</td></tr><tr><td style=text-align:left>n1 -le n2</td><td style=text-align:left>检查n1是否小于或等于n2</td></tr><tr><td style=text-align:left>n1 -lt n2</td><td style=text-align:left>检查n1是否小于n2</td></tr><tr><td style=text-align:left>n1 -ne n2</td><td style=text-align:left>检查n1是否不等于n2</td></tr></tbody></table></li><li><p>字符串比较</p><table><thead><tr><th style=text-align:left>比较</th><th style=text-align:left>描述</th></tr></thead><tbody><tr><td style=text-align:left>str1 = str2</td><td style=text-align:left>是否相同</td></tr><tr><td style=text-align:left>str1 != str2</td><td style=text-align:left>是否不同</td></tr><tr><td style=text-align:left>str1 &lt; str2</td><td style=text-align:left>str1是否比str2大</td></tr><tr><td style=text-align:left>str1 > str2</td><td style=text-align:left>str1是否比str2小</td></tr><tr><td style=text-align:left>-n str1</td><td style=text-align:left>检查str1的长度是否非0</td></tr><tr><td style=text-align:left>-z str1</td><td style=text-align:left>检查str1的长度是否为0</td></tr></tbody></table></li><li><p>文件比较</p><table><thead><tr><th style=text-align:left>比较</th><th style=text-align:left>描述</th></tr></thead><tbody><tr><td style=text-align:left>-d file</td><td style=text-align:left>file是否存在并是目录</td></tr><tr><td style=text-align:left>-e file</td><td style=text-align:left>file是否存在</td></tr><tr><td style=text-align:left>-f file</td><td style=text-align:left>file是否存在并是文件</td></tr><tr><td style=text-align:left>-r file</td><td style=text-align:left>是否存在并可读</td></tr><tr><td style=text-align:left>-s file</td><td style=text-align:left>是否存在并非空</td></tr><tr><td style=text-align:left>-w file</td><td style=text-align:left>是否存在并可写</td></tr><tr><td style=text-align:left>-x file</td><td style=text-align:left>是否存在并可执行</td></tr><tr><td style=text-align:left>-O file</td><td style=text-align:left>是否存在并属于当前用户所有</td></tr><tr><td style=text-align:left>-G file</td><td style=text-align:left>是否存在并默认组与当前用户相同</td></tr><tr><td style=text-align:left>file1 -nt file2</td><td style=text-align:left>file1是否比file2新</td></tr><tr><td style=text-align:left>file1 -ot file2</td><td style=text-align:left>file1是否比file2旧</td></tr></tbody></table></li><li><p>复合条件测试</p></li></ol><p><code>[ conditon1 ] && [ condition2 ]</code><br><code>[ conditon1 ] || [ condition2 ]</code></p><ol start=5><li>使用双括号进行数学运算判断</li></ol><p><code>(( expression ))</code>，支持的运算符号除普通运算符外还包括如下，大于小于符号不用转义 .
-<code>val++</code> 、<code>val--</code>、 <code>++val</code>、 <code>--val</code> ：自增自减<br><code>!</code> :求反 <code>~</code>:位求反 <code>**</code>:幂运算 <code>&lt;&lt;</code>：左位移 <code>>></code>:右位移 <code>&</code>:位布尔和<code>|</code>：位布尔或 <code>&&</code>：逻辑和 <code>||</code>:逻辑或</p><p>可以在if语句中使用双括号命令，也可以在脚本中的普通命令里使用来赋值</p><ol start=6><li>使用双方括号进行字符串比较</li></ol><p><code>[[ express ]]</code><br>bash shell支持模式匹配: <code>if [[ $USER == r* ]]</code></p><h3 id=case语句>case语句<a hidden class=anchor aria-hidden=true href=#case语句>#</a></h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=k>case</span> variable in
+</span></span></code></pre></td></tr></table></div></div><h3 id=条件测试>条件测试<a hidden class=anchor aria-hidden=true href=#条件测试>#</a></h3><ol><li><p>数值比较</p><table><thead><tr><th style=text-align:left>比较</th><th style=text-align:left>描述</th></tr></thead><tbody><tr><td style=text-align:left>n1 -eq n2</td><td style=text-align:left>检查相等</td></tr><tr><td style=text-align:left>n1 -ge n2</td><td style=text-align:left>检查n1是否大于或等于n2</td></tr><tr><td style=text-align:left>n1 -gt n2</td><td style=text-align:left>检查n1是否大于n2</td></tr><tr><td style=text-align:left>n1 -le n2</td><td style=text-align:left>检查n1是否小于或等于n2</td></tr><tr><td style=text-align:left>n1 -lt n2</td><td style=text-align:left>检查n1是否小于n2</td></tr><tr><td style=text-align:left>n1 -ne n2</td><td style=text-align:left>检查n1是否不等于n2</td></tr></tbody></table></li><li><p>字符串比较</p><table><thead><tr><th style=text-align:left>比较</th><th style=text-align:left>描述</th></tr></thead><tbody><tr><td style=text-align:left>str1 = str2</td><td style=text-align:left>是否相同</td></tr><tr><td style=text-align:left>str1 != str2</td><td style=text-align:left>是否不同</td></tr><tr><td style=text-align:left>str1 &lt; str2</td><td style=text-align:left>str1是否比str2大</td></tr><tr><td style=text-align:left>str1 > str2</td><td style=text-align:left>str1是否比str2小</td></tr><tr><td style=text-align:left>-n str1</td><td style=text-align:left>检查str1的长度是否非0</td></tr><tr><td style=text-align:left>-z str1</td><td style=text-align:left>检查str1的长度是否为0</td></tr></tbody></table></li><li><p>文件比较</p><table><thead><tr><th style=text-align:left>比较</th><th style=text-align:left>描述</th></tr></thead><tbody><tr><td style=text-align:left>-d file</td><td style=text-align:left>file是否存在并是目录</td></tr><tr><td style=text-align:left>-e file</td><td style=text-align:left>file是否存在</td></tr><tr><td style=text-align:left>-f file</td><td style=text-align:left>file是否存在并是文件</td></tr><tr><td style=text-align:left>-r file</td><td style=text-align:left>是否存在并可读</td></tr><tr><td style=text-align:left>-s file</td><td style=text-align:left>是否存在并非空</td></tr><tr><td style=text-align:left>-w file</td><td style=text-align:left>是否存在并可写</td></tr><tr><td style=text-align:left>-x file</td><td style=text-align:left>是否存在并可执行</td></tr><tr><td style=text-align:left>-O file</td><td style=text-align:left>是否存在并属于当前用户所有</td></tr><tr><td style=text-align:left>-G file</td><td style=text-align:left>是否存在并默认组与当前用户相同</td></tr><tr><td style=text-align:left>file1 -nt file2</td><td style=text-align:left>file1是否比file2新</td></tr><tr><td style=text-align:left>file1 -ot file2</td><td style=text-align:left>file1是否比file2旧</td></tr></tbody></table></li><li><p>复合条件测试</p></li></ol><p><code>[ conditon1 ] && [ condition2 ]</code><br><code>[ conditon1 ] || [ condition2 ]</code></p><ol start=5><li>使用双括号进行数学运算判断</li></ol><p><code>(( expression ))</code>，支持的运算符号除普通运算符外还包括如下，大于小于符号不用转义 .
+<code>val++</code> 、<code>val--</code>、 <code>++val</code>、 <code>--val</code> ：自增自减<br><code>!</code> :求反 <code>~</code>:位求反 <code>**</code>:幂运算 <code>&lt;&lt;</code>：左位移 <code>>></code>:右位移 <code>&</code>:位布尔和<code>|</code>：位布尔或 <code>&&</code>：逻辑和 <code>||</code>:逻辑或</p><p>可以在if语句中使用双括号命令，也可以在脚本中的普通命令里使用来赋值</p><ol start=6><li>使用双方括号进行字符串比较</li></ol><p><code>[[ express ]]</code><br>bash shell支持模式匹配: <code>if [[ $USER == r* ]]</code></p><h3 id=case语句>case语句<a hidden class=anchor aria-hidden=true href=#case语句>#</a></h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=k>case</span> variable in
 </span></span><span class=line><span class=cl>pattern1 <span class=p>|</span> pattern2<span class=o>)</span> commands1<span class=p>;;</span>
 </span></span><span class=line><span class=cl>pattern3<span class=o>)</span> comands2<span class=p>;;</span>
 </span></span><span class=line><span class=cl>*<span class=o>)</span> default commands<span class=p>;;</span>
 </span></span><span class=line><span class=cl><span class=k>esac</span>
-</span></span></code></pre></div><h3 id=for语句>for语句<a hidden class=anchor aria-hidden=true href=#for语句>#</a></h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=k>for</span> var in list
+</span></span></code></pre></td></tr></table></div></div><h3 id=for语句>for语句<a hidden class=anchor aria-hidden=true href=#for语句>#</a></h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=k>for</span> var in list
 </span></span><span class=line><span class=cl><span class=k>do</span>
 </span></span><span class=line><span class=cl> commands:<span class=nv>$var</span>
 </span></span><span class=line><span class=cl><span class=k>done</span>
-</span></span></code></pre></div><p>有时候使用<code>for line in $(cat $file)</code>读取文本文件，默认会以空格分隔而不是换行符,需要修改IFS.<br>IFS值：内部字段分隔符</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>IFS.OLD<span class=o>=</span><span class=nv>$IFS</span>
+</span></span></code></pre></td></tr></table></div></div><p>有时候使用<code>for line in $(cat $file)</code>读取文本文件，默认会以空格分隔而不是换行符,需要修改IFS.<br>IFS值：内部字段分隔符</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>IFS.OLD<span class=o>=</span><span class=nv>$IFS</span>
 </span></span><span class=line><span class=cl><span class=nv>IFS</span><span class=o>=</span>$’<span class=se>\n</span>’
 </span></span><span class=line><span class=cl><span class=c1>#&lt;在代码中使用新的IFS值&gt;</span>
 </span></span><span class=line><span class=cl><span class=nv>IFS</span><span class=o>=</span><span class=nv>$IFS</span>.OLD
-</span></span></code></pre></div><p>C语言风格for语句</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=k>for</span>  <span class=o>((</span> <span class=nv>i</span><span class=o>=</span>1<span class=p>;</span> i &lt;<span class=o>=</span>10<span class=p>;</span> i++ <span class=o>))</span>
+</span></span></code></pre></td></tr></table></div></div><p>C语言风格for语句</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=k>for</span>  <span class=o>((</span> <span class=nv>i</span><span class=o>=</span>1<span class=p>;</span> i &lt;<span class=o>=</span>10<span class=p>;</span> i++ <span class=o>))</span>
 </span></span><span class=line><span class=cl><span class=k>do</span>
 </span></span><span class=line><span class=cl>...
 </span></span><span class=line><span class=cl><span class=k>done</span>
-</span></span></code></pre></div><h3 id=while语句>while语句<a hidden class=anchor aria-hidden=true href=#while语句>#</a></h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=k>while</span> <span class=o>[</span> condition <span class=o>]</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=while语句>while语句<a hidden class=anchor aria-hidden=true href=#while语句>#</a></h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=k>while</span> <span class=o>[</span> condition <span class=o>]</span>
 </span></span><span class=line><span class=cl><span class=k>do</span>
 </span></span><span class=line><span class=cl> other commands
 </span></span><span class=line><span class=cl><span class=k>done</span>
-</span></span></code></pre></div><p><code>break</code>: 跳出内部循环<br><code>continue</code>: 跳过本次循环<br><code>break n</code>: 可跳出外部循环<br><code>continue n</code> : 继续循环层级n的循环</p><h2 id=处理用户输入>处理用户输入<a hidden class=anchor aria-hidden=true href=#处理用户输入>#</a></h2><p>利用getopts处理用户输入参数</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=k>while</span> <span class=nb>getopts</span> :ab:c opt
+</span></span></code></pre></td></tr></table></div></div><p><code>break</code>: 跳出内部循环<br><code>continue</code>: 跳过本次循环<br><code>break n</code>: 可跳出外部循环<br><code>continue n</code> : 继续循环层级n的循环</p><h2 id=处理用户输入>处理用户输入<a hidden class=anchor aria-hidden=true href=#处理用户输入>#</a></h2><p>利用getopts处理用户输入参数</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=k>while</span> <span class=nb>getopts</span> :ab:c opt
 </span></span><span class=line><span class=cl><span class=k>do</span>
 </span></span><span class=line><span class=cl> <span class=k>case</span> <span class=s2>&#34;</span><span class=nv>$opt</span><span class=s2>&#34;</span> in
 </span></span><span class=line><span class=cl>      a<span class=o>)</span> <span class=nb>echo</span> <span class=s2>&#34;found -a option&#34;</span> <span class=p>;;</span>
@@ -100,43 +184,88 @@
 </span></span><span class=line><span class=cl>    <span class=nb>echo</span> <span class=s2>&#34;Parameter </span><span class=nv>$count</span><span class=s2>: </span><span class=nv>$param</span><span class=s2>&#34;</span>
 </span></span><span class=line><span class=cl>    <span class=nv>count</span><span class=o>=</span>$<span class=o>[</span> <span class=nv>$count</span> + 1<span class=o>]</span>
 </span></span><span class=line><span class=cl><span class=k>done</span>
-</span></span></code></pre></div><p>获取用户输入</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=k>if</span> <span class=nb>read</span> -t <span class=m>10</span> -p <span class=s2>&#34;Please enter your name: &#34;</span> name
+</span></span></code></pre></td></tr></table></div></div><p>获取用户输入</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=k>if</span> <span class=nb>read</span> -t <span class=m>10</span> -p <span class=s2>&#34;Please enter your name: &#34;</span> name
 </span></span><span class=line><span class=cl><span class=k>then</span>
 </span></span><span class=line><span class=cl> <span class=nb>echo</span> <span class=s2>&#34;ok: </span><span class=nv>$name</span><span class=s2>&#34;</span>
 </span></span><span class=line><span class=cl><span class=k>else</span>
 </span></span><span class=line><span class=cl> <span class=nb>echo</span> <span class=s2>&#34;too slow&#34;</span>
 </span></span><span class=line><span class=cl> <span class=nb>exit</span> <span class=m>1</span>
 </span></span><span class=line><span class=cl><span class=k>fi</span>
-</span></span></code></pre></div><h2 id=使用临时文件>使用临时文件<a hidden class=anchor aria-hidden=true href=#使用临时文件>#</a></h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nv>tempfile</span><span class=o>=</span><span class=k>$(</span>mktemp tmp.XXXXXX<span class=k>)</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=使用临时文件>使用临时文件<a hidden class=anchor aria-hidden=true href=#使用临时文件>#</a></h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nv>tempfile</span><span class=o>=</span><span class=k>$(</span>mktemp tmp.XXXXXX<span class=k>)</span>
 </span></span><span class=line><span class=cl><span class=nb>exec</span> 3&gt;<span class=nv>$tempfile</span>
 </span></span><span class=line><span class=cl><span class=nb>echo</span> “test” &gt;<span class=p>&amp;</span><span class=m>3</span>
 </span></span><span class=line><span class=cl><span class=nb>exec</span> 3&gt;<span class=p>&amp;</span>-
 </span></span><span class=line><span class=cl>rm -f <span class=nv>$tempfile</span> 2&gt;/dev/null
 </span></span><span class=line><span class=cl>mktemp -t 生成在/tmp/目录下，返回全路径
-</span></span></code></pre></div><h2 id=控制脚本>控制脚本<a hidden class=anchor aria-hidden=true href=#控制脚本>#</a></h2><ol><li>记录消息
+</span></span></code></pre></td></tr></table></div></div><h2 id=控制脚本>控制脚本<a hidden class=anchor aria-hidden=true href=#控制脚本>#</a></h2><ol><li>记录消息
 <code>date | tee -a testfile</code></li><li>trap捕获处理信号</li></ol><p><code>trap commands signals</code><br><code>trap “echo ‘ sorry i have trapped Ctrl-C’” SIGINT</code><br><code>trap -- SIGINT</code> 删除捕获
 3. 后台作业相关
-<code>command &</code>：后台运行<br><code>nohup comand</code>: 后台运行<br><code>jobs</code>: 列举作业<br><code>bg</code>: 后台重启作业<br><code>fg</code>: 将后台作业调到前台继续执行,可指定job号<br><code>nice renice</code>: 调整作业优先级<br><code>at</code>: 定时执行作业<br><code>atq</code>: 定时作业队列<br><code>atrm</code>: 删除作业<br><code>crontab</code>定时任务时间表：<br>min hour dayofmonth month dayofweek command<br><code>anacron</code>:开机执行错过作业</p><h3 id=shell函数>shell函数<a hidden class=anchor aria-hidden=true href=#shell函数>#</a></h3><ul><li>函数名必须唯一，否则会有问题</li></ul><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=k>function</span> name<span class=o>{</span>
+<code>command &</code>：后台运行<br><code>nohup comand</code>: 后台运行<br><code>jobs</code>: 列举作业<br><code>bg</code>: 后台重启作业<br><code>fg</code>: 将后台作业调到前台继续执行,可指定job号<br><code>nice renice</code>: 调整作业优先级<br><code>at</code>: 定时执行作业<br><code>atq</code>: 定时作业队列<br><code>atrm</code>: 删除作业<br><code>crontab</code>定时任务时间表：<br>min hour dayofmonth month dayofweek command<br><code>anacron</code>:开机执行错过作业</p><h3 id=shell函数>shell函数<a hidden class=anchor aria-hidden=true href=#shell函数>#</a></h3><ul><li>函数名必须唯一，否则会有问题</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=k>function</span> name<span class=o>{</span>
 </span></span><span class=line><span class=cl> commands
 </span></span><span class=line><span class=cl><span class=o>}</span>
 </span></span><span class=line><span class=cl><span class=o>[[</span>或者<span class=o>]]</span>
 </span></span><span class=line><span class=cl>name<span class=o>()</span> <span class=o>{</span>
 </span></span><span class=line><span class=cl> commands
 </span></span><span class=line><span class=cl><span class=o>}</span>
-</span></span></code></pre></div><ul><li><p>return 可以返回函数值：必须函数一结束就取<code>$?</code>;退出的状态码必须是0-255</p></li><li><p>超出255值可以使用 <code>result=$(func1)</code> 方式</p></li><li><p>每个函数可以单独使用自己的<code>$# $1 $2</code> 环境参数</p></li><li><p>变量作用域：</p></li><li><p>全局变量：不管在函数内外定义，脚本所有位置都可访问</p></li><li><p>局部变量：必须用<code>local</code>关键字显式声明</p></li></ul><p><code>local temp=$[ $value + 5]</code></p><p>数组相关：<br>函数参数是数组情况处理：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=k>function</span> testit <span class=o>{</span>
+</span></span></code></pre></td></tr></table></div></div><ul><li><p>return 可以返回函数值：必须函数一结束就取<code>$?</code>;退出的状态码必须是0-255</p></li><li><p>超出255值可以使用 <code>result=$(func1)</code> 方式</p></li><li><p>每个函数可以单独使用自己的<code>$# $1 $2</code> 环境参数</p></li><li><p>变量作用域：</p></li><li><p>全局变量：不管在函数内外定义，脚本所有位置都可访问</p></li><li><p>局部变量：必须用<code>local</code>关键字显式声明</p></li></ul><p><code>local temp=$[ $value + 5]</code></p><p>数组相关：<br>函数参数是数组情况处理：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=k>function</span> testit <span class=o>{</span>
 </span></span><span class=line><span class=cl> <span class=nb>local</span> newarray
 </span></span><span class=line><span class=cl> <span class=nv>newarray</span><span class=o>=(</span><span class=s1>&#39;echo &#34;$@&#34;&#39;</span><span class=o>)</span>
 </span></span><span class=line><span class=cl> <span class=nb>echo</span> “The new array value is: <span class=si>${</span><span class=nv>newarray</span><span class=p>[*]</span><span class=si>}</span>”
 </span></span><span class=line><span class=cl><span class=o>}</span>
 </span></span><span class=line><span class=cl><span class=nv>myarray</span><span class=o>=(</span><span class=m>1</span> <span class=m>2</span> <span class=m>3</span> <span class=m>4</span> 5<span class=o>)</span>
 </span></span><span class=line><span class=cl>testit <span class=si>${</span><span class=nv>myarray</span><span class=p>[*]</span><span class=si>}</span>
-</span></span></code></pre></div><h3 id=多进程执行函数>多进程执行函数<a hidden class=anchor aria-hidden=true href=#多进程执行函数>#</a></h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=k>function</span> multi <span class=o>{}</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=多进程执行函数>多进程执行函数<a hidden class=anchor aria-hidden=true href=#多进程执行函数>#</a></h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=k>function</span> multi <span class=o>{}</span>
 </span></span><span class=line><span class=cl>multi argu1<span class=p>&amp;</span>
 </span></span><span class=line><span class=cl>multi argu2<span class=p>&amp;</span>
 </span></span><span class=line><span class=cl>multi argu3<span class=p>&amp;</span>
 </span></span><span class=line><span class=cl><span class=nb>wait</span>
-</span></span></code></pre></div><h3 id=trap捕获信号>trap捕获信号<a hidden class=anchor aria-hidden=true href=#trap捕获信号>#</a></h3><p>Trapping ctrl-c in Bash
-You can use the trap builtin to handle a user pressing ctrl-c during the execution of a Bash script. e.g. if you need to perform some cleanup functions.</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=cp>#!/bin/bash
+</span></span></code></pre></td></tr></table></div></div><h3 id=trap捕获信号>trap捕获信号<a hidden class=anchor aria-hidden=true href=#trap捕获信号>#</a></h3><p>Trapping ctrl-c in Bash
+You can use the trap builtin to handle a user pressing ctrl-c during the execution of a Bash script. e.g. if you need to perform some cleanup functions.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=cp>#!/bin/bash
 </span></span></span><span class=line><span class=cl><span class=cp></span>
 </span></span><span class=line><span class=cl><span class=o>[[</span>trap<span class=o>]]</span> ctrl-c and call ctrl_c<span class=o>()</span>
 </span></span><span class=line><span class=cl><span class=nb>trap</span> ctrl_c INT
@@ -149,7 +278,7 @@ You can use the trap builtin to handle a user pressing ctrl-c during the executi
 </span></span><span class=line><span class=cl>    sleep <span class=m>1</span>
 </span></span><span class=line><span class=cl>    <span class=nb>echo</span> -n <span class=s2>&#34;.&#34;</span>
 </span></span><span class=line><span class=cl><span class=k>done</span>
-</span></span></code></pre></div><h3 id=debug>debug<a hidden class=anchor aria-hidden=true href=#debug>#</a></h3><ol><li>在调用脚本的时候开启deubg
+</span></span></code></pre></td></tr></table></div></div><h3 id=debug>debug<a hidden class=anchor aria-hidden=true href=#debug>#</a></h3><ol><li>在调用脚本的时候开启deubg
 sh -x shell.sh</li><li>在脚本文件首行开启deubg
 <code>#!/bin/bash -x</code></li><li>使用set开启deubg
 set -x</li><li>-v 显示脚本所有行，详细模式，在脚本嵌套调用时比较有用
@@ -159,4 +288,4 @@ sh -n shell.sh</li></ol><h3 id=远程执行命令>远程执行命令<a hidden cl
 <span class=bs-item><span id=busuanzi_container_site_uv></span><i data-feather=user> </i><span id=busuanzi_value_site_uv></span></span><br><span><a href=https://zhxin.xyz/>zhxin.xyz</a> &copy; 2023 Powered by
 <a href=https://gohugo.io/ rel="noopener noreferrer" target=_blank>Hugo</a>
 <a href=https://github.com/adityatelange/hugo-PaperMod/ rel=noopener target=_blank>PaperMod</a>
-<a href=https://waline.js.org/ rel=noopener target=_blank>Waline</a></span></footer><a href=#top aria-label="go to top" title="Go to Top (Alt + G)" class=top-link id=top-link accesskey=g><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentcolor"><path d="M12 6H0l6-6z"/></svg></a><script>feather.replace();let menu=document.getElementById("menu");menu&&(menu.scrollLeft=localStorage.getItem("menu-scroll-position"),menu.onscroll=function(){localStorage.setItem("menu-scroll-position",menu.scrollLeft)}),document.querySelectorAll('a[href^="#"]').forEach(e=>{e.addEventListener("click",function(e){e.preventDefault();var t=this.getAttribute("href").substr(1);window.matchMedia("(prefers-reduced-motion: reduce)").matches?document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView():document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView({behavior:"smooth"}),t==="top"?history.replaceState(null,null," "):history.pushState(null,null,`#${t}`)})})</script><script>var mybutton=document.getElementById("top-link");window.onscroll=function(){document.body.scrollTop>800||document.documentElement.scrollTop>800?(mybutton.style.visibility="visible",mybutton.style.opacity="1"):(mybutton.style.visibility="hidden",mybutton.style.opacity="0")}</script><script>document.getElementById("theme-toggle").addEventListener("click",()=>{document.body.className.includes("dark")?(document.body.classList.remove("dark"),localStorage.setItem("pref-theme","light")):(document.body.classList.add("dark"),localStorage.setItem("pref-theme","dark"))})</script><script>document.querySelectorAll("pre > code").forEach(e=>{const n=e.parentNode.parentNode,t=document.createElement("button");t.classList.add("copy-code"),t.innerHTML="复制";function s(){t.innerHTML="已复制！",setTimeout(()=>{t.innerHTML="复制"},2e3)}t.addEventListener("click",t=>{if("clipboard"in navigator){navigator.clipboard.writeText(e.textContent),s();return}const n=document.createRange();n.selectNodeContents(e);const o=window.getSelection();o.removeAllRanges(),o.addRange(n);try{document.execCommand("copy"),s()}catch{}o.removeRange(n)}),n.classList.contains("highlight")?n.appendChild(t):n.parentNode.firstChild==n||(e.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName=="TABLE"?e.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(t):e.parentNode.appendChild(t))})</script></body></html>
+<a href=https://waline.js.org/ rel=noopener target=_blank>Waline</a></span></footer><a href=#top aria-label="go to top" title="Go to Top (Alt + G)" class=top-link id=top-link accesskey=g><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentcolor"><path d="M12 6H0l6-6z"/></svg></a><script>feather.replace();let menu=document.getElementById("menu");menu&&(menu.scrollLeft=localStorage.getItem("menu-scroll-position"),menu.onscroll=function(){localStorage.setItem("menu-scroll-position",menu.scrollLeft)}),document.querySelectorAll('a[href^="#"]').forEach(e=>{e.addEventListener("click",function(e){e.preventDefault();var t=this.getAttribute("href").substr(1);window.matchMedia("(prefers-reduced-motion: reduce)").matches?document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView():document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView({behavior:"smooth"}),t==="top"?history.replaceState(null,null," "):history.pushState(null,null,`#${t}`)})})</script><script>var mybutton=document.getElementById("top-link");window.onscroll=function(){document.body.scrollTop>800||document.documentElement.scrollTop>800?(mybutton.style.visibility="visible",mybutton.style.opacity="1"):(mybutton.style.visibility="hidden",mybutton.style.opacity="0")}</script><script>document.querySelectorAll("pre > code").forEach(e=>{const n=e.parentNode.parentNode,t=document.createElement("button");t.classList.add("copy-code"),t.innerHTML="复制";function s(){t.innerHTML="已复制！",setTimeout(()=>{t.innerHTML="复制"},2e3)}t.addEventListener("click",t=>{if("clipboard"in navigator){navigator.clipboard.writeText(e.textContent),s();return}const n=document.createRange();n.selectNodeContents(e);const o=window.getSelection();o.removeAllRanges(),o.addRange(n);try{document.execCommand("copy"),s()}catch{}o.removeRange(n)}),n.classList.contains("highlight")?n.appendChild(t):n.parentNode.firstChild==n||(e.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName=="TABLE"?e.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(t):e.parentNode.appendChild(t))})</script></body></html>
