@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>wsl on zhxin.xyz</title>
+    <link>https://zhxin.xyz/tags/wsl/</link>
+    <description>Recent content in wsl on zhxin.xyz</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Fri, 09 Jun 2023 17:29:59 +0800</lastBuildDate><atom:link href="https://zhxin.xyz/tags/wsl/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>WSL</title>
+      <link>https://zhxin.xyz/post/2023/06/wsl/</link>
+      <pubDate>Fri, 09 Jun 2023 17:29:59 +0800</pubDate>
+      
+      <guid>https://zhxin.xyz/post/2023/06/wsl/</guid>
+      <description>wsl介绍 Windows Subsystem for Linux 允许在Windows上直接运行GNU/Linux环境，包括大多数命令行工具、实用程序和应用程序，而无需传统虚拟机或双启动设置的开销。 WSL2是Windows子系统的新版本，它采用了全新的架构，使得Windows子系统能够在Windows上运行ELF64 Linux二进制文件。其主要目标是提高文件系统性能，并增加完整的系统调用兼容性。这种新架构改变了Linux二进制文件与Window</description>
+    </item>
+    
+  </channel>
+</rss>
