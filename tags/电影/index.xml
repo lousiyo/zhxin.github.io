@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>电影 on zhxin.xyz</title>
-    <link>https://zhxin.xyz/tags/%E7%94%B5%E5%BD%B1/</link>
-    <description>Recent content in 电影 on zhxin.xyz</description>
+    <title>电影 on lousiyo</title>
+    <link>https://lousiyo.com/tags/%E7%94%B5%E5%BD%B1/</link>
+    <description>Recent content in 电影 on lousiyo</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Tue, 28 Apr 2020 22:48:31 +0800</lastBuildDate><atom:link href="https://zhxin.xyz/tags/%E7%94%B5%E5%BD%B1/index.xml" rel="self" type="application/rss+xml" />
+    <language>zh</language>
+    <lastBuildDate>Tue, 28 Apr 2020 22:48:31 +0800</lastBuildDate>
+    <atom:link href="https://lousiyo.com/tags/%E7%94%B5%E5%BD%B1/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>关于是枝裕和</title>
-      <link>https://zhxin.xyz/post/2020/04/%E5%85%B3%E4%BA%8E%E6%98%AF%E6%9E%9D%E8%A3%95%E5%92%8C/</link>
+      <link>https://lousiyo.com/post/2020/04/%E5%85%B3%E4%BA%8E%E6%98%AF%E6%9E%9D%E8%A3%95%E5%92%8C/</link>
       <pubDate>Tue, 28 Apr 2020 22:48:31 +0800</pubDate>
-      
-      <guid>https://zhxin.xyz/post/2020/04/%E5%85%B3%E4%BA%8E%E6%98%AF%E6%9E%9D%E8%A3%95%E5%92%8C/</guid>
+      <guid>https://lousiyo.com/post/2020/04/%E5%85%B3%E4%BA%8E%E6%98%AF%E6%9E%9D%E8%A3%95%E5%92%8C/</guid>
       <description>应该是大二或者大三的时候第一次看是枝裕和导演的电影《无人知晓》。当时好像是看了一篇文章，介绍说柳乐优弥凭借该片击败《花样年华》梁朝伟成为了戛纳历史上最年轻的影帝。文章自然有以此为噱头吸引眼球的嫌疑，不过还是获得了我的好奇。当时和大多数人一样，新近听说了一部电影总要到豆瓣电影看看评分影评什么的，惊奇的是在豆瓣上是枝裕和导演所有作品竟然大多都是八分多的样子。就这样，我有意的多找了几部是枝裕和的作品来看</description>
     </item>
-    
   </channel>
 </rss>

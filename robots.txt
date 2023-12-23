@@ -1,3 +1,3 @@
 User-agent: *
 Disallow:
-Sitemap: https://zhxin.xyz/sitemap.xml
+Sitemap: https://lousiyo.com/sitemap.xml

@@ -1,62 +1,53 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>所有文章 on zhxin.xyz</title>
-    <link>https://zhxin.xyz/post/</link>
-    <description>Recent content in 所有文章 on zhxin.xyz</description>
+    <title>所有文章 on lousiyo</title>
+    <link>https://lousiyo.com/post/</link>
+    <description>Recent content in 所有文章 on lousiyo</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Fri, 09 Jun 2023 17:29:59 +0800</lastBuildDate><atom:link href="https://zhxin.xyz/post/index.xml" rel="self" type="application/rss+xml" />
+    <language>zh</language>
+    <lastBuildDate>Fri, 09 Jun 2023 17:29:59 +0800</lastBuildDate>
+    <atom:link href="https://lousiyo.com/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>WSL</title>
-      <link>https://zhxin.xyz/post/2023/06/wsl/</link>
+      <link>https://lousiyo.com/post/2023/06/wsl/</link>
       <pubDate>Fri, 09 Jun 2023 17:29:59 +0800</pubDate>
-      
-      <guid>https://zhxin.xyz/post/2023/06/wsl/</guid>
+      <guid>https://lousiyo.com/post/2023/06/wsl/</guid>
       <description>wsl介绍 Windows Subsystem for Linux 允许在Windows上直接运行GNU/Linux环境，包括大多数命令行工具、实用程序和应用程序，而无需传统虚拟机或双启动设置的开销。 WSL2是Windows子系统的新版本，它采用了全新的架构，使得Windows子系统能够在Windows上运行ELF64 Linux二进制文件。其主要目标是提高文件系统性能，并增加完整的系统调用兼容性。这种新架构改变了Linux二进制文件与Window</description>
     </item>
-    
     <item>
       <title>Shell编程基础</title>
-      <link>https://zhxin.xyz/post/2021/06/shell%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/</link>
+      <link>https://lousiyo.com/post/2021/06/shell%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/</link>
       <pubDate>Mon, 28 Jun 2021 22:49:38 +0800</pubDate>
-      
-      <guid>https://zhxin.xyz/post/2021/06/shell%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/</guid>
+      <guid>https://lousiyo.com/post/2021/06/shell%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/</guid>
       <description>变量 脚本开头使用#!/bin/bash指定要使用的shell,shell会通过PATH环境变量来查找脚本中使用的命令，可以使用echo $PATH来看下脚本会在哪些目录下查找命令，如果脚本中执行的命令没有在PATH环境变量中，也可以通过绝对或相对路径来引用. 在脚本中可以使用shell维护的环境变量也可以定义和使用自己的用户变量. 赋值等号两边不能存在空格 环境变量： 可以使用set命令查看当前环境变量列表</description>
     </item>
-    
     <item>
       <title>PG Peering过程状态变化代码走读</title>
-      <link>https://zhxin.xyz/post/2021/05/pg-peering%E8%BF%87%E7%A8%8B%E7%8A%B6%E6%80%81%E5%8F%98%E5%8C%96%E4%BB%A3%E7%A0%81%E8%B5%B0%E8%AF%BB/</link>
+      <link>https://lousiyo.com/post/2021/05/pg-peering%E8%BF%87%E7%A8%8B%E7%8A%B6%E6%80%81%E5%8F%98%E5%8C%96%E4%BB%A3%E7%A0%81%E8%B5%B0%E8%AF%BB/</link>
       <pubDate>Fri, 28 May 2021 22:49:38 +0800</pubDate>
-      
-      <guid>https://zhxin.xyz/post/2021/05/pg-peering%E8%BF%87%E7%A8%8B%E7%8A%B6%E6%80%81%E5%8F%98%E5%8C%96%E4%BB%A3%E7%A0%81%E8%B5%B0%E8%AF%BB/</guid>
+      <guid>https://lousiyo.com/post/2021/05/pg-peering%E8%BF%87%E7%A8%8B%E7%8A%B6%E6%80%81%E5%8F%98%E5%8C%96%E4%BB%A3%E7%A0%81%E8%B5%B0%E8%AF%BB/</guid>
       <description>最近看了PG状态转换的过程,代码细节没有仔细研究，先粗略过了一遍代码，特此记录. PG PG是存储池的基本单元，是一些对象的集合，多副本和纠删的数据备份策略依托PG实现. PG有多种状态，状态之间的变化通过状态机实现. 有两个场景会触发peering流程： 在pg创建时 在OSD启动、停止导致OSDMap变化进而导致pg的acting set发生变化时 状态机 状态机在创建PG进行初始化. 1 2 3 4 5 6 7 class RecoveryMachine : public boost::statechart::state_machine&amp;lt; RecoveryMachine, Initial</description>
     </item>
-    
     <item>
       <title>Git 基本操作</title>
-      <link>https://zhxin.xyz/post/2021/03/git-%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/</link>
+      <link>https://lousiyo.com/post/2021/03/git-%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/</link>
       <pubDate>Sun, 28 Mar 2021 22:49:38 +0800</pubDate>
-      
-      <guid>https://zhxin.xyz/post/2021/03/git-%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/</guid>
+      <guid>https://lousiyo.com/post/2021/03/git-%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/</guid>
       <description>配置 git config --list --show-origin 查看所有配置信息 git config 命令带入&amp;ndash;system参数会将配置写入/etc/gitconfig文件，对整个系统生效；&amp;ndash;global选项会写入~/.gitconfig文件对当前用户所有仓库生效 1 2 3 4 5 6 7 #安装完成GIT之后配置相关用户名邮箱 git config --global user.name &amp;#34;me&amp;#34; git config --global user.email me@outlook.com git config --global core.editor vim git config --global log.date iso git config --global merge.conflictstyle diff3 git config --global merge.tool nvimdiff3 配置github ssh 访问 1 2 3 4 5 6 ls -al ~/.ssh [[查看是否生成SSH]] key ssh-keygen</description>
     </item>
-    
     <item>
       <title>【转载】ceph存储引擎bluestore解析</title>
-      <link>https://zhxin.xyz/post/2021/02/%E8%BD%AC%E8%BD%BDceph%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8Ebluestore%E8%A7%A3%E6%9E%90/</link>
+      <link>https://lousiyo.com/post/2021/02/%E8%BD%AC%E8%BD%BDceph%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8Ebluestore%E8%A7%A3%E6%9E%90/</link>
       <pubDate>Sun, 28 Feb 2021 22:49:38 +0800</pubDate>
-      
-      <guid>https://zhxin.xyz/post/2021/02/%E8%BD%AC%E8%BD%BDceph%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8Ebluestore%E8%A7%A3%E6%9E%90/</guid>
+      <guid>https://lousiyo.com/post/2021/02/%E8%BD%AC%E8%BD%BDceph%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8Ebluestore%E8%A7%A3%E6%9E%90/</guid>
       <description>转载自sysnote,如有侵权请联系删除 ceph后端支持多种存储引擎，以插件式的方式来进行管理使用，目前支持filestore，kvstore，memstore以及最新的bluestore，目前默认使用的filestore，但是因为filestore在写数据前需要先写journal，会有一倍的写放大，并且filestore一开始只是对于机械盘进行设计的，没有专门针对ssd做优化考虑，因此诞生的bl</description>
     </item>
-    
     <item>
       <title>常用ceph命令</title>
-      <link>https://zhxin.xyz/post/2021/02/%E5%B8%B8%E7%94%A8ceph%E5%91%BD%E4%BB%A4/</link>
+      <link>https://lousiyo.com/post/2021/02/%E5%B8%B8%E7%94%A8ceph%E5%91%BD%E4%BB%A4/</link>
       <pubDate>Sun, 28 Feb 2021 22:49:38 +0800</pubDate>
-      
-      <guid>https://zhxin.xyz/post/2021/02/%E5%B8%B8%E7%94%A8ceph%E5%91%BD%E4%BB%A4/</guid>
+      <guid>https://lousiyo.com/post/2021/02/%E5%B8%B8%E7%94%A8ceph%E5%91%BD%E4%BB%A4/</guid>
       <description>&lt;p&gt;工作中遇到的比较常用的命令,特此整理以备忘.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;查看集群状态&lt;/li&gt;
@@ -77,33 +68,26 @@
 &lt;/div&gt;
 &lt;/div&gt;</description>
     </item>
-    
     <item>
       <title>我的天才女友读后感</title>
-      <link>https://zhxin.xyz/post/2021/02/%E6%88%91%E7%9A%84%E5%A4%A9%E6%89%8D%E5%A5%B3%E5%8F%8B%E8%AF%BB%E5%90%8E%E6%84%9F/</link>
+      <link>https://lousiyo.com/post/2021/02/%E6%88%91%E7%9A%84%E5%A4%A9%E6%89%8D%E5%A5%B3%E5%8F%8B%E8%AF%BB%E5%90%8E%E6%84%9F/</link>
       <pubDate>Sun, 28 Feb 2021 22:49:38 +0800</pubDate>
-      
-      <guid>https://zhxin.xyz/post/2021/02/%E6%88%91%E7%9A%84%E5%A4%A9%E6%89%8D%E5%A5%B3%E5%8F%8B%E8%AF%BB%E5%90%8E%E6%84%9F/</guid>
+      <guid>https://lousiyo.com/post/2021/02/%E6%88%91%E7%9A%84%E5%A4%A9%E6%89%8D%E5%A5%B3%E5%8F%8B%E8%AF%BB%E5%90%8E%E6%84%9F/</guid>
       <description>你很自由,而她却是囚徒 在看了四集HBO拍的 我的天才女友 的剧之后,就迫不及待的抱起书来看了.之前并没有听过这本书,也没有了解过埃莱娜费兰特这个作家,纯粹只是最近在微博上看到很多人在推荐这部剧,就好奇来看.追完更新之后,要一周的时间才能看到下一集(在这方面不得不夸奖Netflix),没耐心就去kindle上下载了书,花了大概三周的时间把那不勒斯四部曲给看完. 故事讲述的是莉娜和莱农两个女孩从童年到老年持</description>
     </item>
-    
     <item>
       <title>关于是枝裕和</title>
-      <link>https://zhxin.xyz/post/2020/04/%E5%85%B3%E4%BA%8E%E6%98%AF%E6%9E%9D%E8%A3%95%E5%92%8C/</link>
+      <link>https://lousiyo.com/post/2020/04/%E5%85%B3%E4%BA%8E%E6%98%AF%E6%9E%9D%E8%A3%95%E5%92%8C/</link>
       <pubDate>Tue, 28 Apr 2020 22:48:31 +0800</pubDate>
-      
-      <guid>https://zhxin.xyz/post/2020/04/%E5%85%B3%E4%BA%8E%E6%98%AF%E6%9E%9D%E8%A3%95%E5%92%8C/</guid>
+      <guid>https://lousiyo.com/post/2020/04/%E5%85%B3%E4%BA%8E%E6%98%AF%E6%9E%9D%E8%A3%95%E5%92%8C/</guid>
       <description>应该是大二或者大三的时候第一次看是枝裕和导演的电影《无人知晓》。当时好像是看了一篇文章，介绍说柳乐优弥凭借该片击败《花样年华》梁朝伟成为了戛纳历史上最年轻的影帝。文章自然有以此为噱头吸引眼球的嫌疑，不过还是获得了我的好奇。当时和大多数人一样，新近听说了一部电影总要到豆瓣电影看看评分影评什么的，惊奇的是在豆瓣上是枝裕和导演所有作品竟然大多都是八分多的样子。就这样，我有意的多找了几部是枝裕和的作品来看</description>
     </item>
-    
     <item>
       <title>不会到来的新生活</title>
-      <link>https://zhxin.xyz/post/2019/08/%E4%B8%8D%E4%BC%9A%E5%88%B0%E6%9D%A5%E7%9A%84%E6%96%B0%E7%94%9F%E6%B4%BB/</link>
+      <link>https://lousiyo.com/post/2019/08/%E4%B8%8D%E4%BC%9A%E5%88%B0%E6%9D%A5%E7%9A%84%E6%96%B0%E7%94%9F%E6%B4%BB/</link>
       <pubDate>Fri, 02 Aug 2019 23:06:16 +0800</pubDate>
-      
-      <guid>https://zhxin.xyz/post/2019/08/%E4%B8%8D%E4%BC%9A%E5%88%B0%E6%9D%A5%E7%9A%84%E6%96%B0%E7%94%9F%E6%B4%BB/</guid>
+      <guid>https://lousiyo.com/post/2019/08/%E4%B8%8D%E4%BC%9A%E5%88%B0%E6%9D%A5%E7%9A%84%E6%96%B0%E7%94%9F%E6%B4%BB/</guid>
       <description>28岁、单身、无业、泡图书馆， 追剧看到这几个关键词的时候自己难免会心一笑，因为这几个标签可以完美套在当下的自己身上。 毕业后的第一份工作在坚持了几年之后还是最近提出了离职。自然没有剧中那样极具戏剧冲突的意外会让你突然决定离职来开始新的生活，现实中的职场只会让你在一眼看得到头的日子中精神被一点点摧残直到濒临崩溃。28岁是很尴尬的年龄，明明感觉正年轻，是孩提时向往的能够自由独立、天高任鸟飞的时候，但是现</description>
     </item>
-    
   </channel>
 </rss>

@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>git on zhxin.xyz</title>
-    <link>https://zhxin.xyz/tags/git/</link>
-    <description>Recent content in git on zhxin.xyz</description>
+    <title>git on lousiyo</title>
+    <link>https://lousiyo.com/tags/git/</link>
+    <description>Recent content in git on lousiyo</description>
     <generator>Hugo -- gohugo.io</generator>
-    <lastBuildDate>Sun, 28 Mar 2021 22:49:38 +0800</lastBuildDate><atom:link href="https://zhxin.xyz/tags/git/index.xml" rel="self" type="application/rss+xml" />
+    <language>zh</language>
+    <lastBuildDate>Sun, 28 Mar 2021 22:49:38 +0800</lastBuildDate>
+    <atom:link href="https://lousiyo.com/tags/git/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Git 基本操作</title>
-      <link>https://zhxin.xyz/post/2021/03/git-%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/</link>
+      <link>https://lousiyo.com/post/2021/03/git-%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/</link>
       <pubDate>Sun, 28 Mar 2021 22:49:38 +0800</pubDate>
-      
-      <guid>https://zhxin.xyz/post/2021/03/git-%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/</guid>
+      <guid>https://lousiyo.com/post/2021/03/git-%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/</guid>
       <description>配置 git config --list --show-origin 查看所有配置信息 git config 命令带入&amp;ndash;system参数会将配置写入/etc/gitconfig文件，对整个系统生效；&amp;ndash;global选项会写入~/.gitconfig文件对当前用户所有仓库生效 1 2 3 4 5 6 7 #安装完成GIT之后配置相关用户名邮箱 git config --global user.name &amp;#34;me&amp;#34; git config --global user.email me@outlook.com git config --global core.editor vim git config --global log.date iso git config --global merge.conflictstyle diff3 git config --global merge.tool nvimdiff3 配置github ssh 访问 1 2 3 4 5 6 ls -al ~/.ssh [[查看是否生成SSH]] key ssh-keygen</description>
     </item>
-    
   </channel>
 </rss>
