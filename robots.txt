@@ -1,3 +1,1 @@
 User-agent: *
-Disallow:
-Sitemap: https://lousiyo.com/sitemap.xml

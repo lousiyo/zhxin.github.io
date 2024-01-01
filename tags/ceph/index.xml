@@ -2,50 +2,32 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>ceph on lousiyo</title>
-    <link>https://lousiyo.com/tags/ceph/</link>
+    <link>http://localhost:1313/tags/ceph/</link>
     <description>Recent content in ceph on lousiyo</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>zh</language>
+    <language>zh-cn</language>
     <lastBuildDate>Fri, 28 May 2021 22:49:38 +0800</lastBuildDate>
-    <atom:link href="https://lousiyo.com/tags/ceph/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/ceph/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>PG Peering过程状态变化代码走读</title>
-      <link>https://lousiyo.com/post/2021/05/pg-peering%E8%BF%87%E7%A8%8B%E7%8A%B6%E6%80%81%E5%8F%98%E5%8C%96%E4%BB%A3%E7%A0%81%E8%B5%B0%E8%AF%BB/</link>
+      <link>http://localhost:1313/post/pg_state_change_code/</link>
       <pubDate>Fri, 28 May 2021 22:49:38 +0800</pubDate>
-      <guid>https://lousiyo.com/post/2021/05/pg-peering%E8%BF%87%E7%A8%8B%E7%8A%B6%E6%80%81%E5%8F%98%E5%8C%96%E4%BB%A3%E7%A0%81%E8%B5%B0%E8%AF%BB/</guid>
-      <description>最近看了PG状态转换的过程,代码细节没有仔细研究，先粗略过了一遍代码，特此记录. PG PG是存储池的基本单元，是一些对象的集合，多副本和纠删的数据备份策略依托PG实现. PG有多种状态，状态之间的变化通过状态机实现. 有两个场景会触发peering流程： 在pg创建时 在OSD启动、停止导致OSDMap变化进而导致pg的acting set发生变化时 状态机 状态机在创建PG进行初始化. 1 2 3 4 5 6 7 class RecoveryMachine : public boost::statechart::state_machine&amp;lt; RecoveryMachine, Initial</description>
+      <guid>http://localhost:1313/post/pg_state_change_code/</guid>
+      <description>最近看了PG状态转换的过程,代码细节没有仔细研究，先粗略过了一遍代码，特此记录. PG PG是存储池的基本单元，是一些对象的集合，多副本和纠删的数</description>
     </item>
     <item>
       <title>【转载】ceph存储引擎bluestore解析</title>
-      <link>https://lousiyo.com/post/2021/02/%E8%BD%AC%E8%BD%BDceph%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8Ebluestore%E8%A7%A3%E6%9E%90/</link>
+      <link>http://localhost:1313/post/ceph_bluestore_summary/</link>
       <pubDate>Sun, 28 Feb 2021 22:49:38 +0800</pubDate>
-      <guid>https://lousiyo.com/post/2021/02/%E8%BD%AC%E8%BD%BDceph%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8Ebluestore%E8%A7%A3%E6%9E%90/</guid>
-      <description>转载自sysnote,如有侵权请联系删除 ceph后端支持多种存储引擎，以插件式的方式来进行管理使用，目前支持filestore，kvstore，memstore以及最新的bluestore，目前默认使用的filestore，但是因为filestore在写数据前需要先写journal，会有一倍的写放大，并且filestore一开始只是对于机械盘进行设计的，没有专门针对ssd做优化考虑，因此诞生的bl</description>
+      <guid>http://localhost:1313/post/ceph_bluestore_summary/</guid>
+      <description>转载自sysnote,如有侵权请联系删除 ceph后端支持多种存储引擎，以插件式的方式来进行管理使用，目前支持filestore，kvstor</description>
     </item>
     <item>
       <title>常用ceph命令</title>
-      <link>https://lousiyo.com/post/2021/02/%E5%B8%B8%E7%94%A8ceph%E5%91%BD%E4%BB%A4/</link>
+      <link>http://localhost:1313/post/ceph%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</link>
       <pubDate>Sun, 28 Feb 2021 22:49:38 +0800</pubDate>
-      <guid>https://lousiyo.com/post/2021/02/%E5%B8%B8%E7%94%A8ceph%E5%91%BD%E4%BB%A4/</guid>
-      <description>&lt;p&gt;工作中遇到的比较常用的命令,特此整理以备忘.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;查看集群状态&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ceph -s &lt;span class=&#34;c1&#34;&gt;#查看状态&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ceph -v &lt;span class=&#34;c1&#34;&gt;#查看版本&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ceph df &lt;span class=&#34;c1&#34;&gt;#查询集群存储容量&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ceph health detail &lt;span class=&#34;c1&#34;&gt;#集群详细健康信息&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;</description>
+      <guid>http://localhost:1313/post/ceph%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</guid>
+      <description>&lt;p&gt;工作中遇到的比较常用的命令,特此整理以备忘.&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;查看集群状态&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#eed;-moz-tab-size:2;-o-tab-size:2;tab-size:2;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ceph -s &lt;span style=&#34;color:#228b22&#34;&gt;#查看状态&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ceph -v &lt;span style=&#34;color:#228b22&#34;&gt;#查看版本&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ceph df &lt;span style=&#34;color:#228b22&#34;&gt;#查询集群存储容量&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ceph health detail &lt;span style=&#34;color:#228b22&#34;&gt;#集群详细健康信息&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
   </channel>
 </rss>

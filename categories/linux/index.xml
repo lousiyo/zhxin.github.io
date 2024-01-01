@@ -2,32 +2,32 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Linux on lousiyo</title>
-    <link>https://lousiyo.com/categories/linux/</link>
+    <link>http://localhost:1313/categories/linux/</link>
     <description>Recent content in Linux on lousiyo</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>zh</language>
+    <language>zh-cn</language>
     <lastBuildDate>Fri, 09 Jun 2023 17:29:59 +0800</lastBuildDate>
-    <atom:link href="https://lousiyo.com/categories/linux/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/categories/linux/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>WSL</title>
-      <link>https://lousiyo.com/post/2023/06/wsl/</link>
+      <link>http://localhost:1313/post/wsl_stuff/</link>
       <pubDate>Fri, 09 Jun 2023 17:29:59 +0800</pubDate>
-      <guid>https://lousiyo.com/post/2023/06/wsl/</guid>
-      <description>wsl介绍 Windows Subsystem for Linux 允许在Windows上直接运行GNU/Linux环境，包括大多数命令行工具、实用程序和应用程序，而无需传统虚拟机或双启动设置的开销。 WSL2是Windows子系统的新版本，它采用了全新的架构，使得Windows子系统能够在Windows上运行ELF64 Linux二进制文件。其主要目标是提高文件系统性能，并增加完整的系统调用兼容性。这种新架构改变了Linux二进制文件与Window</description>
+      <guid>http://localhost:1313/post/wsl_stuff/</guid>
+      <description>wsl介绍 Windows Subsystem for Linux 允许在Windows上直接运行GNU/Linux环境，包括大多数命令行工具、实用程序和应用程序，而无需传统虚拟机或双启动设</description>
     </item>
     <item>
       <title>Shell编程基础</title>
-      <link>https://lousiyo.com/post/2021/06/shell%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/</link>
+      <link>http://localhost:1313/post/shell_script/</link>
       <pubDate>Mon, 28 Jun 2021 22:49:38 +0800</pubDate>
-      <guid>https://lousiyo.com/post/2021/06/shell%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/</guid>
-      <description>变量 脚本开头使用#!/bin/bash指定要使用的shell,shell会通过PATH环境变量来查找脚本中使用的命令，可以使用echo $PATH来看下脚本会在哪些目录下查找命令，如果脚本中执行的命令没有在PATH环境变量中，也可以通过绝对或相对路径来引用. 在脚本中可以使用shell维护的环境变量也可以定义和使用自己的用户变量. 赋值等号两边不能存在空格 环境变量： 可以使用set命令查看当前环境变量列表</description>
+      <guid>http://localhost:1313/post/shell_script/</guid>
+      <description>变量 脚本开头使用#!/bin/bash指定要使用的shell,shell会通过PATH环境变量来查找脚本中使用的命令，可以使用echo $PA</description>
     </item>
     <item>
       <title>Git 基本操作</title>
-      <link>https://lousiyo.com/post/2021/03/git-%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/</link>
+      <link>http://localhost:1313/post/git-client-config/</link>
       <pubDate>Sun, 28 Mar 2021 22:49:38 +0800</pubDate>
-      <guid>https://lousiyo.com/post/2021/03/git-%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/</guid>
-      <description>配置 git config --list --show-origin 查看所有配置信息 git config 命令带入&amp;ndash;system参数会将配置写入/etc/gitconfig文件，对整个系统生效；&amp;ndash;global选项会写入~/.gitconfig文件对当前用户所有仓库生效 1 2 3 4 5 6 7 #安装完成GIT之后配置相关用户名邮箱 git config --global user.name &amp;#34;me&amp;#34; git config --global user.email me@outlook.com git config --global core.editor vim git config --global log.date iso git config --global merge.conflictstyle diff3 git config --global merge.tool nvimdiff3 配置github ssh 访问 1 2 3 4 5 6 ls -al ~/.ssh [[查看是否生成SSH]] key ssh-keygen</description>
+      <guid>http://localhost:1313/post/git-client-config/</guid>
+      <description>配置 git config &amp;ndash;list &amp;ndash;show-origin 查看所有配置信息 git config 命令带入&amp;ndash;system参数会将配置写入/etc/gitconfig文件，对整个系统生效；&amp;nda</description>
     </item>
   </channel>
 </rss>

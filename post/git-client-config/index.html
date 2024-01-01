@@ -1,58 +1,404 @@
-<!doctype html><html lang=zh dir=auto><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><title>Git客户端初始配置 | zhxin.xyz</title><meta name=keywords content="git"><meta name=description content="
-安装完成GIT之后配置相关用户名邮箱.
+<!DOCTYPE html>
+<html lang="zh-cn"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+   <meta name="description" content="配置 git config &ndash;list &ndash;show-origin 查看所有配置信息 git config 命令带入&ndash;system参数会将配置写入/etc/gitconfig文件，对整个系统生效；&nda">  
+
+  <title>
+    
+      Git 基本操作
+    
+  </title>
 
 
-
-1
-2
-
-
-git config --global user.name &#34;xxx&#34;
-git config --global user.email xxx@xxx.com
-
-
-"><meta name=author content><link rel=canonical href=https://zhxin.xyz/post/git-client-config/><link crossorigin=anonymous href=/assets/css/stylesheet.75c1af7a4f490b6c2c4ae8e4179952385419fb7129b6410619635a37ec94e4ca.css integrity="sha256-dcGvek9JC2wsSujkF5lSOFQZ+3EptkEGGWNaN+yU5Mo=" rel="preload stylesheet" as=style><script defer crossorigin=anonymous src=/assets/js/highlight.f413e19d0714851f6474e7ee9632408e58ac146fbdbe62747134bea2fa3415e0.js integrity="sha256-9BPhnQcUhR9kdOfuljJAjlisFG+9vmJ0cTS+ovo0FeA=" onload=hljs.initHighlightingOnLoad()></script>
-<link rel=icon href=https://zhxin.xyz/%3Cfavicon.jpg%3E><link rel=icon type=image/png sizes=16x16 href=https://zhxin.xyz/%3Clink%20/%20abs%20url%3E><link rel=icon type=image/png sizes=32x32 href=https://zhxin.xyz/%3Clink%20/%20abs%20url%3E><link rel=apple-touch-icon href=https://zhxin.xyz/%3Clink%20/%20abs%20url%3E><link rel=mask-icon href=https://zhxin.xyz/%3Clink%20/%20abs%20url%3E><meta name=theme-color content="#2e2e33"><meta name=msapplication-TileColor content="#2e2e33"><noscript><style>#theme-toggle,.top-link{display:none}</style></noscript><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100;300&display=swap" rel=stylesheet><script type=application/javascript>var doNotTrack=!1;doNotTrack||(function(e,t,n,s,o,i,a){e.GoogleAnalyticsObject=o,e[o]=e[o]||function(){(e[o].q=e[o].q||[]).push(arguments)},e[o].l=1*new Date,i=t.createElement(n),a=t.getElementsByTagName(n)[0],i.async=1,i.src=s,a.parentNode.insertBefore(i,a)}(window,document,"script","https://www.google-analytics.com/analytics.js","ga"),ga("create","UA-109514401-1","auto"),ga("send","pageview"))</script><meta property="og:title" content="Git客户端初始配置"><meta property="og:description" content="
-安装完成GIT之后配置相关用户名邮箱.
-
+  <link rel="shortcut icon" type="image/x-icon" href="/" />
+  
+  
+  
+  <link rel="stylesheet" href="/css/main.01273a70fa873b012d056499c16bb47955e0e7526c34edb73f05ca8f99f488ebc323423c6557f93f9b42a41de0448a25ce9a1ab577d0bf61e36eaf52a4979a1d.css" integrity="sha512-ASc6cPqHOwEtBWSZwWu0eVXg51JsNO23PwXKj5n0iOvDI0I8ZVf5P5tCpB3gRIolzpoatXfQv2Hjbq9SpJeaHQ==" />
+  
+</head>
+<body a="light">
+        <main class="page-content" aria-label="Content">
+            <div class="w">
+<a href="/">返回</a>
 
 
-1
-2
+<article>
+    <p class="post-meta">
+        <time datetime="2021-03-28 22:49:38 &#43;0800 CST">
+            2021-03-28
+        </time>
+    </p>
 
+    <h1>Git 基本操作</h1>
 
-git config --global user.name &#34;xxx&#34;
-git config --global user.email xxx@xxx.com
+    
 
+    <h1 id="配置">配置</h1>
+<p>git config &ndash;list &ndash;show-origin 查看所有配置信息
+git config 命令带入&ndash;system参数会将配置写入/etc/gitconfig文件，对整个系统生效；&ndash;global选项会写入~/.gitconfig文件对当前用户所有仓库生效</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#eed;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#228b22">#安装完成GIT之后配置相关用户名邮箱</span>
+</span></span><span style="display:flex;"><span>git config --global user.name <span style="color:#cd5555">&#34;me&#34;</span>
+</span></span><span style="display:flex;"><span>git config --global user.email me@outlook.com
+</span></span><span style="display:flex;"><span>git config --global core.editor vim
+</span></span><span style="display:flex;"><span>git config --global log.date iso
+</span></span><span style="display:flex;"><span>git config --global merge.conflictstyle diff3
+</span></span><span style="display:flex;"><span>git config --global merge.tool nvimdiff3
+</span></span></code></pre></div><p>配置github ssh 访问</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#eed;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ls -al ~/.ssh [[查看是否生成SSH]] key
+</span></span><span style="display:flex;"><span>ssh-keygen -t rsa -b <span style="color:#b452cd">4096</span> -C <span style="color:#cd5555">&#34;me@outlook.com&#34;</span> [[生成key]]
+</span></span><span style="display:flex;"><span><span style="color:#658b00">eval</span> <span style="color:#cd5555">&#34;</span><span style="color:#8b008b;font-weight:bold">$(</span>ssh-agent -s<span style="color:#8b008b;font-weight:bold">)</span><span style="color:#cd5555">&#34;</span> [[保证ssh可用]]
+</span></span><span style="display:flex;"><span>ssh-add ~/.ssh/id_rsa [[添加ssh]] key到客户端
+</span></span><span style="display:flex;"><span>将ssh key添加到github账户
+</span></span><span style="display:flex;"><span>clip &lt; ~/.ssh/id_rsa.pub ssh -T git@github.com [[测试是否连接到github]]
+</span></span></code></pre></div><h1 id="操作">操作</h1>
+<ol>
+<li>初始化
+git init命令创建一个本地的仓库
+git clone <!-- raw HTML omitted -->/<!-- raw HTML omitted --> <!-- raw HTML omitted --> clone一个已经存在的仓库</li>
+<li>添加追踪文件
+git add <!-- raw HTML omitted --> 添加文件到仓库暂存区</li>
+<li>提交: 尝试每个提交成为一个逻辑上独立的变更集，并且每个提交附带一个 有用的信息
+git diff &ndash;check 检查是否有空白错误
+git commit 加-a参数会跳过暂存，将所有已追踪文件一起提交</li>
+<li>删除文件</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#eed;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>rm file <span style="color:#228b22">#本地删除文件，修改未放入暂存区</span>
+</span></span><span style="display:flex;"><span>git rm file <span style="color:#228b22">#修改待提交，提交完成之后文件不再跟踪</span>
+</span></span><span style="display:flex;"><span>git rm -f file <span style="color:#228b22">#删除已经修改或者已经暂存的文件</span>
+</span></span><span style="display:flex;"><span>git rm --cached file <span style="color:#228b22">#将文件从仓库中删除但是保留在本地</span>
+</span></span></code></pre></div><ol start="5">
+<li>文件重命名
+git mv old new</li>
+<li>贮藏</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#eed;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git stash <span style="color:#228b22">#贮藏当前未提交内容</span>
+</span></span><span style="display:flex;"><span>git stash list <span style="color:#228b22">#查看已经贮藏的列表</span>
+</span></span><span style="display:flex;"><span>git stash apply <span style="color:#228b22">#应用最新贮藏</span>
+</span></span><span style="display:flex;"><span>git stash apply &lt;stashid&gt; <span style="color:#228b22">#指定应用的贮藏</span>
+</span></span><span style="display:flex;"><span>git stash pop <span style="color:#228b22">#应用贮藏并从栈上丢弃</span>
+</span></span></code></pre></div><ol start="7">
+<li>清理工作目录
+git clean -f -d [-n]
+git stash &ndash;all</li>
+</ol>
+<h1 id="查询">查询</h1>
+<h2 id="仓库状态">仓库状态</h2>
+<ol>
+<li>git status查看当前仓库状态；</li>
+<li>git diff查看详细的未暂存文件与暂存区域的差异；</li>
+<li>git diff &ndash;staged/cached 查看对比已暂存文件与最后一次提交的文件差异;</li>
+<li>git diff master&hellip;contrib 查看当前contrib分支与master分支的共同祖先起，该分支中的工作。</li>
+</ol>
+<h2 id="提交记录">提交记录</h2>
+<ol>
+<li>git log 按照时间顺序显示提交记录;</li>
+<li>git log -p 附带提交记录变化；</li>
+<li>git log &ndash;stat 显示缩略统计信息;</li>
+<li>git log &ndash;pretty=oneline\full\fuller\short 自定义输出信息程度;</li>
+<li>可以自定义log输出格式</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#eed;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git log --pretty=format:<span style="color:#cd5555">&#34;%h - %an, %ar : %s&#34;</span>
+</span></span><span style="display:flex;"><span>git log --pretty=format:<span style="color:#cd5555">&#34;%h %s&#34;</span> --graph
+</span></span></code></pre></div><table>
+<thead>
+<tr>
+<th>选项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>%H</td>
+<td>提交的完整哈希值</td>
+</tr>
+<tr>
+<td>%h</td>
+<td>提交的简写哈希值</td>
+</tr>
+<tr>
+<td>%T</td>
+<td>树的完整哈希值</td>
+</tr>
+<tr>
+<td>%t</td>
+<td>树的简写哈希值</td>
+</tr>
+<tr>
+<td>%P</td>
+<td>父提交的完整哈希值</td>
+</tr>
+<tr>
+<td>%p</td>
+<td>父提交的简写哈希值</td>
+</tr>
+<tr>
+<td>%an</td>
+<td>作者名字</td>
+</tr>
+<tr>
+<td>%ae</td>
+<td>作者的电子邮件地址</td>
+</tr>
+<tr>
+<td>%ad</td>
+<td>作者修订日期（可以用 &ndash;date=选项 来定制格式）</td>
+</tr>
+<tr>
+<td>%ar</td>
+<td>作者修订日期，按多久以前的方式显示</td>
+</tr>
+<tr>
+<td>%cn</td>
+<td>提交者的名字</td>
+</tr>
+<tr>
+<td>%ce</td>
+<td>提交者的电子邮件地址</td>
+</tr>
+<tr>
+<td>%cd</td>
+<td>提交日期</td>
+</tr>
+<tr>
+<td>%cr</td>
+<td>提交日期（距今多长时间）</td>
+</tr>
+<tr>
+<td>%s</td>
+<td>提交说明</td>
+</tr>
+</tbody>
+</table>
+<p>git log 常用选项</p>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-p</td>
+<td>按补丁格式显示每个提交引入的差异。</td>
+</tr>
+<tr>
+<td>&ndash;stat</td>
+<td>显示每次提交的文件修改统计信息。</td>
+</tr>
+<tr>
+<td>&ndash;shortstat</td>
+<td>只显示 &ndash;stat 中最后的行数修改添加移除统计。</td>
+</tr>
+<tr>
+<td>&ndash;name-only</td>
+<td>仅在提交信息后显示已修改的文件清单。</td>
+</tr>
+<tr>
+<td>&ndash;name-status</td>
+<td>显示新增、修改、删除的文件清单。</td>
+</tr>
+<tr>
+<td>&ndash;abbrev-commit</td>
+<td>仅显示 SHA-1 校验和所有 40 个字符中的前几个字符。</td>
+</tr>
+<tr>
+<td>&ndash;relative-date</td>
+<td>使用较短的相对时间而不是完整格式显示日期（比如“2 weeks ago”）。</td>
+</tr>
+<tr>
+<td>&ndash;graph</td>
+<td>在日志旁以 ASCII 图形显示分支与合并历史。</td>
+</tr>
+<tr>
+<td>&ndash;pretty</td>
+<td>使用其他格式显示历史提交信息。可用的选项包括 oneline、short、full、fuller 和format（用来定义自己的格式）。</td>
+</tr>
+<tr>
+<td>&ndash;oneline</td>
+<td>&ndash;pretty=oneline &ndash;abbrev-commit 合用的简写。</td>
+</tr>
+</tbody>
+</table>
+<ol start="6">
+<li>限制输出</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#eed;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>git log -n
+</span></span><span style="display:flex;"><span>git log --since=2.weeks --after --until --before
+</span></span><span style="display:flex;"><span>git log --author --commiter --grep --all-match
+</span></span><span style="display:flex;"><span>git log -S function_name
+</span></span><span style="display:flex;"><span>git log --no-merges
+</span></span></code></pre></div><ol start="7">
+<li>简短输出 git log &ndash;abbrev-commit &ndash;pretty=oneline</li>
+<li>分支差异查询</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#eed;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git log experiment..master <span style="color:#228b22"># 在master分支而不在experiment分支中的提交</span>
+</span></span><span style="display:flex;"><span>git log origin/master..HEAD <span style="color:#228b22"># 在远程分支而不在当前分支的提交</span>
+</span></span><span style="display:flex;"><span>git log refA refB --not refC <span style="color:#228b22"># 查询所有被refA或者refB包含，但是不被refC包含的提交</span>
+</span></span><span style="display:flex;"><span>git log --left-right experiment...master  <span style="color:#228b22"># 不是两个分支同时包含的提交查询</span>
+</span></span></code></pre></div><ol start="9">
+<li>查看包含某次提交的tag
+git tag &ndash;contains [commitid]</li>
+</ol>
+<h2 id="搜索">搜索</h2>
+<ol>
+<li>使用git grep从提交历史、工作目录、索引中搜索字符串或者表达式
+git grep &ndash;break &ndash;heading -n &ndash;count &ndash;show-function main</li>
+<li>git 日志搜索</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#eed;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git log -S ZLIB_BUF_MAX --oneline <span style="color:#228b22">#查找ZLIB_BUF_MAX变量什么时候引入的</span>
+</span></span><span style="display:flex;"><span>git log -L :git_deflate_bound:zlib.c <span style="color:#228b22">#查看某个函数的每一次变更</span>
+</span></span><span style="display:flex;"><span>git blame &lt;file&gt; <span style="color:#228b22">#查看文件每一行的最后一次提交记录</span>
+</span></span></code></pre></div><h1 id="回退">回退</h1>
+<ol>
+<li>未提交到暂存区的回退
+git checkout &ndash; <!-- raw HTML omitted --></li>
+<li>git commit &ndash;amend 将暂存区文件添加到上次提交记录中，或者只修改提交信息；</li>
+<li>git reset HEAD <!-- raw HTML omitted --> 取消文件暂存，从待提交中剔除；</li>
+<li>修改历史提交信息或者合并历史提交</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#eed;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>git rebase -i HEAD~n
+</span></span><span style="display:flex;"><span>[[p]], pick = use commit
+</span></span><span style="display:flex;"><span>[[r]], reword = use commit, but edit the commit message
+</span></span><span style="display:flex;"><span>[[e]], edit = use commit, but stop for amending
+</span></span><span style="display:flex;"><span>[[s]], squash = use commit, but meld into previous commit
+</span></span><span style="display:flex;"><span>[[f]], fixup = like &#34;squash&#34;, but discard this commit log message
+</span></span><span style="display:flex;"><span>[[x]], exec = run command (the rest of the line) using shell
+</span></span><span style="display:flex;"><span>[[d]], drop = remove commit
+</span></span></code></pre></div><ol start="5">
+<li>重置</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#eed;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git reset --soft HEAD~ <span style="color:#228b22"># 撤销上一次提交记录，只移动head指针，index指针不变，既上一次提交变为暂存状态</span>
+</span></span><span style="display:flex;"><span>git reset [--mixed] HEAD~ <span style="color:#228b22"># 撤销上一次提交，也会取消暂存所有东西</span>
+</span></span><span style="display:flex;"><span>git reset --hard HEAD~ <span style="color:#228b22"># 完全撤销上一次提交，上一次提交的内容被销毁</span>
+</span></span><span style="display:flex;"><span><span style="color:#228b22"># 亦可以指定文件路径</span>
+</span></span></code></pre></div><h1 id="远程仓库">远程仓库</h1>
+<ol>
+<li>查看远程仓库： git remote -v</li>
+<li>添加远程仓库: git remote add <!-- raw HTML omitted --> url</li>
+<li>拉取远程仓库:git fetch <!-- raw HTML omitted --> 拉取后会拥有那个远程仓库的所有分支的引用；</li>
+<li>推送远程仓库: git push <!-- raw HTML omitted --> <!-- raw HTML omitted --></li>
+<li>查看远程仓库信息：git remote show <!-- raw HTML omitted --></li>
+<li>远程仓库重命名：git remote rename <!-- raw HTML omitted --> <!-- raw HTML omitted --></li>
+<li>删除远程仓库：git remote remove <!-- raw HTML omitted --></li>
+</ol>
+<h1 id="标签">标签</h1>
+<ol>
+<li>列举标签：git tag -l &ldquo;v1.8*&rdquo;</li>
+<li>轻量标签：git tag v1.0 [commit]</li>
+<li>附注标签：git tag -a v1.1 -m &ldquo;v1.1&rdquo; [commit]</li>
+<li>推送标签：git push origin [<!-- raw HTML omitted --> [&ndash;tags&ndash;]</li>
+<li>删除标签并推送：git tag -d <!-- raw HTML omitted -->; git push origin &ndash;delete <!-- raw HTML omitted --></li>
+</ol>
+<h1 id="分支">分支</h1>
+<ol>
+<li>git checkout -b &lt;new_branch&gt;创建分支并切换</li>
+<li>git merget <!-- raw HTML omitted --> 合并分支，如果冲突可尝试使用git mergetool解决冲突</li>
+<li>git branch -d hotfix 删除分支</li>
+<li>git branch -v 查看分支</li>
+<li>git branch &ndash;merged or &ndash;no-merged 查看merge与否的分支</li>
+<li>git branch &ndash;no-merged master 尚未合并到master的分支</li>
+<li>git push <!-- raw HTML omitted --> <!-- raw HTML omitted --> 将分支推送到远程仓库</li>
+<li>git checkou &ndash;track origin/serverfix 设置当前分支追踪的远程分支</li>
+<li>git checkout -b br origin/serverfix 检出远程分支并追踪, git checkout serverfix 如果本地没有这个分支而且远程有则会自动设置追踪</li>
+<li>git branch -u/&ndash;set-upstream-to origin/serverfix 修改本地分支追踪上游分支</li>
+<li>git branch -vv 显示分支的详细信息</li>
+<li>git push origin &ndash;delete serverfix 删除远程分支</li>
+<li>变基: <strong>如果提交存在于你的仓库之外，而别人可能基于这些提交进行开发，那么不要执行变基</strong>, 总的原则是，只对尚未推送或分享给别人的本地修改执行变基操作清理历史， 从不对已推送至别处的提交执行变基操作，这样，你才能享受到两种方式带来的便利。</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#eed;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#228b22"># 将experiment分支的代码以变基的方式合入master</span>
+</span></span><span style="display:flex;"><span>git checkout experiment
+</span></span><span style="display:flex;"><span>git rebase master
+</span></span><span style="display:flex;"><span>git checkout master
+</span></span><span style="display:flex;"><span>git merge experiment
+</span></span><span style="display:flex;"><span><span style="color:#228b22"># or</span>
+</span></span><span style="display:flex;"><span>git rebase master experiment
+</span></span><span style="display:flex;"><span><span style="color:#228b22"># 变基一个与另一个分支有交集的分支，只合入该分支中的有差异部分：取出client分支,找出其与server分支分歧之后的补丁，然后把这些补丁在master分支上重放</span>
+</span></span><span style="display:flex;"><span>git rebase --onto master server client
+</span></span></code></pre></div><h1 id="忽略文件">忽略文件</h1>
+<p>编辑.gitignore文件,格式规范如下:
+•  所有空行或者以 # 开头的行都会被 Git 忽略。
+•  可以使用标准的 glob 模式匹配，它会递归地应用在整个工作区中。
+•  匹配模式可以以（/）开头防止递归。
+•  匹配模式可以以（/）结尾指定目录。
+•  要忽略指定模式以外的文件或目录，可以在模式前加上叹号（!）取反。</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#eed;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>glob 模式是指 shell 所使用的简化了的正则表达式。 星号（*）匹配零个或多个任意字符；[abc] 匹配
+</span></span><span style="display:flex;"><span>任何一个列在方括号中的字符 （这个例子要么匹配一个 a，要么匹配一个 b，要么匹配一个 c）； 问号（?）只
+</span></span><span style="display:flex;"><span>匹配一个任意字符；如果在方括号中使用短划线分隔两个字符， 表示所有在这两个字符范围内的都可以匹配
+</span></span><span style="display:flex;"><span>（比如 [0-9] 表示匹配所有 0 到 9 的数字）。 使用两个星号（**）表示匹配任意中间目录，比如 a/**/z 可以
+</span></span><span style="display:flex;"><span>匹配 a/z 、 a/b/z 或 a/b/c/z 等
+</span></span></code></pre></div><p>文件参考 <a href="https://github.com/github/gitignore">gitignore</a></p>
+<h1 id="子模块">子模块</h1>
+<ol>
+<li>为已经存在的项目添加子模块
+git submodule add <!-- raw HTML omitted --> <!-- raw HTML omitted --></li>
+<li>克隆包含子模块的项目</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#eed;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git submodule init
+</span></span><span style="display:flex;"><span>git submodule update
+</span></span><span style="display:flex;"><span><span style="color:#228b22">#或者将两步合为一步</span>
+</span></span><span style="display:flex;"><span>git submodule update --init
+</span></span><span style="display:flex;"><span>git submodule update --init --recursive <span style="color:#228b22">#递归抓取任何嵌套的子模块</span>
+</span></span><span style="display:flex;"><span><span style="color:#228b22">#或者在clone时进行更新</span>
+</span></span><span style="display:flex;"><span>git clone --recurse-submodules &lt;url&gt;
+</span></span></code></pre></div><ol start="3">
+<li>子模块更新</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#eed;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#228b22"># cd进子模块目录</span>
+</span></span><span style="display:flex;"><span>git fetch
+</span></span><span style="display:flex;"><span>git merge
+</span></span><span style="display:flex;"><span><span style="color:#228b22">#或者不在子目录中运行</span>
+</span></span><span style="display:flex;"><span>git submodule update --remote
+</span></span></code></pre></div><ol start="4">
+<li>在子模块上工作</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#eed;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git submodule update --remote --merge
+</span></span><span style="display:flex;"><span>git push --recurse-submodules=check <span style="color:#228b22">#push前检查子模块是否已经提交</span>
+</span></span></code></pre></div><h1 id="一些流程">一些流程</h1>
+<ol>
+<li>提交代码流程</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#eed;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#228b22">#创建dev分支进行开发</span>
+</span></span><span style="display:flex;"><span>git checkout -b dev
+</span></span><span style="display:flex;"><span><span style="color:#228b22">#添加文件到提交列表</span>
+</span></span><span style="display:flex;"><span>git add modified_file
+</span></span><span style="display:flex;"><span>git commit -m <span style="color:#cd5555">&#34;msg&#34;</span>
+</span></span><span style="display:flex;"><span>git checkout 本地分支名[待提交分支]
+</span></span><span style="display:flex;"><span>git pull
+</span></span><span style="display:flex;"><span>git merge dev
+</span></span><span style="display:flex;"><span>git push origin 本地分支名:refs/for/远程分支名 <span style="color:#228b22">#提交gerrit等待代码review</span>
+</span></span><span style="display:flex;"><span>git push origin 分支名:refs/heads/分支名 <span style="color:#228b22">#直接提交到远程分支</span>
+</span></span><span style="display:flex;"><span><span style="color:#228b22">#### 或者</span>
+</span></span><span style="display:flex;"><span>git fetch upstream
+</span></span><span style="display:flex;"><span>git merge upstream/master
+</span></span><span style="display:flex;"><span>vim somefile
+</span></span><span style="display:flex;"><span>git add somefile
+</span></span><span style="display:flex;"><span>git commit
+</span></span><span style="display:flex;"><span>git push origin &lt;branch&gt;
+</span></span></code></pre></div><ol start="2">
+<li>新建分支</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#eed;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#228b22">#本地开好分支,推送到远程:</span>
+</span></span><span style="display:flex;"><span>git checkout -b feature-branch <span style="color:#228b22">#创建并切换到分支feature-branch</span>
+</span></span><span style="display:flex;"><span><span style="color:#228b22">#推送本地的feature-branch(冒号前面的)分支到远程origin的feature-branch(冒号后面的)分支(没有会自动创建)</span>
+</span></span><span style="display:flex;"><span>git push origin feature-branch:feature-branch
+</span></span></code></pre></div><ol start="3">
+<li>cherry-pick使用</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="background-color:#eed;-moz-tab-size:2;-o-tab-size:2;tab-size:2;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>git cherry-pick [&lt;options&gt;] &lt;commit-ish&gt;...
+</span></span><span style="display:flex;"><span>常用options:
+</span></span><span style="display:flex;"><span>--quit            退出当前的chery-pick序列
+</span></span><span style="display:flex;"><span>--continue        继续当前的chery-pick序列
+</span></span><span style="display:flex;"><span>--abort           取消当前的chery-pick序列，恢复当前分支
+</span></span><span style="display:flex;"><span>-n, --no-commit   不自动提交
+</span></span><span style="display:flex;"><span>-e, --edit        编辑提交信息
+</span></span></code></pre></div>
+</article>
 
-"><meta property="og:type" content="article"><meta property="og:url" content="https://zhxin.xyz/post/git-client-config/"><meta property="article:section" content="post"><meta property="article:published_time" content="2021-03-28T22:49:38+08:00"><meta property="article:modified_time" content="2021-03-28T22:49:38+08:00"><meta property="og:site_name" content="zhxin"><meta name=twitter:card content="summary"><meta name=twitter:title content="Git客户端初始配置"><meta name=twitter:description content="
-安装完成GIT之后配置相关用户名邮箱.
-
-
-
-1
-2
-
-
-git config --global user.name &#34;xxx&#34;
-git config --global user.email xxx@xxx.com
-
-
-"><script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"所有文章","item":"https://zhxin.xyz/post/"},{"@type":"ListItem","position":2,"name":"Git客户端初始配置","item":"https://zhxin.xyz/post/git-client-config/"}]}</script><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"Git客户端初始配置","name":"Git客户端初始配置","description":" 安装完成GIT之后配置相关用户名邮箱. 1 2 git config --global user.name \u0026#34;xxx\u0026#34; git config --global user.email xxx@xxx.com ","keywords":["git"],"articleBody":" 安装完成GIT之后配置相关用户名邮箱. 1 2 git config --global user.name \"xxx\" git config --global user.email xxx@xxx.com 配置连接github. 1 2 3 4 ls -al ~/.ssh #查看是否生成SSH key ssh-keygen -t rsa -b 4096 -C \"xxx@xxx.com\" #生成key eval \"$(ssh-agent -s)\" #保证ssh可用 ssh-add ~/.ssh/id_rsa #添加ssh key到客户端 将ssh key添加到github账户 1 2 clip \u003c ~/.ssh/id_rsa.pub ssh -T git@github.com #测试是否连接到github ","wordCount":"139","inLanguage":"zh","datePublished":"2021-03-28T22:49:38+08:00","dateModified":"2021-03-28T22:49:38+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://zhxin.xyz/post/git-client-config/"},"publisher":{"@type":"Organization","name":"zhxin.xyz","logo":{"@type":"ImageObject","url":"https://zhxin.xyz/%3Cfavicon.jpg%3E"}}}</script></head><body class=dark id=top><script>localStorage.getItem("pref-theme")==="light"&&document.body.classList.remove("dark")</script><header class=header><nav class=nav><div class=logo><a href=https://zhxin.xyz/ accesskey=h title="主页 (Alt + H)">主页</a><div class=logo-switches><button id=theme-toggle accesskey=t title="(Alt + T)"><svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg><svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button></div></div><ul id=menu><li><a href=https://zhxin.xyz/categories/ title=类别><span>类别</span></a></li><li><a href=https://zhxin.xyz/tags/ title=标签><span>标签</span></a></li><li><a href=https://zhxin.xyz/archives/ title=归档><span>归档</span></a></li><li><a href=https://zhxin.xyz/search/ title="搜索 (Alt + /)" accesskey=/><span>搜索</span></a></li></ul></nav></header><main class=main><article class=post-single><header class=post-header><div class=breadcrumbs><a href=https://zhxin.xyz/>主页</a>&nbsp;»&nbsp;<a href=https://zhxin.xyz/post/>所有文章</a></div><h1 class=post-title>Git客户端初始配置</h1><div class=post-meta><span title='2021-03-28 22:49:38 +0800 CST'>2021-03-28</span>&nbsp;·&nbsp;1 分钟&nbsp;·&nbsp;139 字</div></header><div class=post-content><ul><li>安装完成GIT之后配置相关用户名邮箱.</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
-</span><span class=lnt>2
-</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>git config --global user.name <span class=s2>&#34;xxx&#34;</span>
-</span></span><span class=line><span class=cl>git config --global user.email xxx@xxx.com
-</span></span></code></pre></td></tr></table></div></div><ul><li>配置连接github.</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
-</span><span class=lnt>2
-</span><span class=lnt>3
-</span><span class=lnt>4
-</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>ls -al ~/.ssh <span class=c1>#查看是否生成SSH key</span>
-</span></span><span class=line><span class=cl>ssh-keygen -t rsa -b <span class=m>4096</span> -C <span class=s2>&#34;xxx@xxx.com&#34;</span> <span class=c1>#生成key</span>
-</span></span><span class=line><span class=cl><span class=nb>eval</span> <span class=s2>&#34;</span><span class=k>$(</span>ssh-agent -s<span class=k>)</span><span class=s2>&#34;</span> <span class=c1>#保证ssh可用</span>
-</span></span><span class=line><span class=cl>ssh-add ~/.ssh/id_rsa <span class=c1>#添加ssh key到客户端</span>
-</span></span></code></pre></td></tr></table></div></div><ul><li>将ssh key添加到github账户</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
-</span><span class=lnt>2
-</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>clip &lt; ~/.ssh/id_rsa.pub
-</span></span><span class=line><span class=cl>ssh -T git@github.com <span class=c1>#测试是否连接到github</span>
-</span></span></code></pre></td></tr></table></div></div></div><footer class=post-footer><ul class=post-tags><li><a href=https://zhxin.xyz/tags/git/>git</a></li></ul><nav class=paginav><a class=prev href=https://zhxin.xyz/post/pg_state_change_code/><span class=title>« 上一页</span><br><span>PG Peering过程状态变化代码走读</span></a>
-<a class=next href=https://zhxin.xyz/post/ceph_bluestore_summary/><span class=title>下一页 »</span><br><span>【转载】ceph存储引擎bluestore解析</span></a></nav></footer><head><link rel=stylesheet href=/waline/waline.css><style>:root{--waline-font-size:14px;--waline-avatar-size:1.75rem}.wl-header input{background:var(--waline-bgcolor-light);font-size:.75em}.wl-editor{min-height:5.75em}</style><script src=/waline/waline.js></script></head><body><div id=waline></div><script>const locale={nick:"昵称(必须)",mail:"邮箱(必须)",sofa:""};Waline.init({el:"#waline",serverURL:"https://hey.zhxin.xyz",dark:"body.dark",emoji:!1,requiredMeta:["nick","mail"],login:"disable",wordLimit:150,pageSize:5,imageUploader:!1,search:!1,copyright:!1,reaction:!1,lang:"zh",locale})</script></body></article></main><footer class=footer><span>&copy; 2023 <a href=https://zhxin.xyz/>zhxin.xyz</a></span></footer><a href=#top aria-label="go to top" title="Go to Top (Alt + G)" class=top-link id=top-link accesskey=g><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentcolor"><path d="M12 6H0l6-6z"/></svg></a><script>let menu=document.getElementById("menu");menu&&(menu.scrollLeft=localStorage.getItem("menu-scroll-position"),menu.onscroll=function(){localStorage.setItem("menu-scroll-position",menu.scrollLeft)}),document.querySelectorAll('a[href^="#"]').forEach(e=>{e.addEventListener("click",function(e){e.preventDefault();var t=this.getAttribute("href").substr(1);window.matchMedia("(prefers-reduced-motion: reduce)").matches?document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView():document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView({behavior:"smooth"}),t==="top"?history.replaceState(null,null," "):history.pushState(null,null,`#${t}`)})})</script><script>var mybutton=document.getElementById("top-link");window.onscroll=function(){document.body.scrollTop>800||document.documentElement.scrollTop>800?(mybutton.style.visibility="visible",mybutton.style.opacity="1"):(mybutton.style.visibility="hidden",mybutton.style.opacity="0")}</script><script>document.getElementById("theme-toggle").addEventListener("click",()=>{document.body.className.includes("dark")?(document.body.classList.remove("dark"),localStorage.setItem("pref-theme","light")):(document.body.classList.add("dark"),localStorage.setItem("pref-theme","dark"))})</script><script>document.querySelectorAll("pre > code").forEach(e=>{const n=e.parentNode.parentNode,t=document.createElement("button");t.classList.add("copy-code"),t.innerHTML="复制";function s(){t.innerHTML="已复制！",setTimeout(()=>{t.innerHTML="复制"},2e3)}t.addEventListener("click",t=>{if("clipboard"in navigator){navigator.clipboard.writeText(e.textContent),s();return}const n=document.createRange();n.selectNodeContents(e);const o=window.getSelection();o.removeAllRanges(),o.addRange(n);try{document.execCommand("copy"),s()}catch{}o.removeRange(n)}),n.classList.contains("highlight")?n.appendChild(t):n.parentNode.firstChild==n||(e.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName=="TABLE"?e.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(t):e.parentNode.appendChild(t))})</script></body></html>
+            </div>
+        </main>
+    </body>
+</html>

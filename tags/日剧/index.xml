@@ -2,18 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>日剧 on lousiyo</title>
-    <link>https://lousiyo.com/tags/%E6%97%A5%E5%89%A7/</link>
+    <link>http://localhost:1313/tags/%E6%97%A5%E5%89%A7/</link>
     <description>Recent content in 日剧 on lousiyo</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>zh</language>
+    <language>zh-cn</language>
     <lastBuildDate>Fri, 02 Aug 2019 23:06:16 +0800</lastBuildDate>
-    <atom:link href="https://lousiyo.com/tags/%E6%97%A5%E5%89%A7/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/%E6%97%A5%E5%89%A7/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>不会到来的新生活</title>
-      <link>https://lousiyo.com/post/2019/08/%E4%B8%8D%E4%BC%9A%E5%88%B0%E6%9D%A5%E7%9A%84%E6%96%B0%E7%94%9F%E6%B4%BB/</link>
+      <link>http://localhost:1313/post/%E4%B8%8D%E4%BC%9A%E5%88%B0%E6%9D%A5%E7%9A%84%E6%96%B0%E7%94%9F%E6%B4%BB/</link>
       <pubDate>Fri, 02 Aug 2019 23:06:16 +0800</pubDate>
-      <guid>https://lousiyo.com/post/2019/08/%E4%B8%8D%E4%BC%9A%E5%88%B0%E6%9D%A5%E7%9A%84%E6%96%B0%E7%94%9F%E6%B4%BB/</guid>
-      <description>28岁、单身、无业、泡图书馆， 追剧看到这几个关键词的时候自己难免会心一笑，因为这几个标签可以完美套在当下的自己身上。 毕业后的第一份工作在坚持了几年之后还是最近提出了离职。自然没有剧中那样极具戏剧冲突的意外会让你突然决定离职来开始新的生活，现实中的职场只会让你在一眼看得到头的日子中精神被一点点摧残直到濒临崩溃。28岁是很尴尬的年龄，明明感觉正年轻，是孩提时向往的能够自由独立、天高任鸟飞的时候，但是现</description>
+      <guid>http://localhost:1313/post/%E4%B8%8D%E4%BC%9A%E5%88%B0%E6%9D%A5%E7%9A%84%E6%96%B0%E7%94%9F%E6%B4%BB/</guid>
+      <description>28岁、单身、无业、泡图书馆， 追剧看到这几个关键词的时候自己难免会心一笑，因为这几个标签可以完美套在当下的自己身上。 毕业后的第一份工作在坚持</description>
     </item>
   </channel>
 </rss>

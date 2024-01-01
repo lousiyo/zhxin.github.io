@@ -2,59 +2,59 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>标签 on lousiyo</title>
-    <link>https://lousiyo.com/tags/</link>
+    <link>http://localhost:1313/tags/</link>
     <description>Recent content in 标签 on lousiyo</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>zh</language>
+    <language>zh-cn</language>
     <lastBuildDate>Fri, 09 Jun 2023 17:29:59 +0800</lastBuildDate>
-    <atom:link href="https://lousiyo.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>wsl</title>
-      <link>https://lousiyo.com/tags/wsl/</link>
+      <link>http://localhost:1313/tags/wsl/</link>
       <pubDate>Fri, 09 Jun 2023 17:29:59 +0800</pubDate>
-      <guid>https://lousiyo.com/tags/wsl/</guid>
+      <guid>http://localhost:1313/tags/wsl/</guid>
       <description></description>
     </item>
     <item>
       <title>shell</title>
-      <link>https://lousiyo.com/tags/shell/</link>
+      <link>http://localhost:1313/tags/shell/</link>
       <pubDate>Mon, 28 Jun 2021 22:49:38 +0800</pubDate>
-      <guid>https://lousiyo.com/tags/shell/</guid>
+      <guid>http://localhost:1313/tags/shell/</guid>
       <description></description>
     </item>
     <item>
       <title>ceph</title>
-      <link>https://lousiyo.com/tags/ceph/</link>
+      <link>http://localhost:1313/tags/ceph/</link>
       <pubDate>Fri, 28 May 2021 22:49:38 +0800</pubDate>
-      <guid>https://lousiyo.com/tags/ceph/</guid>
+      <guid>http://localhost:1313/tags/ceph/</guid>
       <description></description>
     </item>
     <item>
       <title>git</title>
-      <link>https://lousiyo.com/tags/git/</link>
+      <link>http://localhost:1313/tags/git/</link>
       <pubDate>Sun, 28 Mar 2021 22:49:38 +0800</pubDate>
-      <guid>https://lousiyo.com/tags/git/</guid>
+      <guid>http://localhost:1313/tags/git/</guid>
       <description></description>
     </item>
     <item>
       <title>书籍</title>
-      <link>https://lousiyo.com/tags/%E4%B9%A6%E7%B1%8D/</link>
+      <link>http://localhost:1313/tags/%E4%B9%A6%E7%B1%8D/</link>
       <pubDate>Sun, 28 Feb 2021 22:49:38 +0800</pubDate>
-      <guid>https://lousiyo.com/tags/%E4%B9%A6%E7%B1%8D/</guid>
+      <guid>http://localhost:1313/tags/%E4%B9%A6%E7%B1%8D/</guid>
       <description></description>
     </item>
     <item>
       <title>电影</title>
-      <link>https://lousiyo.com/tags/%E7%94%B5%E5%BD%B1/</link>
+      <link>http://localhost:1313/tags/%E7%94%B5%E5%BD%B1/</link>
       <pubDate>Tue, 28 Apr 2020 22:48:31 +0800</pubDate>
-      <guid>https://lousiyo.com/tags/%E7%94%B5%E5%BD%B1/</guid>
+      <guid>http://localhost:1313/tags/%E7%94%B5%E5%BD%B1/</guid>
       <description></description>
     </item>
     <item>
       <title>日剧</title>
-      <link>https://lousiyo.com/tags/%E6%97%A5%E5%89%A7/</link>
+      <link>http://localhost:1313/tags/%E6%97%A5%E5%89%A7/</link>
       <pubDate>Fri, 02 Aug 2019 23:06:16 +0800</pubDate>
-      <guid>https://lousiyo.com/tags/%E6%97%A5%E5%89%A7/</guid>
+      <guid>http://localhost:1313/tags/%E6%97%A5%E5%89%A7/</guid>
       <description></description>
     </item>
   </channel>
