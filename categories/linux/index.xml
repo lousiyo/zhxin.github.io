@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Linux on lousiyo</title>
-    <link>http://localhost:1313/categories/linux/</link>
-    <description>Recent content in Linux on lousiyo</description>
+    <title>Linux on </title>
+    <link>https://lousiyo.com/categories/linux/</link>
+    <description>Recent content in Linux on </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <lastBuildDate>Fri, 09 Jun 2023 17:29:59 +0800</lastBuildDate>
-    <atom:link href="http://localhost:1313/categories/linux/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://lousiyo.com/categories/linux/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>WSL</title>
-      <link>http://localhost:1313/post/wsl_stuff/</link>
+      <link>https://lousiyo.com/post/wsl_stuff/</link>
       <pubDate>Fri, 09 Jun 2023 17:29:59 +0800</pubDate>
-      <guid>http://localhost:1313/post/wsl_stuff/</guid>
+      <guid>https://lousiyo.com/post/wsl_stuff/</guid>
       <description>wsl介绍 Windows Subsystem for Linux 允许在Windows上直接运行GNU/Linux环境，包括大多数命令行工具、实用程序和应用程序，而无需传统虚拟机或双启动设</description>
     </item>
     <item>
       <title>Shell编程基础</title>
-      <link>http://localhost:1313/post/shell_script/</link>
+      <link>https://lousiyo.com/post/shell_script/</link>
       <pubDate>Mon, 28 Jun 2021 22:49:38 +0800</pubDate>
-      <guid>http://localhost:1313/post/shell_script/</guid>
+      <guid>https://lousiyo.com/post/shell_script/</guid>
       <description>变量 脚本开头使用#!/bin/bash指定要使用的shell,shell会通过PATH环境变量来查找脚本中使用的命令，可以使用echo $PA</description>
     </item>
     <item>
       <title>Git 基本操作</title>
-      <link>http://localhost:1313/post/git-client-config/</link>
+      <link>https://lousiyo.com/post/git-client-config/</link>
       <pubDate>Sun, 28 Mar 2021 22:49:38 +0800</pubDate>
-      <guid>http://localhost:1313/post/git-client-config/</guid>
+      <guid>https://lousiyo.com/post/git-client-config/</guid>
       <description>配置 git config &amp;ndash;list &amp;ndash;show-origin 查看所有配置信息 git config 命令带入&amp;ndash;system参数会将配置写入/etc/gitconfig文件，对整个系统生效；&amp;nda</description>
     </item>
   </channel>

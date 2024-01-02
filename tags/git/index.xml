@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>git on lousiyo</title>
-    <link>http://localhost:1313/tags/git/</link>
-    <description>Recent content in git on lousiyo</description>
+    <title>git on </title>
+    <link>https://lousiyo.com/tags/git/</link>
+    <description>Recent content in git on </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <lastBuildDate>Sun, 28 Mar 2021 22:49:38 +0800</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/git/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://lousiyo.com/tags/git/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Git 基本操作</title>
-      <link>http://localhost:1313/post/git-client-config/</link>
+      <link>https://lousiyo.com/post/git-client-config/</link>
       <pubDate>Sun, 28 Mar 2021 22:49:38 +0800</pubDate>
-      <guid>http://localhost:1313/post/git-client-config/</guid>
+      <guid>https://lousiyo.com/post/git-client-config/</guid>
       <description>配置 git config &amp;ndash;list &amp;ndash;show-origin 查看所有配置信息 git config 命令带入&amp;ndash;system参数会将配置写入/etc/gitconfig文件，对整个系统生效；&amp;nda</description>
     </item>
   </channel>

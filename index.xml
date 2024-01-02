@@ -1,74 +1,74 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>lousiyo</title>
-    <link>http://localhost:1313/</link>
-    <description>Recent content on lousiyo</description>
+    <title></title>
+    <link>https://lousiyo.com/</link>
+    <description>Recent content on </description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <lastBuildDate>Thu, 25 Aug 2022 21:30:04 +0800</lastBuildDate>
-    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://lousiyo.com/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>WSL</title>
-      <link>http://localhost:1313/post/wsl_stuff/</link>
+      <link>https://lousiyo.com/post/wsl_stuff/</link>
       <pubDate>Fri, 09 Jun 2023 17:29:59 +0800</pubDate>
-      <guid>http://localhost:1313/post/wsl_stuff/</guid>
+      <guid>https://lousiyo.com/post/wsl_stuff/</guid>
       <description>wsl介绍 Windows Subsystem for Linux 允许在Windows上直接运行GNU/Linux环境，包括大多数命令行工具、实用程序和应用程序，而无需传统虚拟机或双启动设</description>
     </item>
     <item>
       <title>Shell编程基础</title>
-      <link>http://localhost:1313/post/shell_script/</link>
+      <link>https://lousiyo.com/post/shell_script/</link>
       <pubDate>Mon, 28 Jun 2021 22:49:38 +0800</pubDate>
-      <guid>http://localhost:1313/post/shell_script/</guid>
+      <guid>https://lousiyo.com/post/shell_script/</guid>
       <description>变量 脚本开头使用#!/bin/bash指定要使用的shell,shell会通过PATH环境变量来查找脚本中使用的命令，可以使用echo $PA</description>
     </item>
     <item>
       <title>PG Peering过程状态变化代码走读</title>
-      <link>http://localhost:1313/post/pg_state_change_code/</link>
+      <link>https://lousiyo.com/post/pg_state_change_code/</link>
       <pubDate>Fri, 28 May 2021 22:49:38 +0800</pubDate>
-      <guid>http://localhost:1313/post/pg_state_change_code/</guid>
+      <guid>https://lousiyo.com/post/pg_state_change_code/</guid>
       <description>最近看了PG状态转换的过程,代码细节没有仔细研究，先粗略过了一遍代码，特此记录. PG PG是存储池的基本单元，是一些对象的集合，多副本和纠删的数</description>
     </item>
     <item>
       <title>Git 基本操作</title>
-      <link>http://localhost:1313/post/git-client-config/</link>
+      <link>https://lousiyo.com/post/git-client-config/</link>
       <pubDate>Sun, 28 Mar 2021 22:49:38 +0800</pubDate>
-      <guid>http://localhost:1313/post/git-client-config/</guid>
+      <guid>https://lousiyo.com/post/git-client-config/</guid>
       <description>配置 git config &amp;ndash;list &amp;ndash;show-origin 查看所有配置信息 git config 命令带入&amp;ndash;system参数会将配置写入/etc/gitconfig文件，对整个系统生效；&amp;nda</description>
     </item>
     <item>
       <title>【转载】ceph存储引擎bluestore解析</title>
-      <link>http://localhost:1313/post/ceph_bluestore_summary/</link>
+      <link>https://lousiyo.com/post/ceph_bluestore_summary/</link>
       <pubDate>Sun, 28 Feb 2021 22:49:38 +0800</pubDate>
-      <guid>http://localhost:1313/post/ceph_bluestore_summary/</guid>
+      <guid>https://lousiyo.com/post/ceph_bluestore_summary/</guid>
       <description>转载自sysnote,如有侵权请联系删除 ceph后端支持多种存储引擎，以插件式的方式来进行管理使用，目前支持filestore，kvstor</description>
     </item>
     <item>
       <title>常用ceph命令</title>
-      <link>http://localhost:1313/post/ceph%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</link>
+      <link>https://lousiyo.com/post/ceph%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</link>
       <pubDate>Sun, 28 Feb 2021 22:49:38 +0800</pubDate>
-      <guid>http://localhost:1313/post/ceph%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</guid>
+      <guid>https://lousiyo.com/post/ceph%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</guid>
       <description>&lt;p&gt;工作中遇到的比较常用的命令,特此整理以备忘.&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;查看集群状态&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;background-color:#eed;-moz-tab-size:2;-o-tab-size:2;tab-size:2;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ceph -s &lt;span style=&#34;color:#228b22&#34;&gt;#查看状态&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ceph -v &lt;span style=&#34;color:#228b22&#34;&gt;#查看版本&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ceph df &lt;span style=&#34;color:#228b22&#34;&gt;#查询集群存储容量&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ceph health detail &lt;span style=&#34;color:#228b22&#34;&gt;#集群详细健康信息&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
     </item>
     <item>
       <title>我的天才女友读后感</title>
-      <link>http://localhost:1313/post/my_briliant_friend/</link>
+      <link>https://lousiyo.com/post/my_briliant_friend/</link>
       <pubDate>Sun, 28 Feb 2021 22:49:38 +0800</pubDate>
-      <guid>http://localhost:1313/post/my_briliant_friend/</guid>
+      <guid>https://lousiyo.com/post/my_briliant_friend/</guid>
       <description>你很自由,而她却是囚徒 在看了四集HBO拍的 我的天才女友 的剧之后,就迫不及待的抱起书来看了.之前并没有听过这本书,也没有了解过埃莱娜费兰特这个</description>
     </item>
     <item>
       <title>关于是枝裕和</title>
-      <link>http://localhost:1313/post/%E5%85%B3%E4%BA%8E%E6%98%AF%E6%9E%9D%E8%A3%95%E5%92%8C/</link>
+      <link>https://lousiyo.com/post/%E5%85%B3%E4%BA%8E%E6%98%AF%E6%9E%9D%E8%A3%95%E5%92%8C/</link>
       <pubDate>Tue, 28 Apr 2020 22:48:31 +0800</pubDate>
-      <guid>http://localhost:1313/post/%E5%85%B3%E4%BA%8E%E6%98%AF%E6%9E%9D%E8%A3%95%E5%92%8C/</guid>
+      <guid>https://lousiyo.com/post/%E5%85%B3%E4%BA%8E%E6%98%AF%E6%9E%9D%E8%A3%95%E5%92%8C/</guid>
       <description>应该是大二或者大三的时候第一次看是枝裕和导演的电影《无人知晓》。当时好像是看了一篇文章，介绍说柳乐优弥凭借该片击败《花样年华》梁朝伟成为了戛</description>
     </item>
     <item>
       <title>不会到来的新生活</title>
-      <link>http://localhost:1313/post/%E4%B8%8D%E4%BC%9A%E5%88%B0%E6%9D%A5%E7%9A%84%E6%96%B0%E7%94%9F%E6%B4%BB/</link>
+      <link>https://lousiyo.com/post/%E4%B8%8D%E4%BC%9A%E5%88%B0%E6%9D%A5%E7%9A%84%E6%96%B0%E7%94%9F%E6%B4%BB/</link>
       <pubDate>Fri, 02 Aug 2019 23:06:16 +0800</pubDate>
-      <guid>http://localhost:1313/post/%E4%B8%8D%E4%BC%9A%E5%88%B0%E6%9D%A5%E7%9A%84%E6%96%B0%E7%94%9F%E6%B4%BB/</guid>
+      <guid>https://lousiyo.com/post/%E4%B8%8D%E4%BC%9A%E5%88%B0%E6%9D%A5%E7%9A%84%E6%96%B0%E7%94%9F%E6%B4%BB/</guid>
       <description>28岁、单身、无业、泡图书馆， 追剧看到这几个关键词的时候自己难免会心一笑，因为这几个标签可以完美套在当下的自己身上。 毕业后的第一份工作在坚持</description>
     </item>
   </channel>

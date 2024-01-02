@@ -2,73 +2,73 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:1313/categories/linux/</loc>
+    <loc>https://lousiyo.com/categories/</loc>
     <lastmod>2023-06-09T17:29:59+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/wsl/</loc>
+    <loc>https://lousiyo.com/categories/linux/</loc>
     <lastmod>2023-06-09T17:29:59+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/post/wsl_stuff/</loc>
+    <loc>https://lousiyo.com/tags/</loc>
     <lastmod>2023-06-09T17:29:59+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/categories/</loc>
+    <loc>https://lousiyo.com/tags/wsl/</loc>
     <lastmod>2023-06-09T17:29:59+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/post/</loc>
+    <loc>https://lousiyo.com/post/wsl_stuff/</loc>
     <lastmod>2023-06-09T17:29:59+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/</loc>
+    <loc>https://lousiyo.com/post/</loc>
     <lastmod>2023-06-09T17:29:59+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/</loc>
+    <loc>https://lousiyo.com/</loc>
     <lastmod>2022-08-25T21:30:04+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/shell/</loc>
+    <loc>https://lousiyo.com/tags/shell/</loc>
     <lastmod>2021-06-28T22:49:38+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/post/shell_script/</loc>
+    <loc>https://lousiyo.com/post/shell_script/</loc>
     <lastmod>2021-06-28T22:49:38+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/ceph/</loc>
+    <loc>https://lousiyo.com/tags/ceph/</loc>
     <lastmod>2021-05-28T22:49:38+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/post/pg_state_change_code/</loc>
+    <loc>https://lousiyo.com/post/pg_state_change_code/</loc>
     <lastmod>2021-05-28T22:49:38+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/categories/%E5%AD%98%E5%82%A8/</loc>
+    <loc>https://lousiyo.com/categories/%E5%AD%98%E5%82%A8/</loc>
     <lastmod>2021-05-28T22:49:38+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/git/</loc>
+    <loc>https://lousiyo.com/tags/git/</loc>
     <lastmod>2021-03-28T22:49:38+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/post/git-client-config/</loc>
+    <loc>https://lousiyo.com/post/git-client-config/</loc>
     <lastmod>2021-03-28T22:49:38+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/post/ceph_bluestore_summary/</loc>
+    <loc>https://lousiyo.com/post/ceph_bluestore_summary/</loc>
     <lastmod>2021-02-28T22:49:38+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/%E4%B9%A6%E7%B1%8D/</loc>
+    <loc>https://lousiyo.com/tags/%E4%B9%A6%E7%B1%8D/</loc>
     <lastmod>2021-02-28T22:49:38+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/post/ceph%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</loc>
+    <loc>https://lousiyo.com/post/ceph%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</loc>
     <lastmod>2021-02-28T22:49:38+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/post/my_briliant_friend/</loc>
+    <loc>https://lousiyo.com/post/my_briliant_friend/</loc>
     <lastmod>2021-02-28T22:49:38+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/categories/%E9%98%85%E8%AF%BB/</loc>
+    <loc>https://lousiyo.com/categories/%E9%98%85%E8%AF%BB/</loc>
     <lastmod>2021-02-28T22:49:38+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/post/%E5%85%B3%E4%BA%8E%E6%98%AF%E6%9E%9D%E8%A3%95%E5%92%8C/</loc>
+    <loc>https://lousiyo.com/post/%E5%85%B3%E4%BA%8E%E6%98%AF%E6%9E%9D%E8%A3%95%E5%92%8C/</loc>
     <lastmod>2020-04-28T22:48:31+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/%E7%94%B5%E5%BD%B1/</loc>
+    <loc>https://lousiyo.com/tags/%E7%94%B5%E5%BD%B1/</loc>
     <lastmod>2020-04-28T22:48:31+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/post/%E4%B8%8D%E4%BC%9A%E5%88%B0%E6%9D%A5%E7%9A%84%E6%96%B0%E7%94%9F%E6%B4%BB/</loc>
+    <loc>https://lousiyo.com/post/%E4%B8%8D%E4%BC%9A%E5%88%B0%E6%9D%A5%E7%9A%84%E6%96%B0%E7%94%9F%E6%B4%BB/</loc>
     <lastmod>2019-08-02T23:06:16+08:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/%E6%97%A5%E5%89%A7/</loc>
+    <loc>https://lousiyo.com/tags/%E6%97%A5%E5%89%A7/</loc>
     <lastmod>2019-08-02T23:06:16+08:00</lastmod>
   </url>
 </urlset>
